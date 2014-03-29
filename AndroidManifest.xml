@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ca.ubc.cs.ephemerallauncherexperiment.ExperimentActivity"
+            android:name="ca.ubc.cs.ephemerallauncherexperiment.Experiment"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,47 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+        <activity
+            android:name="ca.ubc.cs.ephemerallauncherexperiment.Condition"
+            android:label="@string/title_activity_condition"
+            android:parentActivityName="ca.ubc.ca.ephemerallauncherexperiment.Experiment" >
+        </activity>
+        <activity
+            android:name="ca.ubc.cs.ephemerallauncherexperiment.Trial"
+            android:label="@string/title_activity_trial"
+            android:parentActivityName="ca.ubc.cs.ephemerallauncherexperiment.Condition" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ubc.cs.ephemerallauncherexperiment.Condition" />
+        </activity>
+        <activity
+            android:name="ca.ubc.cs.ephemerallauncherexperiment.EndOfCondition"
+            android:label="@string/title_activity_end_of_condition"
+            android:parentActivityName="ca.ubc.cs.ephemerallauncherexperiment.Experiment" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ubc.cs.ephemerallauncherexperiment.Experiment" />
+        </activity>
+        <activity
+            android:name="ca.ubc.cs.ephemerallauncherexperiment.TrialTimeout"
+            android:label="@string/title_activity_trial_timeout"
+            android:parentActivityName="ca.ubc.cs.ephemerallauncherexperiment.Trial" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ubc.cs.ephemerallauncherexperiment.Trial" />
+        </activity>
+        <activity
+            android:name="ca.ubc.cs.ephemerallauncherexperiment.TrialIncorrectSelection"
+            android:label="@string/title_activity_trial_incorrect_selection"
+            android:parentActivityName="ca.ubc.cs.ephemerallauncherexperiment.Trial" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ubc.cs.ephemerallauncherexperiment.Trial" />
+        </activity>
+        <activity
+            android:name="ca.ubc.cs.ephemerallauncherexperiment.EndOfExperiment"
+            android:label="@string/title_activity_end_of_experiment" >
+        </activity>
     </application>
 
 </manifest>
