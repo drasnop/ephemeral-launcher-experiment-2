@@ -1,10 +1,10 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
 
 public class Trial extends Activity {
 
@@ -13,7 +13,7 @@ public class Trial extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trial);
 		// Show the Up button in the action bar.
-		setupActionBar();
+		//setupActionBar();
 	}
 
 	/**
