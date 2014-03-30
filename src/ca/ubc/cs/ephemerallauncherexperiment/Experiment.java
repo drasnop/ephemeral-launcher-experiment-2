@@ -36,12 +36,13 @@ public class Experiment extends Activity {
 	
 	public void testSavingToSdCard() {
 		String filename = "file1";
-		File file = new File(getStorageDir(this, "dir1"), filename);
+		boolean ifAppendData = true;
+		File file = new File(getStorageDir(this, "dir1"),filename);
 		
 		try {
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			FileWriter fw = new FileWriter(file.getAbsoluteFile(), ifAppendData);
 			BufferedWriter bw = new BufferedWriter(fw);	
-			bw.write("HELLO MY NAME IS KAMYAR!");
+			bw.write("HELLO MY NAME IS NOT KAMYAR!");
 			bw.flush();
 			bw.close(); }
 		catch (IOException e){
