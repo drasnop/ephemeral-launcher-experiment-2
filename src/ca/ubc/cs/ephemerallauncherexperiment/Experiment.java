@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,35 +29,9 @@ public class Experiment extends Activity {
 	}
 	
 	public void startCondition(View view){
-		testSavingToSdCard();
-		/*Intent intent = new Intent(this, Condition.class);
-		startActivity(intent);*/
-	}
-	
-	public void testSavingToSdCard() {
-		String filename = "file1";
-		boolean ifAppendData = true;
-		File file = new File(getStorageDir(this, "dir1"),filename);
-		
-		try {
-			FileWriter fw = new FileWriter(file.getAbsoluteFile(), ifAppendData);
-			BufferedWriter bw = new BufferedWriter(fw);	
-			bw.write("HELLO MY NAME IS NOT KAMYAR!");
-			bw.flush();
-			bw.close(); }
-		catch (IOException e){
-			e.printStackTrace();
-		}
-	}
-	
-	public File getStorageDir(Context context, String dirName) {
-	     
-	    File file = new File(context.getExternalFilesDir(
-	            "EXPERIMENT_DATA"), dirName);
-	    if (!file.mkdirs()) {
-	        Log.e("LOG", "Directory not created");
-	    }
-	    return file;
+		//FileManager.testSavingToSdCard(this);
+		Intent intent = new Intent(this, Condition.class);
+		startActivity(intent);
 	}
 
 }
