@@ -7,7 +7,7 @@ public class LauncherParameters {
 
     public static final int NUM_PAGES = 3;
     public static final int NUM_HIGHLIGHTED_ICONS = 4;
-    public static AnimationType ANIMATION = AnimationType.COLOR;		// Will be used as initial animation type
+    public static AnimationType ANIMATION = AnimationType.PULSE_OUT;		// Will be used as initial animation type
     public static boolean ANIMATION_AFFECTS_OTHER_ICONS;				// Will be initialized automatically
     public static boolean ANIMATION_HAS_PREANIMATION_STATE;				// Will be initialized automatically
     
@@ -55,7 +55,7 @@ public class LauncherParameters {
     public static int BACKGROUND=1;		// 0=dark 1=ios 2=light
     
     public static enum AnimationType{
-    	COLOR, SIZE_ZOOM_IN, SIZE_ZOOM_OUT, SIZE_PULSE_IN, SIZE_PULSE_OUT, TRANSPARENCY, BLUR, TWIST
+    	COLOR, ZOOM_IN, ZOOM_OUT, PULSE_IN, PULSE_OUT, TRANSPARENCY, BLUR, TWIST
     }
     
     public static void switchAnimationTo(AnimationType type, PagerAdapter pagerAdapter){

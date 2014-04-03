@@ -120,16 +120,16 @@ public class AnimatedGridView extends GridView {
 		case BLUR:
 			// Animation.color(this.getIcon(position));    not any more
 			break;
-		case SIZE_ZOOM_IN:
+		case ZOOM_IN:
 			Animation.zoom_in(this.getIcon(position));
 			break;
-		case SIZE_ZOOM_OUT:
+		case ZOOM_OUT:
 			Animation.zoom_out(this.getIcon(position));
 			break;
-		case SIZE_PULSE_IN:
+		case PULSE_IN:
 			Animation.pulse_in(this.getIcon(position));
 			break;
-		case SIZE_PULSE_OUT:
+		case PULSE_OUT:
 			Animation.pulse_out(this.getIcon(position));
 			break;
 		case TWIST:
