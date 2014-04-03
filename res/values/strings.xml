@@ -13,5 +13,6 @@
     <string name="title_activity_end_of_experiment">EndOfExperiment</string>
     <string name="start_condition">Touch the screen to start</string>
     <string name="experiment_button_start">Press to start</string>
+    <string name="file_test">AM I SAVED IN A FILE RIGHT NOW? COOL!</string>
 
 </resources>
