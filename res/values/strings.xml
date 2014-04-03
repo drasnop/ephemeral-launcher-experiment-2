@@ -4,6 +4,7 @@
     <string name="app_name">EphemeralLauncherExperiment</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    
     <string name="title_activity_experiment">Experiment</string>
     <string name="title_activity_condition">Condition</string>
     <string name="title_activity_trial">Trial</string>
@@ -14,5 +15,38 @@
     <string name="start_condition">Touch the screen to start</string>
     <string name="experiment_button_start">Press to start</string>
     <string name="file_test">AM I SAVED IN A FILE RIGHT NOW? COOL!</string>
+   	
+   	<string name="zoom_in">Zoom In</string>
+    <string name="transparency">Transparency</string>
+    <string name="color">Color</string>
+    <string name="zoom_out">Zoom Out</string>
+    <string name="pulse_out">Pulse Out</string>
+    <string name="pulse_in">Pulse In</string>
+    <string name="interrupted_color">Interruped Color</string>
+    <string name="blur">Blur</string>
+    <string name="color_blur">Color+blur</string>
+    <string name="twist">Twist</string>
+    <string name="change_bkg">Change background</string>
+    
+    <string name="icon_0_cap">icon 0</string>
+    <string name="icon_1_cap">icon 1</string>
+    <string name="icon_2_cap">icon 2</string>
+    <string name="icon_3_cap">icon 3</string>
+    <string name="icon_4_cap">icon 4</string>
+    <string name="icon_5_cap">icon 5</string>
+    <string name="icon_6_cap">icon 6</string>
+    <string name="icon_7_cap">icon 7</string>
+    <string name="icon_8_cap">icon 8</string>
+    <string name="icon_9_cap">icon 9</string>
+    <string name="icon_10_cap">icon 10</string>
+    <string name="icon_11_cap">icon 11</string>
+    <string name="icon_12_cap">icon 12</string>
+    <string name="icon_13_cap">icon 13</string>
+    <string name="icon_14_cap">icon 14</string>
+    <string name="icon_15_cap">icon 15</string>
+    <string name="icon_16_cap">icon 16</string>
+    <string name="icon_17_cap">icon 17</string>
+    <string name="icon_18_cap">icon 18</string>
+    <string name="icon_19_cap">icon 19</string>
 
 </resources>
