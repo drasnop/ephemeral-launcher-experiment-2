@@ -24,7 +24,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return Parameters.NUM_PAGES;
+		return LauncherParameters.NUM_PAGES;
 	}
 
 	// helper function to make calls simpler when launching animations

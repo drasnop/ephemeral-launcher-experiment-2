@@ -30,21 +30,21 @@ public class Animation {
 	};
 	
 	public static void zoom_in(Icon icon){
-		animatorList.add(Effects.changeSize(icon,Parameters.ZOOM__DURATION,Parameters.DELAY,Parameters.SIZE__SMALL,Parameters.SIZE__REG));
+		animatorList.add(Effects.changeSize(icon,LauncherParameters.ZOOM__DURATION,LauncherParameters.DELAY,LauncherParameters.SIZE__SMALL,LauncherParameters.SIZE__REG));
 	}
 	
 	public static void zoom_out(Icon icon){
-		animatorList.add(Effects.changeSize(icon,Parameters.ZOOM__DURATION,Parameters.DELAY,Parameters.SIZE__BIG,Parameters.SIZE__REG));
+		animatorList.add(Effects.changeSize(icon,LauncherParameters.ZOOM__DURATION,LauncherParameters.DELAY,LauncherParameters.SIZE__BIG,LauncherParameters.SIZE__REG));
 	}
 	
 	public static void pulse_in(Icon icon){
-		animatorList.add(Effects.changeSize(icon,Parameters.PULSE__1STHALF_DURATION,Parameters.DELAY,Parameters.SIZE__REG,Parameters.SIZE__SMALL));
-		animatorList.add(Effects.changeSize(icon,Parameters.PULSE__2NDHALF_DURATION,Parameters.PULSE__DELAY,Parameters.SIZE__SMALL,Parameters.SIZE__REG));
+		animatorList.add(Effects.changeSize(icon,LauncherParameters.PULSE__1STHALF_DURATION,LauncherParameters.DELAY,LauncherParameters.SIZE__REG,LauncherParameters.SIZE__SMALL));
+		animatorList.add(Effects.changeSize(icon,LauncherParameters.PULSE__2NDHALF_DURATION,LauncherParameters.PULSE__DELAY,LauncherParameters.SIZE__SMALL,LauncherParameters.SIZE__REG));
 	}
 	
 	public static void pulse_out(Icon icon){
-		animatorList.add(Effects.changeSize(icon,Parameters.PULSE__1STHALF_DURATION,Parameters.DELAY,Parameters.SIZE__REG,Parameters.SIZE__BIG));
-		animatorList.add(Effects.changeSize(icon,Parameters.PULSE__2NDHALF_DURATION,Parameters.PULSE__DELAY,Parameters.SIZE__BIG,Parameters.SIZE__REG));
+		animatorList.add(Effects.changeSize(icon,LauncherParameters.PULSE__1STHALF_DURATION,LauncherParameters.DELAY,LauncherParameters.SIZE__REG,LauncherParameters.SIZE__BIG));
+		animatorList.add(Effects.changeSize(icon,LauncherParameters.PULSE__2NDHALF_DURATION,LauncherParameters.PULSE__DELAY,LauncherParameters.SIZE__BIG,LauncherParameters.SIZE__REG));
 	}
 	
 	public static void twist(Icon icon){
@@ -56,12 +56,12 @@ public class Animation {
 		Effects.rotate(icon,Parameters.TWIST__1STDURATION,Parameters.TWIST__0THDURATION,Parameters.DEGREE_BIG);
 		Effects.rotate(icon,Parameters.TWIST__2NDDURATION,Parameters.TWIST__0THDURATION+Parameters.TWIST__1STDURATION,Parameters.DEGREE_REG);*/
 	
-		int repeatNum = Parameters.TWIST_REPEAT_NUM;
-		int duration0 = Parameters.TWIST__0THDURATION;
-		int duration1 = Parameters.TWIST__1STDURATION;
-		int duration2 = Parameters.TWIST__2NDDURATION;
+		int repeatNum = LauncherParameters.TWIST_REPEAT_NUM;
+		int duration0 = LauncherParameters.TWIST__0THDURATION;
+		int duration1 = LauncherParameters.TWIST__1STDURATION;
+		int duration2 = LauncherParameters.TWIST__2NDDURATION;
 		
-		int accumulatedDelay = Parameters.DELAY;
+		int accumulatedDelay = LauncherParameters.DELAY;
 		
 		//int totalRelDuration = Parameters.TWIST__0THDURATION_REL + Parameters.TWIST__1STDURATION_REL + Parameters.TWIST__2NDDURATION_REL;
 		
@@ -71,24 +71,24 @@ public class Animation {
 
 		
 		for (int i=0; i < repeatNum; i++){
-			animatorList.add(Effects.rotate(icon, duration0, accumulatedDelay, Parameters.DEGREE_REG, Parameters.DEGREE_SMALL));
+			animatorList.add(Effects.rotate(icon, duration0, accumulatedDelay, LauncherParameters.DEGREE_REG, LauncherParameters.DEGREE_SMALL));
 			accumulatedDelay += duration0;
 			
-			animatorList.add(Effects.rotate(icon,duration1,accumulatedDelay,Parameters.DEGREE_BIG));
+			animatorList.add(Effects.rotate(icon,duration1,accumulatedDelay,LauncherParameters.DEGREE_BIG));
 			accumulatedDelay += duration1;
 			
-			animatorList.add(Effects.rotate(icon,duration2, accumulatedDelay,Parameters.DEGREE_REG));
+			animatorList.add(Effects.rotate(icon,duration2, accumulatedDelay,LauncherParameters.DEGREE_REG));
 			accumulatedDelay += duration2;
 		}
 	}
 	
 	
 	public static void fadeIn(Icon icon){
-		animatorList.add(Effects.fadeIn(icon,Parameters.TRANSPARENCY__DURATION,Parameters.TRANSPARENCY__DELAY,Parameters.TRANSPARENCY__INTIAL,1f));
+		animatorList.add(Effects.fadeIn(icon,LauncherParameters.TRANSPARENCY__DURATION,LauncherParameters.TRANSPARENCY__DELAY,LauncherParameters.TRANSPARENCY__INTIAL,1f));
 	};
 	
 	public static void disappear(Icon icon){
-		animatorList.add(Effects.fadeOut(icon, 0, 0,1f,Parameters.TRANSPARENCY__INTIAL));
+		animatorList.add(Effects.fadeOut(icon, 0, 0,1f,LauncherParameters.TRANSPARENCY__INTIAL));
 	}
 	
 	public static void blur(Icon icon){

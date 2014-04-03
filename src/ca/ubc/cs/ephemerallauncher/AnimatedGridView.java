@@ -12,7 +12,7 @@ import ca.ubc.cs.ephemerallauncherexperiment.R;
  */
 public class AnimatedGridView extends GridView {
 
-	private int[] highlightedIcons = new int[Parameters.NUM_HIGHLIGHTED_ICONS];
+	private int[] highlightedIcons = new int[LauncherParameters.NUM_HIGHLIGHTED_ICONS];
 
 	public AnimatedGridView(Context context) {
 		super(context);
@@ -48,7 +48,7 @@ public class AnimatedGridView extends GridView {
 		int position;
 		int icon_nb = this.getChildCount();
 		
-		for (int i = 0; i < Parameters.NUM_HIGHLIGHTED_ICONS; i++) {
+		for (int i = 0; i < LauncherParameters.NUM_HIGHLIGHTED_ICONS; i++) {
 			
 			/*position = (int) Math.floor(Math.random() * icon_nb);
 			while (!isDifferentFromAllHighlighted(position))
@@ -59,7 +59,7 @@ public class AnimatedGridView extends GridView {
 		
 		
 
-		if (Parameters.ANIMATION_HAS_PREANIMATION_STATE)
+		if (LauncherParameters.ANIMATION_HAS_PREANIMATION_STATE)
 			startPreAnimationAllIcons();
 	}
 
@@ -69,12 +69,12 @@ public class AnimatedGridView extends GridView {
 			highlightIcon(highlightedIcons[i]);
 		}
 
-		if (Parameters.ANIMATION_AFFECTS_OTHER_ICONS)
+		if (LauncherParameters.ANIMATION_AFFECTS_OTHER_ICONS)
 			animateOtherIcons();
 	}
 
 	public void backToPreAnimationState() {
-		if (Parameters.ANIMATION_HAS_PREANIMATION_STATE) {
+		if (LauncherParameters.ANIMATION_HAS_PREANIMATION_STATE) {
 			// TODO: stop the current animation! (in case they last 10s or so)
 			for (int i = 0; i < this.getChildCount(); i++)
 				this.getIcon(i).getImageGs().setVisibility(View.GONE);
@@ -94,7 +94,7 @@ public class AnimatedGridView extends GridView {
 
 	private void startPreAnimation(int position) {
 		
-		switch (Parameters.ANIMATION) {
+		switch (LauncherParameters.ANIMATION) {
 		case COLOR:
 		case BLUR:
 			if(isDifferentFromAllHighlighted(position)){
@@ -115,7 +115,7 @@ public class AnimatedGridView extends GridView {
 	}
 	
 	private void highlightIcon(int position) {
-		switch (Parameters.ANIMATION) {
+		switch (LauncherParameters.ANIMATION) {
 		case COLOR:
 		case BLUR:
 			// Animation.color(this.getIcon(position));    not any more
@@ -146,11 +146,11 @@ public class AnimatedGridView extends GridView {
 	}
 
 	private void animateOtherIcon(int position) {
-		switch (Parameters.ANIMATION) {
+		switch (LauncherParameters.ANIMATION) {
 		case COLOR:
 		case BLUR:
-			Effects.changeToColor(this.getIcon(position), Parameters.COLOR__FADE_IN_DURATION,
-					Parameters.COLOR__START_DELAY);
+			Effects.changeToColor(this.getIcon(position), LauncherParameters.COLOR__FADE_IN_DURATION,
+					LauncherParameters.COLOR__START_DELAY);
 			break;
 		case TRANSPARENCY:
 			if (isDifferentFromAllHighlighted(position))
@@ -163,12 +163,12 @@ public class AnimatedGridView extends GridView {
 
 	private void changeMaskImages() {
 		for (int i = 0; i < this.getChildCount(); i++) {
-			switch (Parameters.ANIMATION) {
+			switch (LauncherParameters.ANIMATION) {
 			case COLOR:
-				this.getIcon(i).getImageGs().setImageResource(Parameters.images_gs_ID[i]);
+				this.getIcon(i).getImageGs().setImageResource(LauncherParameters.images_gs_ID[i]);
 				break;
 			case BLUR:
-				this.getIcon(i).getImageGs().setImageResource(Parameters.images_b_ID[i]);
+				this.getIcon(i).getImageGs().setImageResource(LauncherParameters.images_b_ID[i]);
 				break;
 			default:
 				break;
@@ -179,7 +179,7 @@ public class AnimatedGridView extends GridView {
 	// Stupid function required because we can't change the text color globally!
 	void changeTextColor() {
 		for (int i = 0; i < this.getChildCount(); i++) {
-			switch (Parameters.BACKGROUND) {
+			switch (LauncherParameters.BACKGROUND) {
 			case 0:
 			case 1:
 				this.getIcon(i).getCaption().setTextColor(getResources().getColor(R.color.white));

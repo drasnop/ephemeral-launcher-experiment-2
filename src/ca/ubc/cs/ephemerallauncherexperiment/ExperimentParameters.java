@@ -1,0 +1,5 @@
+package ca.ubc.cs.ephemerallauncherexperiment;
+
+public class ExperimentParameters {
+
+}

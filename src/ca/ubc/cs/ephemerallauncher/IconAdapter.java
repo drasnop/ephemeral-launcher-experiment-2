@@ -16,7 +16,7 @@ public class IconAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return Parameters.images_ID.length;
+		return LauncherParameters.images_ID.length;
 	}
 
 	public Object getItem(int position) {
@@ -38,14 +38,14 @@ public class IconAdapter extends BaseAdapter {
 			icon=(Icon) LayoutInflater.from(mContext).inflate(R.layout.icon, parent,false);
 			
 			// Set up the colored image
-			icon.getImage().setImageResource(Parameters.images_ID[position]);
+			icon.getImage().setImageResource(LauncherParameters.images_ID[position]);
 			
 			// Set up the greyscale image
-			icon.getImageGs().setImageResource(Parameters.images_gs_ID[position]);
+			icon.getImageGs().setImageResource(LauncherParameters.images_gs_ID[position]);
 			icon.getImageGs().setVisibility(ViewGroup.GONE);
 			
 			// The caption
-			icon.getCaption().setText(Parameters.captions_ID[position]);
+			icon.getCaption().setText(LauncherParameters.captions_ID[position]);
 			
 		} else {
 			// [AP: I haven't quite figured out when this happens...

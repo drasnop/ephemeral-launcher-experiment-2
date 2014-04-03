@@ -3,9 +3,9 @@ package ca.ubc.cs.ephemerallauncher;
 import android.util.Log;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 
-public class Parameters {
+public class LauncherParameters {
 
-    public static final int NUM_PAGES = 6;
+    public static final int NUM_PAGES = 3;
     public static final int NUM_HIGHLIGHTED_ICONS = 4;
     public static AnimationType ANIMATION = AnimationType.COLOR;		// Will be used as initial animation type
     public static boolean ANIMATION_AFFECTS_OTHER_ICONS;				// Will be initialized automatically
