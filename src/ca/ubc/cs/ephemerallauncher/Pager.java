@@ -21,8 +21,8 @@ public class Pager extends FragmentActivity{
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.pager);
-		setUpPager();
-		
+		State.page=0;
+		setUpPager();		
 	}
 	
 	@Override
@@ -66,6 +66,8 @@ public class Pager extends FragmentActivity{
 			}
 
 			public void onPageSelected(int position) {
+				State.page=position;
+				
 				pagerAdapter.previousPosition=pagerAdapter.currentPosition;
 				pagerAdapter.currentPosition = position;
 				

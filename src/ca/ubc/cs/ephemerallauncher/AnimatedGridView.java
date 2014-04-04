@@ -35,13 +35,21 @@ public class AnimatedGridView extends GridView {
 
 		this.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				long duration=System.currentTimeMillis()-State.startTime;
-				Toast.makeText(mContext, "duration = " + duration + " ms", Toast.LENGTH_SHORT).show();
+				iconClicked(position);
 			}
 		});
 
 	}
-
+	
+	public void iconClicked(int position){
+		long duration=System.currentTimeMillis()-State.startTime;
+		Toast.makeText(this.getContext(), "duration = " + duration + " ms \n"
+				+"page = "+ State.page+1 +"\n"
+				+"position = "+ position+1, Toast.LENGTH_SHORT).show();
+	}
+	
+	// ------ Public animation functions ------
+	
 	public void startPreAnimation() {
 
 		for (int i = 0; i < highlightedIcons.length; i++)
@@ -83,7 +91,7 @@ public class AnimatedGridView extends GridView {
 		}
 	}
 
-	// ////// Private helper functions
+	// ------ Private helper functions ------
 
 	private Icon getIcon(int position) {
 		return (Icon) this.getChildAt(position);
