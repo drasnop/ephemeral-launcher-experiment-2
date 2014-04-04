@@ -22,8 +22,7 @@ public class FileManager {
 	}
 	
 	public static void appendLineToFile(String content){
-		content = "\n" + content;
-		appendToFile(content);
+		writeLineToFile(content, true);
 	}
 	
 	public static void appendToFile(String content) {
@@ -33,7 +32,10 @@ public class FileManager {
 		writeToFile(file, content, true);
 	}
 	
-	
+	public static void writeLineToFile(String content, boolean ifAppendData){
+		content = "\n" + content;
+		writeToFile(content, ifAppendData);
+	}
 	public static void writeToFile(String content, boolean ifAppendData) {
 		writeToFile(currentFile, content, ifAppendData);
 	}
@@ -51,19 +53,12 @@ public class FileManager {
 	}
 	
 	public static void testSavingToSdCard(Context c) {
-		String filename = "file1";
-		boolean ifAppendData = true;
-		File file = new File(getExtStorageDir(c, "dir1"),filename);
+		String fileName = "file_test";
+		String folderName = "dir_test";
 		
-		try {
-			FileWriter fw = new FileWriter(file.getAbsoluteFile(), ifAppendData);
-			BufferedWriter bw = new BufferedWriter(fw);	
-			bw.write(R.string.file_test);
-			bw.flush();
-			bw.close(); }
-		catch (IOException e){
-			e.printStackTrace();
-		}
+		openFile(c, folderName, fileName);
+		
+		appendToFile(c.getString(R.string.file_test));
 	}
 	
 	private static File getExtStorageDir(Context context, String dirName) {
