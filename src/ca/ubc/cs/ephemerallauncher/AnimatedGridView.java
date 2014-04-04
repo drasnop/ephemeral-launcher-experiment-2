@@ -58,7 +58,7 @@ public class AnimatedGridView extends GridView {
 				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();
 		
 		State.trial++;
-		if(State.trial>ExperimentParameters.TRIALS){
+		if(State.trial>ExperimentParameters.TRIALS_NUM){
 			// end condition
 			State.trial=1;
 			Intent intent = new Intent(this.getContext(), Condition.class);
