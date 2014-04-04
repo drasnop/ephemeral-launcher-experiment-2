@@ -1,10 +1,14 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.RelativeLayout;
 
 public class Trial extends Activity {
 
@@ -12,6 +16,14 @@ public class Trial extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trial);
+
+		RelativeLayout trial = (RelativeLayout) this.findViewById(R.id.trial);
+		trial.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startPager();
+			}
+		});
 	}
 
 	@Override
@@ -36,6 +48,11 @@ public class Trial extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void startPager(){
+		Intent intent = new Intent(this, ca.ubc.cs.ephemerallauncher.Pager.class);
+		startActivity(intent);
 	}
 
 }

@@ -38,7 +38,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ubc.cs.ephemerallauncherexperiment.Condition" />
-        </activity>
+        </activity>       
         <activity
             android:name="ca.ubc.cs.ephemerallauncherexperiment.EndOfCondition"
             android:screenOrientation="portrait"
@@ -69,6 +69,16 @@
         <activity
             android:name="ca.ubc.cs.ephemerallauncherexperiment.EndOfExperiment"
             android:label="@string/title_activity_end_of_experiment" >
+        </activity>
+        
+        <activity
+            android:name="ca.ubc.cs.ephemerallauncher.Pager"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_pager"
+            android:parentActivityName="ca.ubc.cs.ephemerallauncherexperiment.Trial" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ubc.cs.ephemerallauncherexperiment.Trial" />
         </activity>
     </application>
 
