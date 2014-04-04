@@ -11,10 +11,33 @@ import android.util.Log;
 
 public class FileManager {
 	
-	public static void appendToFile(Context c, String content) {
-		String filename = "file1";
-		boolean ifAppendData = true;
-		File file = new File(getExtStorageDir(c, "dir1"),filename);
+	private static File currentFile;
+	
+	public static void openFile(Context c, String folderName, String fileName) {
+		currentFile = getFile(c, folderName, fileName);
+	}
+	
+	private static File getFile(Context c, String folderName, String fileName) {
+		return new File(getExtStorageDir(c, folderName),fileName);
+	}
+	
+	public static void appendLineToFile(String content){
+		content = "\n" + content;
+		appendToFile(content);
+	}
+	
+	public static void appendToFile(String content) {
+		appendToFile(currentFile, content);
+	}
+	private static void appendToFile(File file, String content) {
+		writeToFile(file, content, true);
+	}
+	
+	
+	public static void writeToFile(String content, boolean ifAppendData) {
+		writeToFile(currentFile, content, ifAppendData);
+	}
+	private static void writeToFile(File file, String content, boolean ifAppendData) {
 		
 		try {
 			FileWriter fw = new FileWriter(file.getAbsoluteFile(), ifAppendData);
@@ -25,7 +48,6 @@ public class FileManager {
 		catch (IOException e){
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public static void testSavingToSdCard(Context c) {
@@ -44,7 +66,7 @@ public class FileManager {
 		}
 	}
 	
-	public static File getExtStorageDir(Context context, String dirName) {
+	private static File getExtStorageDir(Context context, String dirName) {
 	     
 	    File file = new File(context.getExternalFilesDir(
 	            "EXPERIMENT_DATA"), dirName);
