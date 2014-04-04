@@ -59,6 +59,7 @@ public class Trial extends Activity {
 	}
 	
 	private void startPager(){
+		Log.v("Trial",State.trial +"");
 		Intent intent = new Intent(this, ca.ubc.cs.ephemerallauncher.Pager.class);
 		startActivity(intent);
 	}

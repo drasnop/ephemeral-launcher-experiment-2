@@ -1,14 +1,17 @@
 package ca.ubc.cs.ephemerallauncher;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+import ca.ubc.cs.ephemerallauncherexperiment.Condition;
 import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
+import ca.ubc.cs.ephemerallauncherexperiment.Trial;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
  */
@@ -43,18 +46,28 @@ public class AnimatedGridView extends GridView {
 	}
 	
 	public void iconClicked(int position){
-		long duration=System.currentTimeMillis()-State.startTime;	
+		long duration=System.currentTimeMillis()-State.startTime;
+		int row=(int) Math.floor(position/4)+1;
+		int column=position%4+1;
+		
+		State.logTrial(duration, row, column);		// TODO
 		
 		Toast.makeText(this.getContext(), "trial = "+State.trial+"\n"
 				+"duration = " + duration + " ms \n"
 				+"page = "+ State.page +"\n"
-				+"position = "+ position, Toast.LENGTH_SHORT).show();
+				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();
 		
 		State.trial++;
 		if(State.trial>ExperimentParameters.TRIALS){
 			// end condition
 			State.trial=1;
+			Intent intent = new Intent(this.getContext(), Condition.class);
+			this.getContext().startActivity(intent);
 		}	
+		else{
+			Intent intent = new Intent(this.getContext(), Trial.class);
+			this.getContext().startActivity(intent);
+		}
 	}
 	
 	// ------ Public animation functions ------

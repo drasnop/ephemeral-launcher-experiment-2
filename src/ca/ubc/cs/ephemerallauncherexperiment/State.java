@@ -10,4 +10,8 @@ public class State {
 	
 	public static int page=1;	// current page in the pager
 	public static long startTime;
+	
+	public static void logTrial(long duration, int row, int column){
+		// TODO
+	};
 }
