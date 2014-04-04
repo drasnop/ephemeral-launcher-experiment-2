@@ -9,5 +9,5 @@ public class Distributions {
 		{0,1,2,3,4}
 	};
 	
-	public static int[] targets={15,12,2,6,20}; 
+	public static int[] targets={15,12,2,6,20};
 }
