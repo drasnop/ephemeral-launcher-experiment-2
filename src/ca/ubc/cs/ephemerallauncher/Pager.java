@@ -8,18 +8,30 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
+import ca.ubc.cs.ephemerallauncherexperiment.State;
 
 public class Pager extends FragmentActivity{
 
 	PagerAdapter pagerAdapter;
 	ViewPager pager;
+	long startTime;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Set up pager view
 		setContentView(R.layout.pager);
+		setUpPager();
+		
+	}
+	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		State.startTime = System.currentTimeMillis();
+	}
+	
+	private void setUpPager(){
 		pager = (ViewPager) findViewById(R.id.pager);
 
 		// Create grid views for each page
@@ -76,4 +88,6 @@ public class Pager extends FragmentActivity{
 
 		// Parameters.switchAnimationTo(Parameters.ANIMATION,pagerAdapter);		// CRASHES
 	}
+	
+
 }

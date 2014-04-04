@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
+import ca.ubc.cs.ephemerallauncherexperiment.State;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
  */
@@ -34,7 +35,8 @@ public class AnimatedGridView extends GridView {
 
 		this.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				Toast.makeText(mContext, "" + position, Toast.LENGTH_SHORT).show();
+				long duration=System.currentTimeMillis()-State.startTime;
+				Toast.makeText(mContext, "duration = " + duration + " ms", Toast.LENGTH_SHORT).show();
 			}
 		});
 
