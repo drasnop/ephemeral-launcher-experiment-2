@@ -1,6 +1,5 @@
 package ca.ubc.cs.ephemerallauncher;
 
-import android.util.Log;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 
 public class LauncherParameters {
@@ -58,9 +57,7 @@ public class LauncherParameters {
     	COLOR, ZOOM_IN, ZOOM_OUT, PULSE_IN, PULSE_OUT, TRANSPARENCY, BLUR, TWIST
     }
     
-    public static void switchAnimationTo(AnimationType type, PagerAdapter pagerAdapter){
-    	Log.v("Parameters","animation");
-    	
+    public static void switchAnimationTo(AnimationType type, PagerAdapter pagerAdapter){	
     	ANIMATION=type;
  	
     	switch(ANIMATION){

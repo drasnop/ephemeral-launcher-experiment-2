@@ -1,7 +1,6 @@
 package ca.ubc.cs.ephemerallauncher;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,6 @@ public class IconAdapter extends BaseAdapter {
 		} else {
 			// [AP: I haven't quite figured out when this happens...
 			icon = (Icon) convertView;
-			Log.v("IconAdapter","convert view");
 		}
 
 

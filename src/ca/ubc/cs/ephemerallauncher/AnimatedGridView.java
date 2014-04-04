@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
 
@@ -42,10 +43,18 @@ public class AnimatedGridView extends GridView {
 	}
 	
 	public void iconClicked(int position){
-		long duration=System.currentTimeMillis()-State.startTime;
-		Toast.makeText(this.getContext(), "duration = " + duration + " ms \n"
-				+"page = "+ State.page+1 +"\n"
-				+"position = "+ position+1, Toast.LENGTH_SHORT).show();
+		long duration=System.currentTimeMillis()-State.startTime;	
+		
+		Toast.makeText(this.getContext(), "trial = "+State.trial+"\n"
+				+"duration = " + duration + " ms \n"
+				+"page = "+ State.page +"\n"
+				+"position = "+ position, Toast.LENGTH_SHORT).show();
+		
+		State.trial++;
+		if(State.trial>ExperimentParameters.TRIALS){
+			// end condition
+			State.trial=1;
+		}	
 	}
 	
 	// ------ Public animation functions ------
