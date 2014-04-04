@@ -11,6 +11,23 @@ import android.util.Log;
 
 public class FileManager {
 	
+	public static void appendToFile(Context c, String content) {
+		String filename = "file1";
+		boolean ifAppendData = true;
+		File file = new File(getExtStorageDir(c, "dir1"),filename);
+		
+		try {
+			FileWriter fw = new FileWriter(file.getAbsoluteFile(), ifAppendData);
+			BufferedWriter bw = new BufferedWriter(fw);	
+			bw.write(content);
+			bw.flush();
+			bw.close(); }
+		catch (IOException e){
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static void testSavingToSdCard(Context c) {
 		String filename = "file1";
 		boolean ifAppendData = true;
