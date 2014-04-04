@@ -21,5 +21,7 @@ public class State {
 	public static void logTrial(long duration, int row, int column){
 		// TODO   I think this function should belong to trial. Each trial logs its state and its results. It only
 		// gets the state information from this class via stateCsvLog() for convenience
+		
+		// Antoine: No, it's not possible because Trial is already destroyed (we're in the Pager, and I felt it would be easier to have this function here, because ost of the parameters are here) 
 	};
 }
