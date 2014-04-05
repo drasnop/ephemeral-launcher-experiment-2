@@ -40,6 +40,7 @@ public class Condition extends Activity {
 	}
 
 	// AP: should we put this function in Distributions?
+	// KA: or we could initialize everything in Experiment.initializeExperiment()
 	private void pickIconsForCondition(){
 		// TODO: randomly select the relevant icons
 		// For the moment: just duplicate our icon set
