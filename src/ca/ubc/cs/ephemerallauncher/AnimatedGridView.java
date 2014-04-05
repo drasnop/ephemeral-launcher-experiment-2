@@ -14,6 +14,7 @@ import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
 import ca.ubc.cs.ephemerallauncherexperiment.Trial;
+import ca.ubc.cs.ephemerallauncherexperiment.TrialIncorrectSelection;
 import ca.ubc.cs.ephemerallauncherexperiment.Utils;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
@@ -48,12 +49,13 @@ public class AnimatedGridView extends GridView {
 
 	}
 	
-	private String resultCsvLog(long duration, int row, int column){
-		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column));
+	private String resultCsvLog(long duration, int row, int column, boolean ifSuccess){
+		String successStr = ifSuccess ? "Success" : "Failure";
+		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr);
 		return log;
 	}
-	private void logTrial(long duration, int row, int column){
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column));
+	private void logTrial(long duration, int row, int column, boolean ifSuccess){
+		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column, ifSuccess));
 		
 		Toast.makeText(this.getContext(), finalTrialLog, Toast.LENGTH_SHORT).show();
 		
@@ -61,18 +63,8 @@ public class AnimatedGridView extends GridView {
 		
 		
 	}
-	public void iconClicked(int position){
-		long duration=System.currentTimeMillis()-State.startTime;
-		int row=(int) Math.floor(position/4)+1;
-		int column=position%4+1;
-		
-		logTrial(duration, row, column);		// TODO
-		
-		Toast.makeText(this.getContext(), "trial = "+State.trial+"\n"
-				+"duration = " + duration + " ms \n"
-				+"page = "+ State.page +"\n"
-				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();
-		
+	
+	private void startNextTrial(){
 		State.trial++;
 		if(State.trial>ExperimentParameters.NUM_TRIALS){
 			// end condition
@@ -97,6 +89,34 @@ public class AnimatedGridView extends GridView {
 			Intent intent = new Intent(this.getContext(), Trial.class);
 			this.getContext().startActivity(intent);
 		}
+		
+	}
+	public void iconClicked(int position){
+		long duration=System.currentTimeMillis()-State.startTime;
+		int row=(int) Math.floor(position/4)+1;
+		int column=position%4+1;
+		
+		
+		//TODO: check success and update ifSuccess
+		
+		boolean ifSuccess = true;//just for test
+		logTrial(duration, row, column, ifSuccess);		// TODO
+		
+		Toast.makeText(this.getContext(), "trial = "+State.trial+"\n"
+				+"duration = " + duration + " ms \n"
+				+"page = "+ State.page +"\n"
+				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();
+		
+		if (!ifSuccess){
+			Intent intent = new Intent(this.getContext(), TrialIncorrectSelection.class);
+			this.getContext().startActivity(intent);
+		}
+		
+		else {
+			startNextTrial();
+		}
+		
+		
 	}
 	
 	// ------ Public animation functions ------
