@@ -2,6 +2,8 @@ package ca.ubc.cs.ephemerallauncherexperiment;
 
 import java.util.ArrayList;
 
+import ca.ubc.cs.ephemerallauncher.LauncherParameters;
+
 public class State {
 
 	// things put here should change during the experiment
@@ -11,8 +13,10 @@ public class State {
 	public static ArrayList<ExperimentParameters.ConditionEnum> listOfConditions;
 	public static int trial=1;		// in that condition
 	
-	public static int page=1;	// current page in the pager  //I doubt this is useful
+	public static int page=1;	// current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
 	public static long startTime;
+	
+	public static int[] current_images_ID = new int[LauncherParameters.NUM_PAGES*20+1];	// from 1 to 60, 0 is irrelevant
 	
 	public static String participantId = "test_participant";
 	
@@ -31,4 +35,5 @@ public class State {
 		//OOPS! By Trial I meant Pager all this time.
 		//I implemented it in Pager but if you think it's better here we can easily move it
 	};
+
 }

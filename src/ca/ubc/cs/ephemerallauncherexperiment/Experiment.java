@@ -1,9 +1,6 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,12 +30,15 @@ public class Experiment extends Activity {
 	}
 	
 	private void initializeExperiment(){
+			
+		//Initialize condition order
+
+		// Initialize target and higlighted icons
+		Distributions.init();
+		// TODO: write the distributions in a log file (Kamyar if you want to do that don't hesitate!)
 		
 		//Initialize icon order
 		
-		//Initialize target and highlighted icons
-		
-		//Initialize condition order
 		
 		//This is just for test now
 		State.listOfConditions = new ArrayList<ExperimentParameters.ConditionEnum>();
@@ -60,7 +60,7 @@ public class Experiment extends Activity {
 	public void startFirstCondition(View view){
 		//FileManager.testSavingToSdCard(this);
 		initializeExperiment();
-			
+	
 		Intent intent = new Intent(this, Condition.class);
 		startActivity(intent);
 	}
