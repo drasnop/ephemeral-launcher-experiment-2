@@ -1,5 +1,6 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
@@ -27,6 +28,8 @@ public class State {
 		String log = Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(startTime));
 		return log;
 	}
+	
+	public static File currentTrialsLogFile;
 	
 	public static void logTrial(long duration, int row, int column){
 		// TODO   I think this function should belong to trial. Each trial logs its state and its results. It only
