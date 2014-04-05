@@ -71,6 +71,8 @@ public class Pager extends FragmentActivity{
 				pagerAdapter.previousPosition=pagerAdapter.currentPosition;
 				pagerAdapter.currentPosition = position;
 				
+				Animation.clearAll();
+				
 				pagerAdapter.getCurrentPage().getGridView().startEphemeralAnimation();
 				pagerAdapter.getPreviousPage().getGridView().backToPreAnimationState();
 			}

@@ -9,9 +9,11 @@ import android.widget.GridView;
 import android.widget.Toast;
 import ca.ubc.cs.ephemerallauncherexperiment.Condition;
 import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
+import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
 import ca.ubc.cs.ephemerallauncherexperiment.Trial;
+import ca.ubc.cs.ephemerallauncherexperiment.Utils;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
  */
@@ -45,12 +47,25 @@ public class AnimatedGridView extends GridView {
 
 	}
 	
+	private String resultCsvLog(long duration, int row, int column){
+		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column));
+		return log;
+	}
+	private void logTrial(long duration, int row, int column){
+		String finalTrialLog = Utils.appendWithComma(State.stateCsvLog(), resultCsvLog(duration, row, column));
+		
+		Toast.makeText(this.getContext(), finalTrialLog, Toast.LENGTH_SHORT).show();
+		
+		FileManager.appendLineToFile(finalTrialLog);
+		
+		
+	}
 	public void iconClicked(int position){
 		long duration=System.currentTimeMillis()-State.startTime;
 		int row=(int) Math.floor(position/4)+1;
 		int column=position%4+1;
 		
-		State.logTrial(duration, row, column);		// TODO
+		logTrial(duration, row, column);		// TODO
 		
 		Toast.makeText(this.getContext(), "trial = "+State.trial+"\n"
 				+"duration = " + duration + " ms \n"
@@ -60,6 +75,7 @@ public class AnimatedGridView extends GridView {
 		State.trial++;
 		if(State.trial>ExperimentParameters.NUM_TRIALS){
 			// end condition
+			// TODO: assign next condition to the state
 			State.trial=1;
 			Intent intent = new Intent(this.getContext(), Condition.class);
 			this.getContext().startActivity(intent);

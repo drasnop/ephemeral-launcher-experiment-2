@@ -21,8 +21,9 @@ public class Experiment extends Activity {
 		return true;
 	}
 	
-	public void startCondition(View view){
-		//FileManager.testSavingToSdCard(this);
+	public void startFirstCondition(View view){
+		FileManager.testSavingToSdCard(this);
+		
 		Intent intent = new Intent(this, Condition.class);
 		startActivity(intent);
 	}

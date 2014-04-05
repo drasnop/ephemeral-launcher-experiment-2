@@ -1,5 +1,7 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +23,16 @@ public class Condition extends Activity {
 		return true;
 	}
 	
-	public void startTrial(View view){
-		
+	private String getFileName(){
+		Calendar cal = Calendar.getInstance();
+		String fileName = cal.toString() + " - " + State.participantId + " - " + State.condition.toString();
+		return fileName;
+	}
+	
+	public void startFirstTrial(View view){
+
+	FileManager.openFile(this, "EXP1", getFileName());
+	
 	Intent intent = new Intent(this, Trial.class);
 	startActivity(intent);
 	
