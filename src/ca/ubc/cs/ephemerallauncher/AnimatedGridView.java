@@ -50,8 +50,8 @@ public class AnimatedGridView extends GridView {
 	}
 	
 	private String resultCsvLog(long duration, int row, int column, boolean ifSuccess){
-		String successStr = ifSuccess ? "Success" : "Failure";
-		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr);
+		
+		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column), String.valueOf(ifSuccess));
 		return log;
 	}
 	private void logTrial(long duration, int row, int column, boolean ifSuccess){

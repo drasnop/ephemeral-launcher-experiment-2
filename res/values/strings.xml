@@ -18,6 +18,7 @@
     <string name="experiment_button_start">Press to start</string>
     <string name="file_test">AM I SAVED IN A FILE RIGHT NOW? COOL!</string>
     <string name="trial_failure_message">You selected a wrong icon, touch the screen to continue</string>
+    <string name="trial_timeout_message">Timeout!</string>
    	
    	<string name="zoom_in">Zoom In</string>
     <string name="transparency">Transparency</string>

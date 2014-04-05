@@ -33,8 +33,6 @@ public class Condition extends Activity {
 	
 	public void startFirstTrial(View view) {
 
-		FileManager.openFile(this, "EXP1", getFileName());
-
 		Intent intent = new Intent(this, Trial.class);
 		startActivity(intent);
 	}
