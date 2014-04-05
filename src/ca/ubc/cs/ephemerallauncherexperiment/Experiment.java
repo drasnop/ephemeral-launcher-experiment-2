@@ -41,6 +41,8 @@ public class Experiment extends Activity {
 		
 		
 		//This is just for test now
+		// AP: this might be redundant with State.conditions, which is a latin square
+		// my idea was to do something like State.conditions[Pariticipant.id%4][State.block] 
 		State.listOfConditions = new ArrayList<ExperimentParameters.ConditionEnum>();
 		State.listOfConditions.add(ExperimentParameters.ConditionEnum.PRACTICE);
 		State.listOfConditions.add(ExperimentParameters.ConditionEnum.PULSEOUT);

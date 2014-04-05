@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.Toast;
 import ca.ubc.cs.ephemerallauncherexperiment.Condition;
 import ca.ubc.cs.ephemerallauncherexperiment.EndOfExperiment;
 import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
@@ -77,19 +76,18 @@ public class Pager extends FragmentActivity{
 	  
 	private String resultCsvLog(long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
 		String successStr = ifSuccess? "Success" : "Failure";
-		String timeoutStr = ifTimeout? "Yes" : "No";
-		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
+		String timeoutStr = ifTimeout? "Timeout" : "InTime";
+		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(State.page),String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
 		return log;
 		}
+	
 	private void logTrial(long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
 		
 		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column, ifSuccess,  ifTimeout));
 		
-		Toast.makeText(this, finalTrialLog, Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, finalTrialLog, Toast.LENGTH_SHORT).show();
 		
 		FileManager.appendLineToFile(finalTrialLog);
-		
-		
 	}
 	  
 	public void concludeTrial(int position){
@@ -112,10 +110,10 @@ public class Pager extends FragmentActivity{
 		
 		logTrial(duration, row, column, success, State.timeout);		
 		
-		Toast.makeText(this, "trial = "+State.trial+"\n"
+/*		Toast.makeText(this, "trial = "+State.trial+"\n"
 				+"duration = " + duration + " ms \n"
 				+"page = "+ State.page +"\n"
-				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();
+				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();*/
 		
 		if (State.timeout){
 				Intent intent = new Intent(this, TrialTimeout.class);

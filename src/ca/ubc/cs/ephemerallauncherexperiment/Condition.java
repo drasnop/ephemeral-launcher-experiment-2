@@ -1,6 +1,5 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
-import java.util.Calendar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,11 +24,12 @@ public class Condition extends Activity {
 		return true;
 	}
 
-	private String getFileName() {
+	// AP: Deprecated? Since we're using one file per subject, and open it in Experiment?
+/*	private String getFileName() {
 		Calendar cal = Calendar.getInstance();
 		String fileName = cal.toString() + " - " + State.participantId + " - " + State.condition.toString();
 		return fileName;
-	}
+	}*/
 	
 	public void startFirstTrial(View view) {
 
@@ -39,6 +39,8 @@ public class Condition extends Activity {
 
 	// AP: should we put this function in Distributions?
 	// KA: or we could initialize everything in Experiment.initializeExperiment()
+	// AP: Agreed. I was thinking of doing it once for the entire experiment.
+	// However, I'm thinking of putting the "random selection" part in Distributions, because it's sort of a distribution... thoughts? 
 	private void pickIconsForCondition(){
 		// TODO: randomly select the relevant icons
 		// For the moment: just duplicate our icon set

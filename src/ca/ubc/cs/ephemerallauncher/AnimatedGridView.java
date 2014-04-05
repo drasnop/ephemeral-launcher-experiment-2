@@ -1,21 +1,11 @@
 package ca.ubc.cs.ephemerallauncher;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
-import ca.ubc.cs.ephemerallauncherexperiment.Condition;
-import ca.ubc.cs.ephemerallauncherexperiment.EndOfExperiment;
-import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
-import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
-import ca.ubc.cs.ephemerallauncherexperiment.State;
-import ca.ubc.cs.ephemerallauncherexperiment.Trial;
-import ca.ubc.cs.ephemerallauncherexperiment.Utils;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
  */
@@ -49,7 +39,7 @@ public class AnimatedGridView extends GridView {
 
 	}
 	
-
+	// This ((Pager) this.getContext()) is great, Kamyar! But maybe we don't have to create an iconClicked function then
 	public void iconClicked(int position){
 		((Pager) this.getContext()).concludeTrial(position);
 	}
@@ -62,7 +52,6 @@ public class AnimatedGridView extends GridView {
 			highlightedIcons[i] = -1;
 
 		int position;
-		int icon_nb = this.getChildCount();
 		
 		for (int i = 0; i < LauncherParameters.NUM_HIGHLIGHTED_ICONS; i++) {
 			
