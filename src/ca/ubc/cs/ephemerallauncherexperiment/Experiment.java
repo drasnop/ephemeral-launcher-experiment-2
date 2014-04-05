@@ -1,10 +1,12 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 public class Experiment extends Activity {
 
@@ -21,14 +23,44 @@ public class Experiment extends Activity {
 		return true;
 	}
 	
-	public void startFirstCondition(View view){
-		FileManager.testSavingToSdCard(this);
-		
-		// Set up everything for the experiment
+	private String getFileName(){
+		String fileName =  Utils.getTimeStamp(true) + " - " + State.participantId;
+		Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
+		return fileName;
+	}
+	
+	private void initializeExperiment(){
+			
+		//Initialize condition order
+
+		// Initialize target and higlighted icons
 		Distributions.init();
-		
 		// TODO: write the distributions in a log file (Kamyar if you want to do that don't hesitate!)
 		
+		//Initialize icon order
+		
+		
+		//This is just for test now
+		State.listOfConditions = new ArrayList<ExperimentParameters.ConditionEnum>();
+		State.listOfConditions.add(ExperimentParameters.ConditionEnum.PRACTICE);
+		State.listOfConditions.add(ExperimentParameters.ConditionEnum.PULSEOUT);
+		State.listOfConditions.add(ExperimentParameters.ConditionEnum.TRANSPARENCY);
+		State.listOfConditions.add(ExperimentParameters.ConditionEnum.TWIST);
+		
+		State.condition = State.listOfConditions.get(0);
+				
+		
+		//Initialize log file
+		
+		FileManager.openFile(this, "EXP1", getFileName());
+		FileManager.writeToFile(this.getString(R.string.trial_log_header), false);
+		
+	}
+	
+	public void startFirstCondition(View view){
+		//FileManager.testSavingToSdCard(this);
+		initializeExperiment();
+	
 		Intent intent = new Intent(this, Condition.class);
 		startActivity(intent);
 	}

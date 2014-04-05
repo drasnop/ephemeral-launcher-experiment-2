@@ -1,14 +1,12 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
 import java.util.Calendar;
-
-import ca.ubc.cs.ephemerallauncher.LauncherParameters;
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Condition extends Activity {
 
@@ -32,14 +30,13 @@ public class Condition extends Activity {
 		String fileName = cal.toString() + " - " + State.participantId + " - " + State.condition.toString();
 		return fileName;
 	}
-
+	
 	public void startFirstTrial(View view) {
 
 		FileManager.openFile(this, "EXP1", getFileName());
 
 		Intent intent = new Intent(this, Trial.class);
 		startActivity(intent);
-
 	}
 
 	// AP: should we put this function in Distributions?
