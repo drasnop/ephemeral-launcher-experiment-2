@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import ca.ubc.cs.ephemerallauncherexperiment.Condition;
+import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
 import ca.ubc.cs.ephemerallauncherexperiment.EndOfExperiment;
 import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
 import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
@@ -56,8 +57,7 @@ public class Pager extends FragmentActivity{
 	private void checkForTimeout(){
 		if (System.currentTimeMillis() - State.startTime > ExperimentParameters.TRIAL_TIMEOUT_MS){
 			State.timeout = true;
-			concludeTrial(-1);
-			
+			concludeTrial(-1,-1);			
 		}
 	}
     
@@ -90,42 +90,32 @@ public class Pager extends FragmentActivity{
 		FileManager.appendLineToFile(finalTrialLog);
 	}
 	  
-	public void concludeTrial(int position){
-		boolean success;
-		
+	public void concludeTrial(int page, int position_on_page){
+		boolean success=(Distributions.targets[State.trial] == page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1);
 		long duration=System.currentTimeMillis()-State.startTime;
 		
-		int row=(int) Math.floor(position/4)+1;
-		int column=position%4+1;
+		int row=(int) Math.floor(position_on_page/4)+1;
+		int column=position_on_page%4+1;
 		
-		//finished due to timeout
-		if (position == -1) {
+		// If finished due to timeout
+		if (position_on_page == -1) {
 			row = 0;
 			column = 0;
 		}
-		
-		//TODO: check success and update ifSuccess
-		success = true;//just for test
-		
-		
+				
 		logTrial(duration, row, column, success, State.timeout);		
-		
-/*		Toast.makeText(this, "trial = "+State.trial+"\n"
-				+"duration = " + duration + " ms \n"
-				+"page = "+ State.page +"\n"
-				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();*/
 		
 		if (State.timeout){
 				Intent intent = new Intent(this, TrialTimeout.class);
 				this.startActivity(intent);
-			}
-			else if (!success){
+		}
+		else if (!success){
 			Intent intent = new Intent(this, TrialIncorrectSelection.class);
 			this.startActivity(intent);
-			}
-			else {
-				startNextTrial();
-			}
+		}
+		else {
+			startNextTrial();
+		}
 	}
 	
 	private void startNextTrial(){

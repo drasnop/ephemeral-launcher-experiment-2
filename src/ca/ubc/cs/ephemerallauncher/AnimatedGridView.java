@@ -61,9 +61,9 @@ public class AnimatedGridView extends GridView {
 
 	}
 	
-	// This ((Pager) this.getContext()) is great, Kamyar! But maybe we don't have to create an iconClicked function then
+	// This ((Pager) this.getContext()) is great, Kamyar!
 	public void iconClicked(int position){
-		((Pager) this.getContext()).concludeTrial(position);
+		((Pager) this.getContext()).concludeTrial(page_number,position);
 	}
 	
 	// ------ Public animation functions ------
