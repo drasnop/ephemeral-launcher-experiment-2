@@ -17,6 +17,7 @@ public class State {
 	public static long startTime;
 	
 	public static int[] current_images_ID = new int[LauncherParameters.NUM_PAGES*20+1];	// from 1 to 60, 0 is irrelevant
+	// TODO add current_images_names, so we can log it after each trial
 	
 	public static String participantId = "test_participant";
 	
@@ -34,6 +35,7 @@ public class State {
 		// the trial results to State.java to do the final logging which does not make sense.
 		//OOPS! By Trial I meant Pager all this time.
 		//I implemented it in Pager but if you think it's better here we can easily move it
+		//AP: by Pager you mean AnimatedGridView, right?
 	};
 
 }

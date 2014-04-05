@@ -58,8 +58,6 @@ public class AnimatedGridView extends GridView {
 		Toast.makeText(this.getContext(), finalTrialLog, Toast.LENGTH_SHORT).show();
 		
 		FileManager.appendLineToFile(finalTrialLog);
-		
-		
 	}
 	public void iconClicked(int position){
 		long duration=System.currentTimeMillis()-State.startTime;
