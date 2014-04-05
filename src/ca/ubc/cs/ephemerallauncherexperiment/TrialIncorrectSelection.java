@@ -1,10 +1,12 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class TrialIncorrectSelection extends Activity {
 
@@ -48,5 +50,33 @@ public class TrialIncorrectSelection extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	
+	public void startNextTrial(View view) {
+		State.trial++;
+		if(State.trial>ExperimentParameters.NUM_TRIALS){
+			// end condition
+			
+			State.block++;
+			State.condition = State.listOfConditions.get(State.block);
+			
+			State.trial=1;
+			
+			if (State.block == ExperimentParameters.NUM_CONDITIONS)
+			{
+				Intent intent = new Intent(this, EndOfExperiment.class);
+				startActivity(intent);
+			}
+			else {
+				
+				Intent intent = new Intent(this, Condition.class);
+				startActivity(intent);
+			}
+		}	
+		else{
+			Intent intent = new Intent(this, Trial.class);
+			startActivity(intent);
+		}
+		
+		
+	}
 }

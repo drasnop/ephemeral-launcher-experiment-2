@@ -17,6 +17,8 @@
     <string name="start_trial">Touch anywhere to start</string>
     <string name="experiment_button_start">Press to start</string>
     <string name="file_test">AM I SAVED IN A FILE RIGHT NOW? COOL!</string>
+    <string name="trial_failure_message">You selected a wrong icon, touch the screen to continue</string>
+    <string name="trial_timeout_message">Timeout!</string>
    	
    	<string name="zoom_in">Zoom In</string>
     <string name="transparency">Transparency</string>
@@ -29,7 +31,7 @@
     <string name="color_blur">Color+blur</string>
     <string name="twist">Twist</string>
     <string name="change_bkg">Change background</string>
-    <string name="trial_log_header">TimeStamp, Participant ID, Block #, Condition, Trial #, Start Time(ms), Duration(ms), Icon Row #, Icon Col #</string>
+    <string name="trial_log_header">TimeStamp, Participant ID, Block #, Condition, Trial #, Start Time(ms), Duration(ms), Icon Row #, Icon Col #, Success/Failure, Timeout</string>
     
     <string name="icon_0_cap">icon 0</string>
     <string name="icon_1_cap">icon 1</string>

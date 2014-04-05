@@ -21,6 +21,8 @@ public class State {
 	
 	public static String participantId = "test_participant";
 	
+	public static boolean timeout = false;
+	
 	public static String stateCsvLog(){
 		String log = Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(startTime));
 		return log;

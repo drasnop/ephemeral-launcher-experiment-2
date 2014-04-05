@@ -33,13 +33,12 @@ public class Condition extends Activity {
 	
 	public void startFirstTrial(View view) {
 
-		FileManager.openFile(this, "EXP1", getFileName());
-
 		Intent intent = new Intent(this, Trial.class);
 		startActivity(intent);
 	}
 
 	// AP: should we put this function in Distributions?
+	// KA: or we could initialize everything in Experiment.initializeExperiment()
 	private void pickIconsForCondition(){
 		// TODO: randomly select the relevant icons
 		// For the moment: just duplicate our icon set

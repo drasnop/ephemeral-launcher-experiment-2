@@ -2,6 +2,7 @@ package ca.ubc.cs.ephemerallauncher;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,53 +49,9 @@ public class AnimatedGridView extends GridView {
 
 	}
 	
-	private String resultCsvLog(long duration, int row, int column){
-		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column));
-		return log;
-	}
-	private void logTrial(long duration, int row, int column){
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column));
-		
-		Toast.makeText(this.getContext(), finalTrialLog, Toast.LENGTH_SHORT).show();
-		
-		FileManager.appendLineToFile(finalTrialLog);
-	}
+
 	public void iconClicked(int position){
-		long duration=System.currentTimeMillis()-State.startTime;
-		int row=(int) Math.floor(position/4)+1;
-		int column=position%4+1;
-		
-		logTrial(duration, row, column);		// TODO
-		
-		Toast.makeText(this.getContext(), "trial = "+State.trial+"\n"
-				+"duration = " + duration + " ms \n"
-				+"page = "+ State.page +"\n"
-				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();
-		
-		State.trial++;
-		if(State.trial>ExperimentParameters.NUM_TRIALS){
-			// end condition
-			
-			State.block++;
-			State.condition = State.listOfConditions.get(State.block);
-			
-			State.trial=1;
-			
-			if (State.block == ExperimentParameters.NUM_CONDITIONS)
-			{
-				Intent intent = new Intent(this.getContext(), EndOfExperiment.class);
-				this.getContext().startActivity(intent);
-			}
-			else {
-				
-				Intent intent = new Intent(this.getContext(), Condition.class);
-				this.getContext().startActivity(intent);
-			}
-		}	
-		else{
-			Intent intent = new Intent(this.getContext(), Trial.class);
-			this.getContext().startActivity(intent);
-		}
+		((Pager) this.getContext()).concludeTrial(position);
 	}
 	
 	// ------ Public animation functions ------
