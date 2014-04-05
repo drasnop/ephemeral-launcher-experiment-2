@@ -15,6 +15,7 @@ import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
 import ca.ubc.cs.ephemerallauncherexperiment.Trial;
 import ca.ubc.cs.ephemerallauncherexperiment.TrialIncorrectSelection;
+import ca.ubc.cs.ephemerallauncherexperiment.TrialTimeout;
 import ca.ubc.cs.ephemerallauncherexperiment.Utils;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
@@ -49,13 +50,15 @@ public class AnimatedGridView extends GridView {
 
 	}
 	
-	private String resultCsvLog(long duration, int row, int column, boolean ifSuccess){
-		
-		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column), String.valueOf(ifSuccess));
+	private String resultCsvLog(long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
+		String successStr = ifSuccess? "Success" : "Failure";
+		String timeoutStr = ifTimeout? "Yes" : "No";
+		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
 		return log;
 	}
-	private void logTrial(long duration, int row, int column, boolean ifSuccess){
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column, ifSuccess));
+	private void logTrial(long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
+		
+		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column, ifSuccess,  ifTimeout));
 		
 		Toast.makeText(this.getContext(), finalTrialLog, Toast.LENGTH_SHORT).show();
 		
@@ -92,31 +95,36 @@ public class AnimatedGridView extends GridView {
 		
 	}
 	public void iconClicked(int position){
+		boolean success;
+		boolean timeout;
 		long duration=System.currentTimeMillis()-State.startTime;
+		timeout = (duration > ExperimentParameters.TRIAL_TIMEOUT_MS);
 		int row=(int) Math.floor(position/4)+1;
 		int column=position%4+1;
 		
 		
 		//TODO: check success and update ifSuccess
+		success = true;//just for test
 		
-		boolean ifSuccess = true;//just for test
-		logTrial(duration, row, column, ifSuccess);		// TODO
+		
+		logTrial(duration, row, column, success, timeout);		
 		
 		Toast.makeText(this.getContext(), "trial = "+State.trial+"\n"
 				+"duration = " + duration + " ms \n"
 				+"page = "+ State.page +"\n"
 				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();
 		
-		if (!ifSuccess){
+		if (timeout){
+				Intent intent = new Intent(this.getContext(), TrialTimeout.class);
+				this.getContext().startActivity(intent);
+			}
+			else if (!success){
 			Intent intent = new Intent(this.getContext(), TrialIncorrectSelection.class);
 			this.getContext().startActivity(intent);
-		}
-		
-		else {
-			startNextTrial();
-		}
-		
-		
+			}
+			else {
+				startNextTrial();
+			}
 	}
 	
 	// ------ Public animation functions ------

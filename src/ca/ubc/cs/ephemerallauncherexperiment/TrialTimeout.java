@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class TrialTimeout extends Activity {
 
@@ -50,7 +51,7 @@ public class TrialTimeout extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	private void startNextTrial() {
+	public void startNextTrial(View view) {
 		State.trial++;
 		if(State.trial>ExperimentParameters.NUM_TRIALS){
 			// end condition
