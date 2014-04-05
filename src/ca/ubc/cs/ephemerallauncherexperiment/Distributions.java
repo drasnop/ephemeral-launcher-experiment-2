@@ -26,13 +26,19 @@ public class Distributions {
 		// Step 1: Generate Zipfian distribution of frequencies (the first cell of the array is not used)
 		
 		double denominator = 0;
+		double sum_frequencies=0;
+		int frequency;
 		for (int i = 1; i <= zipSize; i++) {
 			denominator += 1.0 / Math.pow(i, zipfCoeff);
 		}
 		for (int i = 1; i <= zipSize; i++) {
-			zipf[i]=(int) Math.round(1.0/Math.pow(i, zipfCoeff)/denominator*ExperimentParameters.NUM_TRIALS);
+			frequency=(int) Math.round(1.0/Math.pow(i, zipfCoeff)/denominator*ExperimentParameters.NUM_TRIALS);
+			if(frequency==0 && sum_frequencies<ExperimentParameters.NUM_TRIALS)
+				frequency=1;
+			zipf[i]=frequency;
+			sum_frequencies+=frequency;
 		}
-
+		assert(sum_frequencies==ExperimentParameters.NUM_TRIALS);
 		// Step 2: Pick zipfSize positions for the target icon, in [1..LauncherParameters.NUM_PAGES*20]
 		
 		ArrayList<Integer> allPositions = new ArrayList<Integer>();
@@ -51,12 +57,15 @@ public class Distributions {
 				targetsList.add(positions.get(i-1));
 			}
 		}
+		assert(targetsList.size()==ExperimentParameters.NUM_TRIALS);
 		Collections.shuffle(targetsList);
+		
 		List<Integer> temp = targetsList.subList(0, ExperimentParameters.NUM_TRIALS);
 		assert(temp.size() == ExperimentParameters.NUM_TRIALS);
 		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
 			targets[i]=temp.remove(0);
 		}
+				
 	}
-	
+
 }

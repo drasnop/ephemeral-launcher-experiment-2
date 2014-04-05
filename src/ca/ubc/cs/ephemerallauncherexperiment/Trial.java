@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Trial extends Activity {
 
@@ -21,8 +20,7 @@ public class Trial extends Activity {
 		setContentView(R.layout.activity_trial);
 
 		ImageView target_icon = (ImageView) this.findViewById(R.id.target_icon);
-		int a = LauncherParameters.images_ID[Distributions.targets[State.trial-1]];
-		Log.v("Trial",a+"");
+		int a = State.current_images_ID[Distributions.targets[State.trial]];
 		target_icon.setImageResource(a);
 		
 		LinearLayout trial = (LinearLayout) this.findViewById(R.id.trial);
@@ -59,7 +57,7 @@ public class Trial extends Activity {
 	}
 	
 	private void startPager(){
-		Log.v("Trial",State.trial +"");
+		Log.v("Trial","Starting trial "+State.trial);
 		Intent intent = new Intent(this, ca.ubc.cs.ephemerallauncher.Pager.class);
 		startActivity(intent);
 	}

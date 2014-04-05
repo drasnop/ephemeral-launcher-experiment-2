@@ -24,6 +24,11 @@ public class Experiment extends Activity {
 	public void startFirstCondition(View view){
 		FileManager.testSavingToSdCard(this);
 		
+		// Set up everything for the experiment
+		Distributions.init();
+		
+		// TODO: write the distributions in a log file (Kamyar if you want to do that don't hesitate!)
+		
 		Intent intent = new Intent(this, Condition.class);
 		startActivity(intent);
 	}
