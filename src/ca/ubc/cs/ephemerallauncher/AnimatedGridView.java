@@ -1,17 +1,22 @@
 package ca.ubc.cs.ephemerallauncher;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
+import ca.ubc.cs.ephemerallauncherexperiment.State;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
  */
 public class AnimatedGridView extends GridView {
 
-	private int[] highlightedIcons = new int[LauncherParameters.NUM_HIGHLIGHTED_ICONS];
+	private ArrayList<Integer> highlightedIcons = new ArrayList<Integer>();
+	private int page_number;
 
 	public AnimatedGridView(Context context) {
 		super(context);
@@ -25,12 +30,29 @@ public class AnimatedGridView extends GridView {
 		super(context, attrs, defStyle);
 	}
 
-	// /////// Public methods
+	// ------- Public methods -------
 
-	public void init(final Context mContext) {
-
+	public void init(final Context mContext, int page_number) {
+		
 		this.setAdapter(new IconAdapter(mContext));
 
+		this.page_number=page_number;
+		
+		// Define highlighted icons for this trial
+		int position;			// from 1 to NUM_PAGES*NUM_ICONS_PER_PAGE
+		int position_on_page;	// from 0 to NUM_ICONS_PER_PAGE-1
+		String log="icons: ";
+		for(int i=0; i<LauncherParameters.NUM_HIGHLIGHTED_ICONS; i++){
+			position=Distributions.highlighted[State.trial][i];
+			log=log+position;
+			if(this.page_number == (position-1)/LauncherParameters.NUM_ICONS_PER_PAGE){
+				position_on_page=(position-1)%LauncherParameters.NUM_ICONS_PER_PAGE;
+				highlightedIcons.add(position_on_page);
+				log+=".";
+			}
+			log+=" ";
+		}
+		
 		this.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				iconClicked(position);
@@ -47,32 +69,14 @@ public class AnimatedGridView extends GridView {
 	// ------ Public animation functions ------
 	
 	public void startPreAnimation() {
-
-		for (int i = 0; i < highlightedIcons.length; i++)
-			highlightedIcons[i] = -1;
-
-		int position;
-		
-		for (int i = 0; i < LauncherParameters.NUM_HIGHLIGHTED_ICONS; i++) {
-			
-			/*position = (int) Math.floor(Math.random() * icon_nb);
-			while (!isDifferentFromAllHighlighted(position))
-				position = (int) Math.floor(Math.random() * icon_nb);*/
-			position = i;
-			highlightedIcons[i] = position;
-		} 
-		
-		
-
 		if (LauncherParameters.ANIMATION_HAS_PREANIMATION_STATE)
 			startPreAnimationAllIcons();
 	}
 
 	public void startEphemeralAnimation() {
 
-		for (int i = 0; i < highlightedIcons.length; i++) {
-			highlightIcon(highlightedIcons[i]);
-		}
+		for(Integer icon:highlightedIcons)
+			highlightIcon(icon);
 
 		if (LauncherParameters.ANIMATION_AFFECTS_OTHER_ICONS)
 			animateOtherIcons();
@@ -199,8 +203,8 @@ public class AnimatedGridView extends GridView {
 	}
 
 	private boolean isDifferentFromAllHighlighted(int position) {
-		for (int i = 0; i < highlightedIcons.length; i++) {
-			if (position == highlightedIcons[i])
+		for(Integer icon:highlightedIcons){
+			if(position == icon);
 				return false;
 		}
 		return true;

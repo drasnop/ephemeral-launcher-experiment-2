@@ -18,7 +18,7 @@ public class State {
 	public static long startTime;
 	
 	public static int[] current_images_ID = new int[LauncherParameters.NUM_PAGES*20+1];	// from 1 to 60, 0 is irrelevant
-	// TODO add current_images_names, so we can log it after each trial
+	// TODO add current_images_names, so we can log the name of the target image after each trial
 	
 	public static String participantId = "test_participant";
 	

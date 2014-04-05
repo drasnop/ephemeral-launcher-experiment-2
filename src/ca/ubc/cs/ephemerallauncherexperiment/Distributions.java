@@ -9,7 +9,7 @@ import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 public class Distributions {
 
 	public static final double zipfCoeff = 1;
-	public static final int zipfSize = 20;
+	public static final int zipfSize = ExperimentParameters.zipfSize;
 	public static int NUM_POSITIONS = LauncherParameters.NUM_PAGES * LauncherParameters.NUM_ICONS_PER_PAGE;
 
 	// latin square

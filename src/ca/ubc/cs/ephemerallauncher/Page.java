@@ -17,16 +17,26 @@ import ca.ubc.cs.ephemerallauncherexperiment.R;
 public class Page extends Fragment {
 
 	private Context mContext;
-	private AnimatedGridView gridview; //private to public
+	private AnimatedGridView gridview;
+	private int page_number;
+
+	public Page(){};
 	
 	public Page(Context c){
 		mContext=c;
 	}
 	
-	public Page(){};
+	public Page(Context c, int page_number){
+		mContext=c;
+		this.page_number=page_number;
+	}
 	
 	public AnimatedGridView getGridView(){
 		return gridview;
+	}
+	
+	public int getPageNumber(){
+		return page_number;
 	}
 	
 	@Override
@@ -37,7 +47,7 @@ public class Page extends Fragment {
 		this.gridview = (AnimatedGridView) inflater.inflate(R.layout.animated_grid, container, false);
 		
 		
-		gridview.init(mContext);
+		gridview.init(mContext, page_number);
 
 		return gridview;
 	}

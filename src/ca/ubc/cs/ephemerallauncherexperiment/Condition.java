@@ -15,6 +15,9 @@ public class Condition extends Activity {
 		setContentView(R.layout.activity_condition);
 		
 		pickIconsForCondition();
+		
+		State.trial=1;
+		State.page=1;	// maybe useless
 	}
 
 	@Override

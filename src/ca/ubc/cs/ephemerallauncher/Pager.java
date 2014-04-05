@@ -162,7 +162,7 @@ public class Pager extends FragmentActivity{
 		// Create grid views for each page
 		ArrayList<Page> pages = new ArrayList<Page>();
 		for (int i = 0; i < LauncherParameters.NUM_PAGES; i++) {
-			pages.add(new Page(this));
+			pages.add(new Page(this,i));
 		}
 		
 		  
@@ -216,8 +216,8 @@ public class Pager extends FragmentActivity{
 			}
 		});
 
-		// Parameters.switchAnimationTo(Parameters.ANIMATION,pagerAdapter);		// CRASHES
+		// Parameters.switchAnimationTo(Parameters.ANIMATION,pagerAdapter);		// CRASHES !!!		
+		
 	}
-	
 
 }

@@ -1,12 +1,14 @@
 package ca.ubc.cs.ephemerallauncher;
 
+import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 
 public class LauncherParameters {
 
-    public static final int NUM_PAGES = 3;
+    public static final int NUM_PAGES = ExperimentParameters.NUM_PAGES;
+    public static final int NUM_HIGHLIGHTED_ICONS = ExperimentParameters.NUM_HIGHLIGHTED_ICONS;
     public static final int NUM_ICONS_PER_PAGE = 20;
-    public static final int NUM_HIGHLIGHTED_ICONS = 4;
+    
     public static AnimationType ANIMATION = AnimationType.PULSE_OUT;		// Will be used as initial animation type
     public static boolean ANIMATION_AFFECTS_OTHER_ICONS;				// Will be initialized automatically
     public static boolean ANIMATION_HAS_PREANIMATION_STATE;				// Will be initialized automatically
