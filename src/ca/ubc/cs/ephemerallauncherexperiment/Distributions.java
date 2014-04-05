@@ -10,7 +10,7 @@ public class Distributions {
 
 	public static final double zipfCoeff = 1;
 	public static final int zipfSize = 20;
-	public static int NUM_POSITIONS = LauncherParameters.NUM_PAGES * 20;
+	public static int NUM_POSITIONS = LauncherParameters.NUM_PAGES * LauncherParameters.NUM_ICONS_PER_PAGE;
 
 	// latin square
 	public static int[][] conditions = {
@@ -19,8 +19,10 @@ public class Distributions {
 	
 	private static int[] zipf = new int[zipfSize+1];
 	public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1];
-	public static int[][] highlighted;
+	public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][LauncherParameters.NUM_HIGHLIGHTED_ICONS];
 
+	public static double accuracy;
+	
 	public static void init() {
 
 		// Step 1: Generate Zipfian distribution of frequencies (the first cell of the array is not used)
@@ -52,7 +54,7 @@ public class Distributions {
 		// Step 2: Pick zipfSize positions for the target icon, in [1..LauncherParameters.NUM_PAGES*20]
 		
 		ArrayList<Integer> allPositions = new ArrayList<Integer>();
-		for (int i = 1; i <= LauncherParameters.NUM_PAGES * 20; i++) {
+		for (int i = 1; i <= NUM_POSITIONS; i++) {
 			allPositions.add(i);
 		}
 		Collections.shuffle(allPositions);
@@ -75,7 +77,31 @@ public class Distributions {
 		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
 			targets[i]=temp.remove(0);
 		}
-				
+		
+		// Step 4: Generate highlighted icons sequence
+		
+		// For the moment, just the most frequently used
+		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
+			for(int j=0; j<LauncherParameters.NUM_HIGHLIGHTED_ICONS; j++){
+				highlighted[i][j]=positions.get(j);
+			}
+		}
+		
+		// Step 5: Compute the accuracy
+		int successes=0;
+		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
+			if(correctPrediction(i))
+				successes++;
+		}
+		accuracy= ((double) successes)/ExperimentParameters.NUM_TRIALS;					
 	}
 
+	private static boolean correctPrediction(int trial){
+		for(int i=0; i<LauncherParameters.NUM_HIGHLIGHTED_ICONS; i++){
+			if(highlighted[trial][i]==targets[trial])
+				return true;
+		}
+		return false;
+	}
+	
 }

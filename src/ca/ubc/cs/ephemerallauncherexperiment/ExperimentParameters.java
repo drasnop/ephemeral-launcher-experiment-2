@@ -13,6 +13,6 @@ public class ExperimentParameters {
 	public static final int TIMEOUT_CHECK_INTERVAL = 2000;
 	
 	public static enum ConditionEnum{
-		PRACTICE, TWIST, PULSEOUT, TRANSPARENCY
+		PRACTICE, CONTROL, TWIST, PULSEOUT, TRANSPARENCY
 	}
 }
