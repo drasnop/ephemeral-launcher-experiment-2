@@ -52,7 +52,7 @@ public class AnimatedGridView extends GridView {
 		return log;
 	}
 	private void logTrial(long duration, int row, int column){
-		String finalTrialLog = Utils.appendWithComma(State.stateCsvLog(), resultCsvLog(duration, row, column));
+		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column));
 		
 		Toast.makeText(this.getContext(), finalTrialLog, Toast.LENGTH_SHORT).show();
 		

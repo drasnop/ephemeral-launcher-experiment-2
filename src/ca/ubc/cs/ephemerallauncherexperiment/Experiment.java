@@ -1,10 +1,14 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 public class Experiment extends Activity {
 
@@ -21,8 +25,22 @@ public class Experiment extends Activity {
 		return true;
 	}
 	
+	private String getFileName(){
+		String fileName =  Utils.getTimeStamp(true) + " - " + State.participantId;
+		Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
+		return fileName;
+	}
+	
+	private void initializeExperiment(){
+		
+		
+	}
+	
 	public void startFirstCondition(View view){
-		FileManager.testSavingToSdCard(this);
+		//FileManager.testSavingToSdCard(this);
+		
+		FileManager.openFile(this, "EXP1", getFileName());
+		FileManager.writeToFile(this.getString(R.string.trial_log_header), false);
 		
 		Intent intent = new Intent(this, Condition.class);
 		startActivity(intent);
