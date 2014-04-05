@@ -2,6 +2,7 @@ package ca.ubc.cs.ephemerallauncher;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,8 +15,6 @@ import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
 import ca.ubc.cs.ephemerallauncherexperiment.Trial;
-import ca.ubc.cs.ephemerallauncherexperiment.TrialIncorrectSelection;
-import ca.ubc.cs.ephemerallauncherexperiment.TrialTimeout;
 import ca.ubc.cs.ephemerallauncherexperiment.Utils;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
@@ -50,81 +49,9 @@ public class AnimatedGridView extends GridView {
 
 	}
 	
-	private String resultCsvLog(long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
-		String successStr = ifSuccess? "Success" : "Failure";
-		String timeoutStr = ifTimeout? "Yes" : "No";
-		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
-		return log;
-	}
-	private void logTrial(long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
 		
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column, ifSuccess,  ifTimeout));
-		
-		Toast.makeText(this.getContext(), finalTrialLog, Toast.LENGTH_SHORT).show();
-		
-		FileManager.appendLineToFile(finalTrialLog);
-		
-		
-	}
-	
-	private void startNextTrial(){
-		State.trial++;
-		if(State.trial>ExperimentParameters.NUM_TRIALS){
-			// end condition
-			
-			State.block++;
-			State.condition = State.listOfConditions.get(State.block);
-			
-			State.trial=1;
-			
-			if (State.block == ExperimentParameters.NUM_CONDITIONS)
-			{
-				Intent intent = new Intent(this.getContext(), EndOfExperiment.class);
-				this.getContext().startActivity(intent);
-			}
-			else {
-				
-				Intent intent = new Intent(this.getContext(), Condition.class);
-				this.getContext().startActivity(intent);
-			}
-		}	
-		else{
-			Intent intent = new Intent(this.getContext(), Trial.class);
-			this.getContext().startActivity(intent);
-		}
-		
-	}
 	public void iconClicked(int position){
-		boolean success;
-		boolean timeout;
-		long duration=System.currentTimeMillis()-State.startTime;
-		timeout = (duration > ExperimentParameters.TRIAL_TIMEOUT_MS);
-		int row=(int) Math.floor(position/4)+1;
-		int column=position%4+1;
-		
-		
-		//TODO: check success and update ifSuccess
-		success = true;//just for test
-		
-		
-		logTrial(duration, row, column, success, timeout);		
-		
-		Toast.makeText(this.getContext(), "trial = "+State.trial+"\n"
-				+"duration = " + duration + " ms \n"
-				+"page = "+ State.page +"\n"
-				+"position = "+ row+","+column, Toast.LENGTH_SHORT).show();
-		
-		if (timeout){
-				Intent intent = new Intent(this.getContext(), TrialTimeout.class);
-				this.getContext().startActivity(intent);
-			}
-			else if (!success){
-			Intent intent = new Intent(this.getContext(), TrialIncorrectSelection.class);
-			this.getContext().startActivity(intent);
-			}
-			else {
-				startNextTrial();
-			}
+		((Pager) this.getContext()).concludeTrial(position);
 	}
 	
 	// ------ Public animation functions ------
