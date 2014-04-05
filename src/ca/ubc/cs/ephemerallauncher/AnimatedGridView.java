@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import ca.ubc.cs.ephemerallauncherexperiment.Condition;
+import ca.ubc.cs.ephemerallauncherexperiment.EndOfExperiment;
 import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
 import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
@@ -75,10 +76,22 @@ public class AnimatedGridView extends GridView {
 		State.trial++;
 		if(State.trial>ExperimentParameters.NUM_TRIALS){
 			// end condition
-			// TODO: assign next condition to the state
+			
+			State.block++;
+			State.condition = State.listOfConditions.get(State.block);
+			
 			State.trial=1;
-			Intent intent = new Intent(this.getContext(), Condition.class);
-			this.getContext().startActivity(intent);
+			
+			if (State.block == ExperimentParameters.NUM_CONDITIONS)
+			{
+				Intent intent = new Intent(this.getContext(), EndOfExperiment.class);
+				this.getContext().startActivity(intent);
+			}
+			else {
+				
+				Intent intent = new Intent(this.getContext(), Condition.class);
+				this.getContext().startActivity(intent);
+			}
 		}	
 		else{
 			Intent intent = new Intent(this.getContext(), Trial.class);

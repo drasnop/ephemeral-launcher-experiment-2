@@ -1,6 +1,7 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -33,15 +34,33 @@ public class Experiment extends Activity {
 	
 	private void initializeExperiment(){
 		
+		//Initialize icon order
+		
+		//Initialize target and highlighted icons
+		
+		//Initialize condition order
+		
+		//This is just for test now
+		State.listOfConditions = new ArrayList<ExperimentParameters.ConditionEnum>();
+		State.listOfConditions.add(ExperimentParameters.ConditionEnum.PRACTICE);
+		State.listOfConditions.add(ExperimentParameters.ConditionEnum.PULSEOUT);
+		State.listOfConditions.add(ExperimentParameters.ConditionEnum.TRANSPARENCY);
+		State.listOfConditions.add(ExperimentParameters.ConditionEnum.TWIST);
+		
+		State.condition = State.listOfConditions.get(0);
+				
+		
+		//Initialize log file
+		
+		FileManager.openFile(this, "EXP1", getFileName());
+		FileManager.writeToFile(this.getString(R.string.trial_log_header), false);
 		
 	}
 	
 	public void startFirstCondition(View view){
 		//FileManager.testSavingToSdCard(this);
-		
-		FileManager.openFile(this, "EXP1", getFileName());
-		FileManager.writeToFile(this.getString(R.string.trial_log_header), false);
-		
+		initializeExperiment();
+			
 		Intent intent = new Intent(this, Condition.class);
 		startActivity(intent);
 	}
