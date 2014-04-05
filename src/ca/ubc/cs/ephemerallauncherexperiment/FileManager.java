@@ -11,10 +11,9 @@ import android.util.Log;
 
 public class FileManager {
 	
-	private static File currentFile;
-	
+		
 	public static void openFile(Context c, String folderName, String fileName) {
-		currentFile = getFile(c, folderName, fileName);
+		State.currentTrialsLogFile = getFile(c, folderName, fileName);
 	}
 	
 	private static File getFile(Context c, String folderName, String fileName) {
@@ -26,7 +25,7 @@ public class FileManager {
 	}
 	
 	public static void appendToFile(String content) {
-		appendToFile(currentFile, content);
+		appendToFile(State.currentTrialsLogFile, content);
 	}
 	private static void appendToFile(File file, String content) {
 		writeToFile(file, content, true);
@@ -37,7 +36,7 @@ public class FileManager {
 		writeToFile(content, ifAppendData);
 	}
 	public static void writeToFile(String content, boolean ifAppendData) {
-		writeToFile(currentFile, content, ifAppendData);
+		writeToFile(State.currentTrialsLogFile, content, ifAppendData);
 	}
 	private static void writeToFile(File file, String content, boolean ifAppendData) {
 		
@@ -66,7 +65,7 @@ public class FileManager {
 	    File file = new File(context.getExternalFilesDir(
 	            "EXPERIMENT_DATA"), dirName);
 	    if (!file.mkdirs()) {
-	        Log.e("LOG", "Directory not created");
+	        //Log.e("LOG", "Directory not created");
 	    }
 	    return file;
 	}
