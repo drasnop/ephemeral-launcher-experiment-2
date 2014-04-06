@@ -45,12 +45,13 @@ public class Condition extends Activity {
 	// AP: Agreed. I was thinking of doing it once for the entire experiment.
 	// However, I'm thinking of putting the "random selection" part in Distributions, because it's sort of a distribution... thoughts? 
 	private void pickIconsForCondition(){
-		// TODO: randomly select the relevant icons
-		// For the moment: just duplicate our icon set
+		// TODO: randomly select 60 icons
+		// For the moment: just take all our set
 		for(int p=0;p<3;p++){
 			for(int i=1; i<=20; i++){
-				State.current_images_ID[p*20+i]=LauncherParameters.images_ID[i-1];
+				State.current_images_ID[p*20+i]=LauncherParameters.images_ID[p*20+i-1];
 			}
 		}
+		Utils.shuffleArrayExceptZero(State.current_images_ID);
 	}
 }

@@ -1,17 +1,22 @@
 package ca.ubc.cs.ephemerallauncher;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
+import ca.ubc.cs.ephemerallauncherexperiment.State;
 
 public class IconAdapter extends BaseAdapter {
 	private Context mContext;
+	private int page_number;
 
-	public IconAdapter(Context c) {
+	public IconAdapter(Context c, int page_number) {
 		mContext = c;
+		this.page_number=page_number;
 	}
 
 	public int getCount() {
@@ -29,7 +34,14 @@ public class IconAdapter extends BaseAdapter {
 	// create a new View for each item referenced by the Adapter
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Icon icon;
+		int global_position=page_number*LauncherParameters.NUM_ICONS_PER_PAGE+position+1;	// 1..60
 
+		if(global_position>Distributions.NUM_POSITIONS){
+			Log.e("Adapter", "We should never get this global position: "+Integer.toString(global_position));
+			//TODO I have no idea why we get a 61 on the third page...
+			global_position=Distributions.NUM_POSITIONS;
+		}
+		
 		if (convertView == null) {
 			// if it's not recycled, initialize the view
 			// [AP: I don't really understand this test...]
@@ -37,14 +49,15 @@ public class IconAdapter extends BaseAdapter {
 			icon=(Icon) LayoutInflater.from(mContext).inflate(R.layout.icon, parent,false);
 			
 			// Set up the colored image
-			icon.getImage().setImageResource(LauncherParameters.images_ID[position]);
+			icon.getImage().setImageResource(State.current_images_ID[global_position]);
 			
 			// Set up the greyscale image
-			icon.getImageGs().setImageResource(LauncherParameters.images_gs_ID[position]);
-			icon.getImageGs().setVisibility(ViewGroup.GONE);
+/*			icon.getImageGs().setImageResource(LauncherParameters.images_gs_ID[position]);
+			icon.getImageGs().setVisibility(ViewGroup.GONE);*/
 			
-			// The caption
-			icon.getCaption().setText(LauncherParameters.captions_ID[position]);
+			// The caption TODO
+			//icon.getCaption().setText(LauncherParameters.captions_ID[position]);
+			icon.getCaption().setText("icon");
 			
 		} else {
 			// [AP: I haven't quite figured out when this happens...

@@ -34,7 +34,7 @@ public class AnimatedGridView extends GridView {
 
 	public void init(final Context mContext, int page_number) {
 		
-		this.setAdapter(new IconAdapter(mContext));
+		this.setAdapter(new IconAdapter(mContext, page_number));
 
 		this.page_number=page_number;
 		

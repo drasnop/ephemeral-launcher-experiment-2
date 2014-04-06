@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +19,7 @@ public class Trial extends Activity {
 		setContentView(R.layout.activity_trial);
 
 		ImageView target_icon = (ImageView) this.findViewById(R.id.target_icon);
-		int a = State.current_images_ID[Distributions.targets[State.trial]];
-		target_icon.setImageResource(a);
+		target_icon.setImageResource(State.current_images_ID[Distributions.targets[State.trial]]);
 		
 		LinearLayout trial = (LinearLayout) this.findViewById(R.id.trial);
 		trial.setOnClickListener(new OnClickListener() {
@@ -57,7 +55,6 @@ public class Trial extends Activity {
 	}
 	
 	private void startPager(){
-		Log.v("Trial","Starting trial "+State.trial);
 		Intent intent = new Intent(this, ca.ubc.cs.ephemerallauncher.Pager.class);
 		startActivity(intent);
 	}
