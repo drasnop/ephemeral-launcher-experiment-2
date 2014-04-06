@@ -41,6 +41,7 @@ public class State {
 		//OOPS! By Trial I meant Pager all this time.
 		//I implemented it in Pager but if you think it's better here we can easily move it
 		//AP: by Pager you mean AnimatedGridView, right?
+		//KA: right now it's in Pager
 	};
 
 }
