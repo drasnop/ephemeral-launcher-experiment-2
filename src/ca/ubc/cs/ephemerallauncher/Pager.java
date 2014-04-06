@@ -76,10 +76,10 @@ public class Pager extends FragmentActivity{
 	}*/
 	  
 	private String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
-		String highlighted = ifHighlighted? "Highlighted" : "Normal"; 
+		String highlightedStr = ifHighlighted? "Highlighted" : "Normal"; 
 		String successStr = ifSuccess? "Success" : "Failure";
 		String timeoutStr = ifTimeout? "Timeout" : "InTime";
-		String log = Utils.appendWithComma(highlighted, String.valueOf(duration), String.valueOf(State.page),String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
+		String log = Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(State.page),String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
 		return log;
 	}
 	
@@ -91,6 +91,10 @@ public class Pager extends FragmentActivity{
 	}
 	
 	// AP: it would be great if we could have this function in Trial instead...
+	// KA: do you mean GridView? Because Trial is another activity.
+	// KA: anyway, there are various reasons why I moved this here, the main one being that the highlight
+	// checker had to be implemented here. Logically this function belongs to here rather than to a GridView
+	// because GridView is just a part of a complete trial
 	public void concludeTrial(int page, int position_on_page){
 		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
 		boolean success = (Distributions.targets[State.trial] == global_position);
