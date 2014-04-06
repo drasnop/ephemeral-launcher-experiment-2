@@ -7,11 +7,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:onClick="startNextTrial"
+    android:background="@drawable/ios_background"
     tools:context=".TrialTimeout" >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_centerInParent="true"
+        android:textSize="24sp"
+        android:gravity="center"
         android:text="@string/trial_timeout_message" />
 
 </RelativeLayout>

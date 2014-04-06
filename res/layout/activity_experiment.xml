@@ -6,13 +6,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/ios_background"
     tools:context=".Experiment" >
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/experiment_button_start"
-        android:onClick = "startFirstCondition" 
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:onClick = "startFirstCondition"
+        android:textColor="@color/white" 
         />
 
 </RelativeLayout>

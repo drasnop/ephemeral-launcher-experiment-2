@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class Trial extends Activity {
 
@@ -21,7 +22,7 @@ public class Trial extends Activity {
 		ImageView target_icon = (ImageView) this.findViewById(R.id.target_icon);
 		target_icon.setImageResource(State.current_images_ID[Distributions.targets[State.trial]]);
 		
-		LinearLayout trial = (LinearLayout) this.findViewById(R.id.trial);
+		RelativeLayout trial = (RelativeLayout) this.findViewById(R.id.trial);
 		trial.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
