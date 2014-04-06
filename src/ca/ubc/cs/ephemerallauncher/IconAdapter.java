@@ -20,7 +20,7 @@ public class IconAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return LauncherParameters.images_ID.length;
+		return LauncherParameters.NUM_ICONS_PER_PAGE;
 	}
 
 	public Object getItem(int position) {

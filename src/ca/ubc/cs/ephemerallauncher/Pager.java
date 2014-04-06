@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import ca.ubc.cs.ephemerallauncherexperiment.Condition;
 import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
@@ -74,25 +75,28 @@ public class Pager extends FragmentActivity{
 	   mHandler.removeCallbacks(mTimeoutChecker);
 	}*/
 	  
-	private String resultCsvLog(long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
+	private String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
+		String highlighted = ifHighlighted? "Highlighted" : "Normal"; 
 		String successStr = ifSuccess? "Success" : "Failure";
 		String timeoutStr = ifTimeout? "Timeout" : "InTime";
-		String log = Utils.appendWithComma(String.valueOf(duration), String.valueOf(State.page),String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
+		String log = Utils.appendWithComma(highlighted, String.valueOf(duration), String.valueOf(State.page),String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
 		return log;
-		}
+	}
 	
-	private void logTrial(long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
+	private void logTrial(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
 		
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(duration, row, column, ifSuccess,  ifTimeout));
-		
-//		Toast.makeText(this, finalTrialLog, Toast.LENGTH_SHORT).show();
+		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(ifHighlighted, duration, row, column, ifSuccess,  ifTimeout));
 		
 		FileManager.appendLineToFile(finalTrialLog);
 	}
-	  
+	
+	// AP: it would be great if we could have this function in Trial instead...
 	public void concludeTrial(int page, int position_on_page){
-		boolean success=(Distributions.targets[State.trial] == page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1);
-		long duration=System.currentTimeMillis()-State.startTime;
+		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
+		boolean success = (Distributions.targets[State.trial] == global_position);
+		boolean ifHighlighted = isHighlighted(global_position);
+		Log.v("Pager", ifHighlighted? "Highlighted" : "Normal");
+		long duration = System.currentTimeMillis()-State.startTime;
 		
 		int row=(int) Math.floor(position_on_page/4)+1;
 		int column=position_on_page%4+1;
@@ -103,7 +107,7 @@ public class Pager extends FragmentActivity{
 			column = 0;
 		}
 				
-		logTrial(duration, row, column, success, State.timeout);		
+		logTrial(ifHighlighted, duration, row, column, success, State.timeout);		
 		
 		if (State.timeout){
 				Intent intent = new Intent(this, TrialTimeout.class);
@@ -144,6 +148,14 @@ public class Pager extends FragmentActivity{
 			this.startActivity(intent);
 		}
 		
+	}
+	
+	private boolean isHighlighted(int position){
+		for(Integer icon:Distributions.highlighted[State.trial]){
+			if(position == icon)
+				return true;
+		}
+		return false;
 	}
 	
 	private void setUpPager(){

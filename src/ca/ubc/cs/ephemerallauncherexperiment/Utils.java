@@ -23,7 +23,7 @@ public class Utils {
 		SimpleDateFormat sdf;
 
 		if (forFile) {
-			sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+			sdf = new SimpleDateFormat("yyyy-MM-dd__HH-mm-ss");
 		} else {
 			sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		}

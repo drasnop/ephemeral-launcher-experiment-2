@@ -24,7 +24,7 @@ public class Experiment extends Activity {
 	}
 	
 	private String getFileName(){
-		String fileName =  Utils.getTimeStamp(true) + "_-_" + State.participantId+".log";
+		String fileName =  Utils.getTimeStamp(true) + "__" + State.participantId+".log";
 //		Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
 		return fileName;
 	}
