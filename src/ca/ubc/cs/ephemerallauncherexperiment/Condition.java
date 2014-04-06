@@ -8,7 +8,7 @@ import android.view.View;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Condition extends Activity {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,4 +54,7 @@ public class Condition extends Activity {
 		}
 		Utils.shuffleArrayExceptZero(State.current_images_ID);
 	}
+	
+	@Override //KZ
+	public void onBackPressed(){}
 }

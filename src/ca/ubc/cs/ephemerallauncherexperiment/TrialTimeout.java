@@ -75,9 +75,8 @@ public class TrialTimeout extends Activity {
 		else{
 			Intent intent = new Intent(this, Trial.class);
 			startActivity(intent);
-		}
-		
-		
+		}		
 	}
-
+	@Override //KZ
+	public void onBackPressed(){}
 }

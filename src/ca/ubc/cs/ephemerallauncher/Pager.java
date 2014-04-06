@@ -225,5 +225,7 @@ public class Pager extends FragmentActivity{
 		// Parameters.switchAnimationTo(Parameters.ANIMATION,pagerAdapter);		// CRASHES !!!		
 		
 	}
+	@Override //KZ
+	public void onBackPressed(){}
 
 }

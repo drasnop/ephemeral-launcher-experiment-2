@@ -58,5 +58,8 @@ public class Trial extends Activity {
 		Intent intent = new Intent(this, ca.ubc.cs.ephemerallauncher.Pager.class);
 		startActivity(intent);
 	}
+	
+	@Override //KZ
+	public void onBackPressed(){}
 
 }

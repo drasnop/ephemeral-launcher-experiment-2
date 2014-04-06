@@ -23,6 +23,9 @@ public class Experiment extends Activity {
 		return true;
 	}
 	
+	@Override //KZ
+	public void onBackPressed(){}
+
 	private String getFileName(){
 		String fileName =  Utils.getTimeStamp(true) + "__" + State.participantId+".log";
 //		Toast.makeText(this, fileName, Toast.LENGTH_SHORT).show();
