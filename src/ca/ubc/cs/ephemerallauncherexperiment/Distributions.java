@@ -13,6 +13,7 @@ public class Distributions {
 	public static int NUM_POSITIONS = LauncherParameters.NUM_PAGES * LauncherParameters.NUM_ICONS_PER_PAGE;
 
 	// latin square
+	// http://www.maths.qmul.ac.uk/~rab/DOEbook/doeweb6.pdf
 	public static int[][] conditions = {
 		{ 0, 1, 2, 3, 4 }
 	};

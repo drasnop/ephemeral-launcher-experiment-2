@@ -18,6 +18,7 @@ public class Condition extends Activity {
 		
 		State.trial=1;
 		State.page=1;	// maybe useless
+		State.condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[State.participantNum][State.block]];
 	}
 
 	@Override
@@ -27,12 +28,8 @@ public class Condition extends Activity {
 		return true;
 	}
 
-	// AP: Deprecated? Since we're using one file per subject, and open it in Experiment?
-/*	private String getFileName() {
-		Calendar cal = Calendar.getInstance();
-		String fileName = cal.toString() + " - " + State.participantId + " - " + State.condition.toString();
-		return fileName;
-	}*/
+	
+
 	
 	public void startFirstTrial(View view) {
 
@@ -43,7 +40,8 @@ public class Condition extends Activity {
 	// AP: should we put this function in Distributions?
 	// KA: or we could initialize everything in Experiment.initializeExperiment()
 	// AP: Agreed. I was thinking of doing it once for the entire experiment.
-	// However, I'm thinking of putting the "random selection" part in Distributions, because it's sort of a distribution... thoughts? 
+	// However, I'm thinking of putting the "random selection" part in Distributions, because it's sort of a distribution... thoughts?
+	//KA: Agree, just call it in initializeExperiment()
 	private void pickIconsForCondition(){
 		// TODO: randomly select 60 icons
 		// For the moment: just take all our set

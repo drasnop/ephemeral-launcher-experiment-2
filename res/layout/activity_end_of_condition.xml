@@ -7,15 +7,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/ios_background"
-    tools:context=".EndOfCondition" >
+    android:onClick="startNextCondition"
+    tools:context=".Condition" >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/hello_world"
-        android:textColor="@color/white"
         android:textSize="24sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:text="@string/end_of_condition"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

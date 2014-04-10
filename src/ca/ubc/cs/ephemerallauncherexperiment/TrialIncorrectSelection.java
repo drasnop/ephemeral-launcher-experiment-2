@@ -57,7 +57,7 @@ public class TrialIncorrectSelection extends Activity {
 			// end condition
 			
 			State.block++;
-			State.condition = State.listOfConditions.get(State.block);
+			
 			
 			State.trial=1;
 			
@@ -68,7 +68,7 @@ public class TrialIncorrectSelection extends Activity {
 			}
 			else {
 				
-				Intent intent = new Intent(this, Condition.class);
+				Intent intent = new Intent(this, EndOfCondition.class);
 				startActivity(intent);
 			}
 		}	

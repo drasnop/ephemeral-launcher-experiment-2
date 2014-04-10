@@ -15,21 +15,26 @@ public class FileManager {
 		State.currentTrialsLogFile = getFile(c, folderName, fileName);
 	}
 	
-	private static File getFile(Context c, String folderName, String fileName) {
+	public static File getFile(Context c, String folderName, String fileName) {
 		return new File(getExtStorageDir(c, folderName),fileName);
 	}
 	
 	public static void appendLineToFile(String content){
 		writeLineToFile(content, true);
 	}
-	
+	public static void appendLineToFile(File file, String content){
+		writeLineToFile(file, content, true);
+	}
 	public static void appendToFile(String content) {
 		appendToFile(State.currentTrialsLogFile, content);
 	}
-	private static void appendToFile(File file, String content) {
+	public static void appendToFile(File file, String content) {
 		writeToFile(file, content, true);
 	}
-	
+	public static void writeLineToFile(File file, String content, boolean ifAppendData){
+		content = "\n" + content;
+		writeToFile(file, content, ifAppendData);
+	}
 	public static void writeLineToFile(String content, boolean ifAppendData){
 		content = "\n" + content;
 		writeToFile(content, ifAppendData);
@@ -37,7 +42,7 @@ public class FileManager {
 	public static void writeToFile(String content, boolean ifAppendData) {
 		writeToFile(State.currentTrialsLogFile, content, ifAppendData);
 	}
-	private static void writeToFile(File file, String content, boolean ifAppendData) {
+	public static void writeToFile(File file, String content, boolean ifAppendData) {
 		
 		try {
 			FileWriter fw = new FileWriter(file.getAbsoluteFile(), ifAppendData);

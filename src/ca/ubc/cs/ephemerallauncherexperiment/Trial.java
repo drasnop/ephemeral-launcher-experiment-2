@@ -1,5 +1,6 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ public class Trial extends Activity {
 		ImageView target_icon = (ImageView) this.findViewById(R.id.target_icon);
 		target_icon.setImageResource(State.current_images_ID[Distributions.targets[State.trial]]);
 		
+		initializeTrial();
+		
 		RelativeLayout trial = (RelativeLayout) this.findViewById(R.id.trial);
 		trial.setOnClickListener(new OnClickListener() {
 			@Override
@@ -29,6 +32,16 @@ public class Trial extends Activity {
 				startPager();
 			}
 		});
+	}
+	
+	private void initializeTrial(){
+		int targetIconPosition = Distributions.targets[State.trial];
+		int targetIconPosOnPage = targetIconPosition % LauncherParameters.NUM_ICONS_PER_PAGE + 1;
+		State.targetIconPage = (int)Math.floor(targetIconPosition / LauncherParameters.NUM_ICONS_PER_PAGE) +1; 
+		State.targetIconRow = (int)Math.floor(targetIconPosOnPage / 4) + 1 ;
+		State.targetIconColumn = (targetIconPosOnPage-1)%4+1; 
+		
+		
 	}
 
 	@Override

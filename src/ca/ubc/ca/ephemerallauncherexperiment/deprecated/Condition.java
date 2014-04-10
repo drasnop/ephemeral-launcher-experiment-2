@@ -27,5 +27,10 @@ public class Condition extends Activity {
 	startActivity(intent);
 	
 	}
+	/*	private String getFileName() {
+	Calendar cal = Calendar.getInstance();
+	String fileName = cal.toString() + " - " + State.participantId + " - " + State.condition.toString();
+	return fileName;
+}*/
 
 }

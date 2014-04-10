@@ -1,7 +1,6 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
@@ -11,7 +10,8 @@ public class State {
 	
 	public static int block=0; 		//  0 to CONDITONS, 0 is practice
 	public static ExperimentParameters.ConditionEnum condition = ExperimentParameters.ConditionEnum.PRACTICE;
-	public static ArrayList<ExperimentParameters.ConditionEnum> listOfConditions;
+	
+	
 	public static int trial=1;		// in that condition
 	
 	public static int page=1;	// current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
@@ -21,15 +21,26 @@ public class State {
 	// TODO add current_images_names, so we can log the name of the target image after each trial
 	
 	public static String participantId = "test_participant";
+	public static int participantNum = 0;
 	
 	public static boolean timeout = false;
+	public static boolean missed = false;
+	
+	
+	public static int targetIconPage;
+	public static int targetIconRow;
+	public static int targetIconColumn;
 	
 	public static String stateCsvLog(){
-		String log = Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(startTime));
+		
+		
+		String log = Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn));
 		return log;
 	}
 	
-	public static File currentTrialsLogFile;
+	public static File currentTrialsLogFile;	//the file contains per trial logs for a participant
+	public static File currentEventsLogFile;	//the file contains per event (command) logs for a participant
+	public static File currentExperimentLogFile;	//the file contains the general experiment logs
 	
 	public static void logTrial(long duration, int row, int column){
 		// TODO   I think this function should belong to trial. Each trial logs its state and its results. It only

@@ -10,8 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import ca.ubc.cs.ephemerallauncherexperiment.Condition;
 import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
+import ca.ubc.cs.ephemerallauncherexperiment.EndOfCondition;
 import ca.ubc.cs.ephemerallauncherexperiment.EndOfExperiment;
 import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
 import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
@@ -47,7 +47,10 @@ public class Pager extends FragmentActivity{
 		super.onStart();
 		State.startTime = System.currentTimeMillis();
 		State.timeout = false;
+		State.missed = false;
 		mTimeoutChecker.run();
+		
+		logEvent("TrialStarted","");
 	}
 	
 	protected void onStop(){
@@ -75,19 +78,28 @@ public class Pager extends FragmentActivity{
 	   mHandler.removeCallbacks(mTimeoutChecker);
 	}*/
 	  
-	private String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
+	
+	private void logEvent(String eventName, String eventDescription){
+		String eventLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), eventName, eventDescription);
+		
+		FileManager.appendLineToFile(State.currentEventsLogFile, eventLog);
+	}
+	  
+	private String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout, boolean ifMissed){
 		String highlightedStr = ifHighlighted? "Highlighted" : "Normal"; 
 		String successStr = ifSuccess? "Success" : "Failure";
 		String timeoutStr = ifTimeout? "Timeout" : "InTime";
-		String log = Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(State.page),String.valueOf(row), String.valueOf(column), successStr, timeoutStr);
+		String missedStr = ifMissed? "Miss" : "Catch";
+		String log = Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(State.page),String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr);
+		
 		return log;
 	}
 	
-	private void logTrial(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout){
+	private void logTrial(boolean ifHighlighted, long duration, int row, int column,  boolean ifSuccess, boolean ifTimeout, boolean ifMissed){
 		
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(ifHighlighted, duration, row, column, ifSuccess,  ifTimeout));
+		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(ifHighlighted, duration, row, column,  ifSuccess,  ifTimeout, ifMissed));
 		
-		FileManager.appendLineToFile(finalTrialLog);
+		FileManager.appendLineToFile(State.currentTrialsLogFile,finalTrialLog);
 	}
 	
 	// AP: it would be great if we could have this function in Trial instead...
@@ -96,14 +108,15 @@ public class Pager extends FragmentActivity{
 	// checker had to be implemented here. Logically this function belongs to here rather than to a GridView
 	// because GridView is just a part of a complete trial
 	public void concludeTrial(int page, int position_on_page){
-		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
+		
+		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page;
 		boolean success = (Distributions.targets[State.trial] == global_position);
 		boolean ifHighlighted = isHighlighted(global_position);
 		Log.v("Pager", ifHighlighted? "Highlighted" : "Normal");
 		long duration = System.currentTimeMillis()-State.startTime;
 		
 		int row=(int) Math.floor(position_on_page/4)+1;
-		int column=position_on_page%4+1;
+		int column=(position_on_page-1)%4+1;
 		
 		// If finished due to timeout
 		if (position_on_page == -1) {
@@ -111,7 +124,7 @@ public class Pager extends FragmentActivity{
 			column = 0;
 		}
 				
-		logTrial(ifHighlighted, duration, row, column, success, State.timeout);		
+		logTrial(ifHighlighted, duration, row, column, success, State.timeout, State.missed);		
 		
 		if (State.timeout){
 				Intent intent = new Intent(this, TrialTimeout.class);
@@ -132,7 +145,6 @@ public class Pager extends FragmentActivity{
 			// end condition
 			
 			State.block++;
-			State.condition = State.listOfConditions.get(State.block);
 			
 			State.trial=1;
 			
@@ -143,7 +155,7 @@ public class Pager extends FragmentActivity{
 			}
 			else {
 				
-				Intent intent = new Intent(this, Condition.class);
+				Intent intent = new Intent(this, EndOfCondition.class);
 				this.startActivity(intent);
 			}
 		}	
@@ -204,6 +216,13 @@ public class Pager extends FragmentActivity{
 				pagerAdapter.currentPosition = position;
 				
 				Animation.clearAll();
+				
+				logEvent("NewPage", "");
+				
+				//checking for misses
+				if (State.page > State.targetIconPage) {
+					State.missed = true;
+				}
 				
 				pagerAdapter.getCurrentPage().getGridView().startEphemeralAnimation();
 				pagerAdapter.getPreviousPage().getGridView().backToPreAnimationState();

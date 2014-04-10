@@ -19,6 +19,7 @@
     <string name="file_test">AM I SAVED IN A FILE RIGHT NOW? COOL!</string>
     <string name="trial_failure_message">Wrong Icon</string>
     <string name="trial_timeout_message">Timeout</string>
+    <string name="end_of_condition">Thanks for hanging in there! Touch the screen to start the next block.</string>
    	
    	<string name="zoom_in">Zoom In</string>
     <string name="transparency">Transparency</string>
@@ -31,7 +32,10 @@
     <string name="color_blur">Color+blur</string>
     <string name="twist">Twist</string>
     <string name="change_bkg">Change background</string>
-    <string name="trial_log_header">TimeStamp, Participant ID, Block #, Condition, Trial #, Start Time(ms), Highlighted, Duration(ms), Page #, Icon Row #, Icon Col #, Success, Timeout</string>
+    <string name="state_log_header">TimeStamp, Participant ID, Block #, Condition, Trial #, Start Time(ms), Target Icon Page #, Target Icon Row #, Target Icon Column #</string>
+    <string name="trial_log_header">Highlighted, Duration(ms), Page #, Icon Row #, Icon Col #, Success, Timeout, Miss</string>
+    <string name="events_log_header">Event Name, Event Description</string>
+    <string name="experiment_log_header"></string>
     
     <string name="icon_0_cap">icon 0</string>
     <string name="icon_1_cap">icon 1</string>
