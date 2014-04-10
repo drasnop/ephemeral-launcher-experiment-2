@@ -22,4 +22,8 @@ public class ExperimentParameters {
 		
 		
 	}
+	
+	public static String csvFile(){
+		return Utils.appendWithComma(String.valueOf(NUM_CONDITIONS), String.valueOf(NUM_TRIALS), String.valueOf(NUM_PAGES), String.valueOf(NUM_HIGHLIGHTED_ICONS), String.valueOf(TRIAL_TIMEOUT_MS));
+	}
 }

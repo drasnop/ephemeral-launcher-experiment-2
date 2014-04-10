@@ -68,7 +68,8 @@ public class Experiment extends Activity {
 		//Initialize experiment log file
 		
 		State.currentExperimentLogFile = FileManager.getFile(this, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
-		//FileManager.writeToFile(State.currentExperimentLogFile, this.getString(R.string.experiment_log_header), true);
+		//FileManager.appendLineToFile(State.currentExperimentLogFile, Utils.appendWithComma(this.getString(R.string.experiment_log_header), this.getString(R.string.experiment_parameters_log_header)));
+		FileManager.appendLineToFile(State.currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.csvFile()));
 		
 	
 		
