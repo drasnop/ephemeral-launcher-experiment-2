@@ -37,7 +37,7 @@ public class IconAdapter extends BaseAdapter {
 		int global_position=page_number*LauncherParameters.NUM_ICONS_PER_PAGE+position+1;	// 1..60
 
 		if(global_position>Distributions.NUM_POSITIONS){
-			Log.e("Adapter", "We should never get this global position: "+Integer.toString(global_position));
+			Log.e("Adapter", "We should never get this global position: "+Integer.toString(global_position) + " " + Integer.toString(position));
 			//TODO I have no idea why we get a 61 on the third page...
 			global_position=Distributions.NUM_POSITIONS;
 		}
