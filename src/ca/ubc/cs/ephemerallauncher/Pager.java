@@ -116,7 +116,7 @@ public class Pager extends FragmentActivity{
 		long duration = System.currentTimeMillis()-State.startTime;
 		
 		int row=(int) Math.floor(position_on_page/4)+1;
-		int column=(position_on_page-1)%4+1;
+		int column=(position_on_page)%4+1;
 		
 		// If finished due to timeout
 		if (position_on_page == -1) {
