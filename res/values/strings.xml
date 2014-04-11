@@ -36,7 +36,7 @@
     <string name="trial_log_header">Highlighted, Duration(ms), Icon Row #, Icon Col #, Success, Timeout, Miss</string>
     <string name="events_log_header">Event Name, Event Description</string>
     <string name="experiment_log_header">TimeStamp, Participant ID</string>
-    <string name="ewxperiment_parameters_log_header"># of Conditions, # of Pages, # of Highlighted Icons, Timeout Duration(ms)</string>
+    <string name="experiment_parameters_log_header"># of Conditions, # of Pages, # of Highlighted Icons, Timeout Duration(ms)</string>
     
     
    <string name="icon_0_label">sour</string>
