@@ -45,12 +45,17 @@ public class Condition extends Activity {
 	private void pickIconsForCondition(){
 		// TODO: randomly select 60 icons
 		// For the moment: just take all our set
-		for(int p=0;p<3;p++){
-			for(int i=1; i<=20; i++){
-				State.current_images_ID[p*20+i]=LauncherParameters.images_ID[p*20+i-1];
-			}
+		for(int i=1; i<= Distributions.NUM_POSITIONS; i++){
+			State.current_images_ID[i]=Distributions.images_ID[State.block][i-1];
+				
 		}
-		Utils.shuffleArrayExceptZero(State.current_images_ID);
+		
+		for(int i=1; i<= Distributions.NUM_POSITIONS; i++){
+			State.current_labels_ID[i]=Distributions.labels_ID[State.block][i-1];
+				
+		}
+		//Utils.shuffleArrayExceptZero(State.current_images_ID); done in Distributions
+		
 	}
 	
 	@Override //KZ
