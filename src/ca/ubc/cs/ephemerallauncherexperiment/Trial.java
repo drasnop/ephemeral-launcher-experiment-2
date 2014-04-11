@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Trial extends Activity {
@@ -28,18 +29,20 @@ public class Trial extends Activity {
 		String message = intent.getStringExtra(ExperimentParameters.SUCCESS_MESSAGE);
 		
 		//processing the message
+		TextView message_text = (TextView) this.findViewById(R.id.message_text_view);
+		
 		if (message.equals("Success")){
-			
+			message_text.setText(this.getString(R.string.trial_success_message));
 		}
 		else if (message.equals("Failure")){
-			
+			message_text.setText(this.getString(R.string.trial_failure_message));
 		}
 		else if (message.equals("Timeout")){
-			
+			message_text.setText(this.getString(R.string.trial_timeout_message));
 			
 		}
 		else if (message.equals("None")){
-			
+			message_text.setText(this.getString(R.string.trial_none_message));
 		}
 		
 		RelativeLayout trial = (RelativeLayout) this.findViewById(R.id.trial);

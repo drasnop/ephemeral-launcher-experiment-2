@@ -16,11 +16,14 @@
     <string name="title_activity_pager">Pager</string>
     <string name="start_condition">Condition #</string>
     <string name="start_trial">Touch anywhere to start</string>
+    <string name="trial_message">message</string>
     <string name="experiment_button_start">Press to start</string>
     <string name="condition_button_start">Press to start</string>
     <string name="file_test">AM I SAVED IN A FILE RIGHT NOW? COOL!</string>
     <string name="trial_failure_message">Wrong Icon</string>
     <string name="trial_timeout_message">Timeout</string>
+    <string name="trial_success_message">Good job!</string>
+    <string name="trial_none_message"></string>
     <string name="end_of_condition">Thanks for hanging in there! Touch the screen to start the next block.</string>
     <string name="end_of_experiment">Thank you for your participation!</string>
     <string name="experiment_button_end">Close experiment</string>
@@ -43,7 +46,7 @@
     <string name="experiment_parameters_log_header"># of Conditions, # of Pages, # of Highlighted Icons, Timeout Duration(ms)</string>
     
     
-   <string name="icon_0_label">sour</string>
+ <string name="icon_0_label">sour</string>
 <string name="icon_1_label">weapon</string>
 <string name="icon_2_label">dustpan</string>
 <string name="icon_3_label">prick</string>
