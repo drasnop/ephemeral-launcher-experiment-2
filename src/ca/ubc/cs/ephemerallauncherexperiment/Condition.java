@@ -33,6 +33,7 @@ public class Condition extends Activity {
 	public void startFirstTrial(View view) {
 
 		Intent intent = new Intent(this, Trial.class);
+		intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, "None");
 		startActivity(intent);
 	}
 
