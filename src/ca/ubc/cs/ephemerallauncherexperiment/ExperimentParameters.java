@@ -21,6 +21,11 @@ public class ExperimentParameters {
 	public static final String ICON_SET = "IconSet 1";
 	public static final String LABEL_SET = "LabelSet 1";
 	
+	public final static int SUCCESS_MESSAGE_DURATION_MS = 500;
+	public final static int SUCCESS_MESSAGE_DELAY_MS = 1500;
+	public final static int FAILURE_MESSAGE_DURATION_MS = 500;
+	public final static int FAILURE_MESSAGE_DELAY_MS = 2000;
+	
 	public final static String SUCCESS_MESSAGE = "ca.ubc.cs.ephemerallauncherexperiment.SUCCESS_MESSAGE";
 	
 	public static enum ConditionEnum{

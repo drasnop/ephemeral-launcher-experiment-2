@@ -1,5 +1,6 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +12,14 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import ca.ubc.cs.ephemerallauncher.Effects;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Trial extends Activity {
 
-	@Override
+	private Animator messageAnimator;
+	
+	@Override	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_trial);
@@ -36,9 +40,11 @@ public class Trial extends Activity {
 		
 		if (message.equals("Success")){
 			message_text.setText(this.getString(R.string.trial_success_message));
+			messageAnimator = Effects.animateObjectProperty(message_text, "alpha", ExperimentParameters.SUCCESS_MESSAGE_DURATION_MS, ExperimentParameters.SUCCESS_MESSAGE_DELAY_MS, 1f, 0f);
 		}
 		else if (message.equals("Failure")){
 			message_text.setText(this.getString(R.string.trial_failure_message));
+			messageAnimator = Effects.animateObjectProperty(message_text, "alpha", ExperimentParameters.FAILURE_MESSAGE_DURATION_MS, ExperimentParameters.FAILURE_MESSAGE_DELAY_MS, 1f, 0f);
 		}
 		else if (message.equals("Timeout")){
 			//message_text.setText(this.getString(R.string.trial_timeout_message));
@@ -48,6 +54,8 @@ public class Trial extends Activity {
 		else if (message.equals("None")){
 			message_text.setText(this.getString(R.string.trial_none_message));
 		}
+		
+		
 		
 		RelativeLayout trial = (RelativeLayout) this.findViewById(R.id.trial);
 		trial.setOnClickListener(new OnClickListener() {
