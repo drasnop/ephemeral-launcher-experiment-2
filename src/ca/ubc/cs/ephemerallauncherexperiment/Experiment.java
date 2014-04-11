@@ -35,6 +35,11 @@ public class Experiment extends Activity {
 		return fileName;
 	}
 	
+	private String getDistributionsFileName(){
+		String fileName = Utils.getTimeStamp(true) + "__" + State.participantId + "__DISTRIBUTIONS" + ".log";
+		return fileName;
+	}
+	
 	private String getExperimentLogFileName(){
 		String fileName = ExperimentParameters.EXPERIMENT_LOG_FILE_NAME;
 		return fileName;
@@ -71,6 +76,11 @@ public class Experiment extends Activity {
 		}
 		
 		FileManager.appendLineToFile(State.currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.csvFile()));
+		
+		//Log distributions
+		
+		State.currentDistributionsLogFile = FileManager.getFile(this,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.distributionsLogFile(this), false);
 		
 	
 		

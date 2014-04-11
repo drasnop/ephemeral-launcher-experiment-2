@@ -147,10 +147,24 @@ public class Distributions {
 		String lineSep = "-------------------------------------------------------";
 		String halfLineSep = lineSep.substring(0, (int)lineSep.length()/2);
 		
+		//general
+		logStr += "GENERAL \n";
+		logStr += "participantID: " + State.participantId + "\n";
+		logStr += "zipfSize: " + String.valueOf(zipfSize) + "\n";
+		logStr += "zipfCoeff: " + String.valueOf(zipfCoeff) + "\n";
+		logStr += "Accuracy: " + String.valueOf(accuracy) + "\n";
+		
 		//logging conditions
+		logStr += lineSep;
 		logStr += "CONDITIONS \n";
 		for (int i=0; i < ExperimentParameters.ConditionEnum.values().length; i++)
 			logStr += ExperimentParameters.ConditionEnum.values()[i].toString() + " ";
+		
+		//logging zipf 
+		logStr += lineSep;
+		logStr += "ZIPF \n";
+		for (int i=0; i < zipfSize; i++)
+			logStr += String.valueOf(zipf[i+1]) + " ";
 		
 		
 		//logging image icons
