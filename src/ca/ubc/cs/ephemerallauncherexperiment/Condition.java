@@ -14,11 +14,9 @@ public class Condition extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_condition);
 		
-		pickIconsForCondition();
+		State.initCondition();
 		
-		State.condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[State.participant][State.block]];
-		State.trial=1;
-		State.page=1;	// maybe useless
+		pickIconsForCondition();		
 		
 		// Adjust the text
 		((TextView) this.findViewById(R.id.start_condition)).setText("Condition #"+State.block);

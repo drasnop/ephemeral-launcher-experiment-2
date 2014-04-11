@@ -15,6 +15,7 @@ public class Distributions {
 
 	// latin square
 	// http://www.maths.qmul.ac.uk/~rab/DOEbook/doeweb6.pdf
+	// http://statpages.org/latinsq.html and look for latinsq5.csv in Drive
 	public static int[][] conditions = {
 		{ 0, 1, 2, 3, 4 }
 	};
