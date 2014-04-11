@@ -55,8 +55,11 @@ public class Distributions {
 	
 	public static void init() {
 
+		// Step 0:  Randomly select the icons and labels for the entire experiment
+		
 		iconDistributionInit();
 		labelDistributionInit();
+		
 		// Step 1: Generate Zipfian distribution of frequencies (the first cell of the array is not used)
 		
 		double denominator = 0;

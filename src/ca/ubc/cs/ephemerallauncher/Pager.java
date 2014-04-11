@@ -89,7 +89,7 @@ public class Pager extends FragmentActivity{
 		String highlightedStr = ifHighlighted? "Highlighted" : "Normal"; 
 		String successStr = ifSuccess? "Success" : "Failure";
 		String timeoutStr = ifTimeout? "Timeout" : "InTime";
-		String missedStr = ifMissed? "Miss" : "Catch";
+		String missedStr = ifMissed? "Miss" : "Hit";
 		String log = Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(State.page),String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr);
 		
 		return log;
@@ -109,14 +109,14 @@ public class Pager extends FragmentActivity{
 	// because GridView is just a part of a complete trial
 	public void concludeTrial(int page, int position_on_page){
 		
-		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page;
+		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
 		boolean success = (Distributions.targets[State.trial] == global_position);
 		boolean ifHighlighted = isHighlighted(global_position);
 		Log.v("Pager", ifHighlighted? "Highlighted" : "Normal");
 		long duration = System.currentTimeMillis()-State.startTime;
 		
 		int row=(int) Math.floor(position_on_page/4)+1;
-		int column=(position_on_page-1)%4+1;
+		int column=(position_on_page)%4+1;
 		
 		// If finished due to timeout
 		if (position_on_page == -1) {
