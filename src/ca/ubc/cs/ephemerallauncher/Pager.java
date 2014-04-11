@@ -107,6 +107,10 @@ public class Pager extends FragmentActivity{
 	// KA: anyway, there are various reasons why I moved this here, the main one being that the highlight
 	// checker had to be implemented here. Logically this function belongs to here rather than to a GridView
 	// because GridView is just a part of a complete trial
+	// AP: No, I meant Trial, because it makes more sense to me (semantically)
+	// but you are right, Trial would correspond to the next trial...
+	// What about making these log functions static, to put them in Trial?
+	// The only dynamic thing remaining in Pager would be startNextTrial
 	public void concludeTrial(int page, int position_on_page){
 		
 		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;

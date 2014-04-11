@@ -9,7 +9,7 @@ public class State {
 	// things put here should change during the experiment
 	
 	public static int block=0; 		//  0 to CONDITONS, 0 is practice
-	public static ExperimentParameters.ConditionEnum condition = ExperimentParameters.ConditionEnum.PRACTICE;
+	public static ExperimentParameters.ConditionEnum condition = ExperimentParameters.ConditionEnum.CONTROL;
 	
 	
 	public static int trial=1;		// in that condition
@@ -34,10 +34,7 @@ public class State {
 	public static int targetIconColumn;
 	
 	public static String stateCsvLog(){
-		
-		
-		String log = Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn));
-		return log;
+		return Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn));
 	}
 	
 	public static File currentTrialsLogFile;	//the file contains per trial logs for a participant

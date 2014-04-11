@@ -1,5 +1,6 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +19,7 @@ public class Utils {
 		return temp;
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	public static String getTimeStamp(boolean forFile) {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf;

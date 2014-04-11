@@ -17,15 +17,6 @@ public class EndOfCondition extends Activity {
 		// Show the Up button in the action bar.
 		//setupActionBar();
 	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
-	private void setupActionBar() {
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-	}
 	
 	public void startNextCondition(View view){
 		Intent intent = new Intent(this, Condition.class);
