@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Trial extends Activity {
 
+	@SuppressWarnings("unused")
 	private Animator messageAnimator;
 	
 	@Override	
@@ -40,10 +42,14 @@ public class Trial extends Activity {
 		
 		if (message.equals("Success")){
 			message_text.setText(this.getString(R.string.trial_success_message));
+			message_text.setTextColor(ExperimentParameters.SUCCESS_MESSAGE_COLOR);
+			message_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, ExperimentParameters.SUCCESS_MESSAGE_SIZE);
 			messageAnimator = Effects.animateObjectProperty(message_text, "alpha", ExperimentParameters.SUCCESS_MESSAGE_DURATION_MS, ExperimentParameters.SUCCESS_MESSAGE_DELAY_MS, 1f, 0f);
 		}
 		else if (message.equals("Failure")){
 			message_text.setText(this.getString(R.string.trial_failure_message));
+			message_text.setTextColor(ExperimentParameters.FAILURE_MESSAGE_COLOR);
+			message_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, ExperimentParameters.FAILURE_MESSAGE_SIZE);
 			messageAnimator = Effects.animateObjectProperty(message_text, "alpha", ExperimentParameters.FAILURE_MESSAGE_DURATION_MS, ExperimentParameters.FAILURE_MESSAGE_DELAY_MS, 1f, 0f);
 		}
 		else if (message.equals("Timeout")){

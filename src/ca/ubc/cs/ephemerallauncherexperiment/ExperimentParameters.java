@@ -1,5 +1,7 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import android.graphics.Color;
+
 
 public class ExperimentParameters {
 	
@@ -25,6 +27,12 @@ public class ExperimentParameters {
 	public final static int SUCCESS_MESSAGE_DELAY_MS = 1500;
 	public final static int FAILURE_MESSAGE_DURATION_MS = 500;
 	public final static int FAILURE_MESSAGE_DELAY_MS = 2000;
+	
+	public final static int SUCCESS_MESSAGE_COLOR = Color.GREEN;
+	public final static int FAILURE_MESSAGE_COLOR = Color.RED;
+	
+	public final static float SUCCESS_MESSAGE_SIZE = 15f;
+	public final static float FAILURE_MESSAGE_SIZE = 20f;
 	
 	public final static String SUCCESS_MESSAGE = "ca.ubc.cs.ephemerallauncherexperiment.SUCCESS_MESSAGE";
 	
