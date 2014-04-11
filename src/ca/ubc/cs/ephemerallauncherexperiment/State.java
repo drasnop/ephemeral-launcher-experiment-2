@@ -42,6 +42,7 @@ public class State {
 	public static File currentTrialsLogFile;	//the file contains per trial logs for a participant
 	public static File currentEventsLogFile;	//the file contains per event (command) logs for a participant
 	public static File currentExperimentLogFile;	//the file contains the general experiment logs
+	public static File currentDistributionsLogFile;  //the file contains all information about distributions
 	
 	public static void logTrial(long duration, int row, int column){
 		// TODO   I think this function should belong to trial. Each trial logs its state and its results. It only
