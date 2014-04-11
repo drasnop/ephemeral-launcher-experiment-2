@@ -23,6 +23,9 @@ public class Trial extends Activity {
 		ImageView target_icon = (ImageView) this.findViewById(R.id.target_icon);
 		target_icon.setImageResource(State.current_images_ID[Distributions.targets[State.trial]]);
 		
+		TextView target_icon_label = (TextView) this.findViewById(R.id.target_icon_label);
+		target_icon_label.setText(State.current_labels_ID[Distributions.targets[State.trial]]);
+		
 		initializeTrial();
 		
 		Intent intent = getIntent();
