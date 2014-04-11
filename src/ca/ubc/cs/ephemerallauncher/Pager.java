@@ -109,7 +109,7 @@ public class Pager extends FragmentActivity{
 	// because GridView is just a part of a complete trial
 	public void concludeTrial(int page, int position_on_page){
 		
-		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page;
+		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
 		boolean success = (Distributions.targets[State.trial] == global_position);
 		boolean ifHighlighted = isHighlighted(global_position);
 		Log.v("Pager", ifHighlighted? "Highlighted" : "Normal");
