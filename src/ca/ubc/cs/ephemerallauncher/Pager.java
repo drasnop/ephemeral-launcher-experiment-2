@@ -61,7 +61,8 @@ public class Pager extends FragmentActivity{
 	private void checkForTimeout(){
 		if (System.currentTimeMillis() - State.startTime > ExperimentParameters.TRIAL_TIMEOUT_MS){
 			State.timeout = true;
-			concludeTrial(-1,-1);			
+			concludeTrial(-1,-1);	
+			mHandler.removeCallbacks(mTimeoutChecker);
 		}
 	}
     
