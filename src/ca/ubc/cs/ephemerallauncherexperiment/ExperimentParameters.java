@@ -12,11 +12,16 @@ public class ExperimentParameters {
 	public static final int NUM_HIGHLIGHTED_ICONS = 9;
 	
 	public static final int TRIAL_TIMEOUT_MS = 10000;	//10000	
-	public static final int TIMEOUT_CHECK_INTERVAL = 2000;
+	public static final int TIMEOUT_CHECK_INTERVAL = 500;
 	
 	public static final String LOG_FOLDER = "EXP1";
 	
 	public static final String EXPERIMENT_LOG_FILE_NAME = "ExperimentLog.log";
+	
+	public static final String ICON_SET = "IconSet 1";
+	public static final String LABEL_SET = "LabelSet 1";
+	
+	public final static String SUCCESS_MESSAGE = "ca.ubc.cs.ephemerallauncherexperiment.SUCCESS_MESSAGE";
 	
 	public static enum ConditionEnum{
 		CONTROL, TWIST, PULSEOUT, TRANSPARENCY, GREYBLUR

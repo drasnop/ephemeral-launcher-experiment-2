@@ -24,6 +24,24 @@ public class Trial extends Activity {
 		
 		initializeTrial();
 		
+		Intent intent = getIntent();
+		String message = intent.getStringExtra(ExperimentParameters.SUCCESS_MESSAGE);
+		
+		//processing the message
+		if (message.equals("Success")){
+			
+		}
+		else if (message.equals("Failure")){
+			
+		}
+		else if (message.equals("Timeout")){
+			
+			
+		}
+		else if (message.equals("None")){
+			
+		}
+		
 		RelativeLayout trial = (RelativeLayout) this.findViewById(R.id.trial);
 		trial.setOnClickListener(new OnClickListener() {
 			@Override

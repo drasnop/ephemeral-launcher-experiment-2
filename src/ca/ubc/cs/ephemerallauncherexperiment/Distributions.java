@@ -144,8 +144,8 @@ public class Distributions {
 	public static String distributionsLogFile(Context context){
 		String logStr ="";
 		
-		String lineSep = "-------------------------------------------------------";
-		String halfLineSep = lineSep.substring(0, (int)lineSep.length()/2);
+		String lineSep = "-------------------------------------------------------\n";
+		String halfLineSep = lineSep.substring(0, (int)lineSep.length()/2) + "\n";
 		
 		//general
 		logStr += "GENERAL \n";
@@ -153,6 +153,8 @@ public class Distributions {
 		logStr += "zipfSize: " + String.valueOf(zipfSize) + "\n";
 		logStr += "zipfCoeff: " + String.valueOf(zipfCoeff) + "\n";
 		logStr += "Accuracy: " + String.valueOf(accuracy) + "\n";
+		logStr += "Icon Set: " + ExperimentParameters.ICON_SET;
+		logStr += "Label Set: " + ExperimentParameters.LABEL_SET;
 		
 		//logging conditions
 		logStr += lineSep;
@@ -167,14 +169,14 @@ public class Distributions {
 			logStr += String.valueOf(zipf[i+1]) + " ";
 		
 		
-		//logging image icons
+		//logging image icons and labels
 		logStr += lineSep;
-		logStr += "IMAGE ICONS \n";
+		logStr += "IMAGE ICONS AND LABELS\n";
 		for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
 			logStr += halfLineSep;
 			logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.ConditionEnum.values()[c].toString() +"\n";
-			for (int pos=0; pos < LauncherParameters.NUM_ICONS_PER_PAGE; pos++){
-				logStr += context.getString(images_ID[c][pos]) + " ";
+			for (int pos=0; pos < NUM_POSITIONS; pos++){
+				logStr += String.valueOf(pos+1) + " : " + context.getString(images_ID[c][pos]) + " "  + context.getString(labels_ID[c][pos]) + " ";
 				if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
 					logStr += "\n";
 								
@@ -182,21 +184,7 @@ public class Distributions {
 					
 		}
 		
-		
-		//logging image labels
-		logStr += lineSep;
-		logStr += "IMAGE LABELS \n";
-		for (int c = 0; c < ExperimentParameters.NUM_CONDITIONS; c++){
-			logStr += halfLineSep;
-			logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.ConditionEnum.values()[c].toString() +"\n";
-			for (int pos = 0; pos < LauncherParameters.NUM_ICONS_PER_PAGE; pos++){
-				logStr += context.getString(labels_ID[c][pos]) + " ";
-				if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
-					logStr += "\n";
-								
-			}
-					
-		}
+	
 		
 		//logging target positions
 		logStr += lineSep;

@@ -18,7 +18,6 @@ import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
 import ca.ubc.cs.ephemerallauncherexperiment.Trial;
-import ca.ubc.cs.ephemerallauncherexperiment.TrialIncorrectSelection;
 import ca.ubc.cs.ephemerallauncherexperiment.TrialTimeout;
 import ca.ubc.cs.ephemerallauncherexperiment.Utils;
 
@@ -28,6 +27,7 @@ public class Pager extends FragmentActivity{
 	ViewPager pager;
 	long startTime;
 	
+		
 	private int mInterval = ExperimentParameters.TIMEOUT_CHECK_INTERVAL; 
 	private Handler mHandler;
 	
@@ -61,7 +61,8 @@ public class Pager extends FragmentActivity{
 	private void checkForTimeout(){
 		if (System.currentTimeMillis() - State.startTime > ExperimentParameters.TRIAL_TIMEOUT_MS){
 			State.timeout = true;
-			concludeTrial(-1,-1);			
+			concludeTrial(-1,-1);	
+			mHandler.removeCallbacks(mTimeoutChecker);
 		}
 	}
     
@@ -135,15 +136,14 @@ public class Pager extends FragmentActivity{
 				this.startActivity(intent);
 		}
 		else if (!success){
-			Intent intent = new Intent(this, TrialIncorrectSelection.class);
-			this.startActivity(intent);
+			startNextTrial("Failure");
 		}
 		else {
-			startNextTrial();
+			startNextTrial("Success");
 		}
 	}
 	
-	private void startNextTrial(){
+	private void startNextTrial(String message){
 		State.trial++;
 		if(State.trial>ExperimentParameters.NUM_TRIALS){
 			// end condition
@@ -155,16 +155,19 @@ public class Pager extends FragmentActivity{
 			if (State.block == ExperimentParameters.NUM_CONDITIONS)
 			{
 				Intent intent = new Intent(this, EndOfExperiment.class);
+				intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);
 				this.startActivity(intent);
 			}
 			else {
 				
 				Intent intent = new Intent(this, EndOfCondition.class);
+				intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);
 				this.startActivity(intent);
 			}
 		}	
 		else{
 			Intent intent = new Intent(this, Trial.class);
+			intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);
 			this.startActivity(intent);
 		}
 		

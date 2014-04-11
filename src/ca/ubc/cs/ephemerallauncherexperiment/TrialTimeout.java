@@ -52,6 +52,9 @@ public class TrialTimeout extends Activity {
 	}
 	
 	public void startNextTrial(View view) {
+		
+		String message = "Timeout";
+		
 		State.trial++;
 		if(State.trial>ExperimentParameters.NUM_TRIALS){
 			// end condition
@@ -63,16 +66,19 @@ public class TrialTimeout extends Activity {
 			if (State.block == ExperimentParameters.NUM_CONDITIONS)
 			{
 				Intent intent = new Intent(this, EndOfExperiment.class);
+				intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);
 				startActivity(intent);
 			}
 			else {
 				
 				Intent intent = new Intent(this, EndOfCondition.class);
+				intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);
 				startActivity(intent);
 			}
 		}	
 		else{
 			Intent intent = new Intent(this, Trial.class);
+			intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);
 			startActivity(intent);
 		}		
 	}
