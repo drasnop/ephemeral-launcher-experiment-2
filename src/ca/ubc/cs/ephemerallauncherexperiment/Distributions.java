@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.Context;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Distributions {
@@ -137,6 +138,70 @@ public class Distributions {
 				return true;
 		}
 		return false;
+	}
+	
+	
+	public static String distributionsLogFile(Context context){
+		String logStr ="";
+		
+		String lineSep = "-------------------------------------------------------";
+		String halfLineSep = lineSep.substring(0, (int)lineSep.length()/2);
+		
+		//logging conditions
+		logStr += "CONDITIONS \n";
+		for (int i=0; i < ExperimentParameters.ConditionEnum.values().length; i++)
+			logStr += ExperimentParameters.ConditionEnum.values()[i].toString() + " ";
+		
+		
+		//logging image icons
+		logStr += lineSep;
+		logStr += "IMAGE ICONS \n";
+		for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
+			logStr += halfLineSep;
+			logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.ConditionEnum.values()[c].toString() +"\n";
+			for (int pos=0; pos < LauncherParameters.NUM_ICONS_PER_PAGE; pos++){
+				logStr += context.getString(images_ID[c][pos]) + " ";
+				if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
+					logStr += "\n";
+								
+			}
+					
+		}
+		
+		
+		//logging image labels
+		logStr += lineSep;
+		logStr += "IMAGE LABELS \n";
+		for (int c = 0; c < ExperimentParameters.NUM_CONDITIONS; c++){
+			logStr += halfLineSep;
+			logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.ConditionEnum.values()[c].toString() +"\n";
+			for (int pos = 0; pos < LauncherParameters.NUM_ICONS_PER_PAGE; pos++){
+				logStr += context.getString(labels_ID[c][pos]) + " ";
+				if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
+					logStr += "\n";
+								
+			}
+					
+		}
+		
+		//logging target positions
+		logStr += lineSep;
+		logStr += "TARGET POSITIONS (positions start from 1) \n";
+		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
+			logStr += String.valueOf(targets[tr+1]) + " ";
+		}
+		
+		//logging highlighted icons
+		logStr += lineSep;
+		logStr += "HIGHLIGHTED ICONS' POSITIONS \n";
+		
+		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
+			for (int icon = 0; icon < ExperimentParameters.NUM_HIGHLIGHTED_ICONS; icon++)
+				logStr += String.valueOf(highlighted[tr+1][icon]) + " ";
+			logStr += "\n";
+		}
+		
+		return logStr;
 	}
 	
 }

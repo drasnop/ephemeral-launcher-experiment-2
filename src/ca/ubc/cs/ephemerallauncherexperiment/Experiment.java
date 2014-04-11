@@ -94,7 +94,10 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 		//Initialize experiment log file
 		
 		State.currentExperimentLogFile = FileManager.getFile(this, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
-		//FileManager.appendLineToFile(State.currentExperimentLogFile, Utils.appendWithComma(this.getString(R.string.experiment_log_header), this.getString(R.string.experiment_parameters_log_header)));
+		if (!State.currentExperimentLogFile.exists()){
+			FileManager.writeToFile(State.currentExperimentLogFile, Utils.appendWithComma(this.getString(R.string.experiment_log_header), this.getString(R.string.experiment_parameters_log_header)), false);
+		}
+		
 		FileManager.appendLineToFile(State.currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.csvFile()));
 		
 	
