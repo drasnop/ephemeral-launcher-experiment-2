@@ -17,7 +17,9 @@ public class State {
 	public static int page=1;	// current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
 	public static long startTime;
 	
-	public static int[] current_images_ID = new int[LauncherParameters.NUM_PAGES*20+1];	// from 1 to 60, 0 is irrelevant
+	public static int[] current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];	// from 1 to 60, 0 is irrelevant
+	public static int[] current_labels_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];	// from 1 to 60, 0 is irrelevant
+	
 	// TODO add current_images_names, so we can log the name of the target image after each trial
 	
 	public static String participantId = "test_participant";

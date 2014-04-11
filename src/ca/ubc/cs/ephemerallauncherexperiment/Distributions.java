@@ -21,11 +21,42 @@ public class Distributions {
 	private static int[] zipf = new int[zipfSize+1];
 	public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1];
 	public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][LauncherParameters.NUM_HIGHLIGHTED_ICONS];
+	
+	public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][NUM_POSITIONS];
+	public static Integer[][] labels_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][NUM_POSITIONS];
 
 	public static double accuracy;
 	
+	private static void iconDistributionInit() {
+		ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
+		for (int i = 0; i < NUM_POSITIONS*ExperimentParameters.NUM_CONDITIONS; i++) {
+			allExperimentPositions.add(i);
+		}
+		Collections.shuffle(allExperimentPositions);
+		
+		for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++)
+			for (int j=0; j < NUM_POSITIONS; j++)
+				images_ID[i][j] = LauncherParameters.images_ID[allExperimentPositions.get(i*NUM_POSITIONS+j)];
+		
+	}
+	
+	private static void labelDistributionInit(){
+		ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
+		for (int i = 0; i < NUM_POSITIONS*ExperimentParameters.NUM_CONDITIONS; i++) {
+			allExperimentPositions.add(i);
+		}
+		Collections.shuffle(allExperimentPositions);
+		
+		for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++)
+			for (int j=0; j < NUM_POSITIONS; j++)
+				labels_ID[i][j] = LauncherParameters.labels_ID[allExperimentPositions.get(i*NUM_POSITIONS+j)];
+	}
+	
+	
 	public static void init() {
 
+		iconDistributionInit();
+		labelDistributionInit();
 		// Step 1: Generate Zipfian distribution of frequencies (the first cell of the array is not used)
 		
 		double denominator = 0;

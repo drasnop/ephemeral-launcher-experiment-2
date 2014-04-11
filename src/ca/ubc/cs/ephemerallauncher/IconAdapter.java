@@ -57,7 +57,7 @@ public class IconAdapter extends BaseAdapter {
 			
 			// The caption TODO
 			//icon.getCaption().setText(LauncherParameters.captions_ID[position]);
-			icon.getCaption().setText("icon");
+			icon.getCaption().setText(State.current_labels_ID[global_position]);
 			
 		} else {
 			// [AP: I haven't quite figured out when this happens...
