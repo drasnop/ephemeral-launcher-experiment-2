@@ -24,9 +24,9 @@ public class ExperimentParameters {
 	public static final String LABEL_SET = "LabelSet 1";
 	
 	public final static int SUCCESS_MESSAGE_DURATION_MS = 500;
-	public final static int SUCCESS_MESSAGE_DELAY_MS = 1500;
+	public final static int SUCCESS_MESSAGE_DELAY_MS = 1000;
 	public final static int FAILURE_MESSAGE_DURATION_MS = 500;
-	public final static int FAILURE_MESSAGE_DELAY_MS = 2000;
+	public final static int FAILURE_MESSAGE_DELAY_MS = 2500;
 	
 	public final static int SUCCESS_MESSAGE_COLOR = Color.GREEN;
 	public final static int FAILURE_MESSAGE_COLOR = Color.RED;
