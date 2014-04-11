@@ -23,6 +23,8 @@ public class ExperimentParameters {
 	public static final String ICON_SET = "IconSet 1";
 	public static final String LABEL_SET = "LabelSet 1";
 	
+	public static final float TARGET_ICON_LABEL_SIZE = 25f;
+	
 	public final static int SUCCESS_MESSAGE_DURATION_MS = 500;
 	public final static int SUCCESS_MESSAGE_DELAY_MS = 1000;
 	public final static int FAILURE_MESSAGE_DURATION_MS = 500;
