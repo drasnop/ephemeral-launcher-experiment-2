@@ -15,9 +15,18 @@ public class Distributions {
 
 	// latin square
 	// http://www.maths.qmul.ac.uk/~rab/DOEbook/doeweb6.pdf
-	// http://statpages.org/latinsq.html and look for latinsq5.csv in Drive
+	// http://statpages.org/latinsq.html and look for latinsq5.txt or .csv in Drive
 	public static int[][] conditions = {
-		{ 0, 1, 2, 3, 4 }
+		{0,1,4,2,3},
+		{1,2,0,3,4},
+		{2,3,1,4,0},
+		{3,4,2,0,1},
+		{4,0,3,1,2},
+		{3,2,4,1,0},
+		{4,3,0,2,1},
+		{0,4,1,3,2},
+		{1,0,2,4,3},
+		{2,1,3,0,4}
 	};
 	
 	private static int[] zipf = new int[zipfSize+1];
