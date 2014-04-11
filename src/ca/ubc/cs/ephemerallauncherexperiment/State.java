@@ -8,26 +8,24 @@ public class State {
 
 	// things put here should change during the experiment
 	
-	public static String participantId = "test_participant";
-	public static int participant = 0;
+	public static String participantId;
+	public static int participant;
 	
-	public static int block=0; 		//  0 to CONDITONS-1
-	public static ExperimentParameters.ConditionEnum condition = ExperimentParameters.ConditionEnum.CONTROL;	
+	public static int block; 		//  0 to CONDITONS-1
+	public static ExperimentParameters.ConditionEnum condition;	
 	
-	public static int trial=1;		// in that condition
+	public static int trial;		// in that condition
 	
-	public static int page=1;	// current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
+	public static int page;		// current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
 	public static long startTime;
 	
-	public static int[] current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];	// from 1 to 60, 0 is irrelevant
-	public static int[] current_labels_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];	// from 1 to 60, 0 is irrelevant
+	public static int[] current_images_ID;	// from 1 to 60, 0 is irrelevant
+	public static int[] current_labels_ID;	// from 1 to 60, 0 is irrelevant
 	
 	// TODO add current_images_names, so we can log the name of the target image after each trial
 	
-	
-	public static boolean timeout = false;
-	public static boolean missed = false;
-	
+	public static boolean timeout;
+	public static boolean missed;
 	
 	public static int targetIconPage;
 	public static int targetIconRow;
@@ -37,10 +35,10 @@ public class State {
 		return Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn));
 	}
 	
-	public static File currentTrialsLogFile;	//the file contains per trial logs for a participant
-	public static File currentEventsLogFile;	//the file contains per event (command) logs for a participant
+	public static File currentTrialsLogFile;		//the file contains per trial logs for a participant
+	public static File currentEventsLogFile;		//the file contains per event (command) logs for a participant
 	public static File currentExperimentLogFile;	//the file contains the general experiment logs
-	public static File currentDistributionsLogFile;  //the file contains all information about distributions
+	public static File currentDistributionsLogFile; //the file contains all information about distributions
 	
 	public static void logTrial(long duration, int row, int column){
 		// TODO   I think this function should belong to trial. Each trial logs its state and its results. It only
@@ -56,7 +54,13 @@ public class State {
 	};
 	
 	public static void init(){
-		
+		block=0;
+		trial=1;
+		page=1;
+		current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
+		current_labels_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
+		timeout=false;
+		missed=false;
 	}
 
 }
