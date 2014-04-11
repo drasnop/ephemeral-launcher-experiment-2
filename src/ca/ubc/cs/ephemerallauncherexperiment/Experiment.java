@@ -17,10 +17,11 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment);
 		
-		Integer participants[] = new Integer[ExperimentParameters.NUM_PARTICIPANTS];
+		Integer participants[] = new Integer[ExperimentParameters.NUM_PARTICIPANTS+1];
 		for(int i=0; i<ExperimentParameters.NUM_PARTICIPANTS; i++){
 			participants[i]=i;
 		}
+		participants[ExperimentParameters.NUM_PARTICIPANTS]=-100;	// Default value;
 		
 		// Setup dropdown selector for participant number
 		Spinner spinner = (Spinner) findViewById(R.id.participants_spinner);
@@ -31,6 +32,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 		spinner.setAdapter(adapter);
 		// Specify actions when clicked, use this because implements OnItemSelectedListerner
 		spinner.setOnItemSelectedListener(this);
+		spinner.setSelection(ExperimentParameters.NUM_PARTICIPANTS);
 	}
 	
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
