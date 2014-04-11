@@ -19,7 +19,7 @@ public class Distributions {
 	};
 	
 	private static int[] zipf = new int[zipfSize+1];
-	public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1];
+	public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1]; 
 	public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][LauncherParameters.NUM_HIGHLIGHTED_ICONS];
 	
 	public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][NUM_POSITIONS];
