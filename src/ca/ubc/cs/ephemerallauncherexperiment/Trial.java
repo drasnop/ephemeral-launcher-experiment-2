@@ -38,7 +38,8 @@ public class Trial extends Activity {
 			message_text.setText(this.getString(R.string.trial_failure_message));
 		}
 		else if (message.equals("Timeout")){
-			message_text.setText(this.getString(R.string.trial_timeout_message));
+			//message_text.setText(this.getString(R.string.trial_timeout_message));
+			message_text.setText("");
 			
 		}
 		else if (message.equals("None")){
