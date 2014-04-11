@@ -53,10 +53,15 @@ public class State {
 		//KA: right now it's in Pager
 	};
 	
-	public static void init(){
+	public static void initExperiment(){
 		block=0;
+		participant=-1;
+	}
+
+	public static void initCondition() {
+		condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[participant][block]];
 		trial=1;
-		page=1;
+		page=1;	// maybe useless	
 		current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
 		current_labels_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
 		timeout=false;
