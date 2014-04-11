@@ -114,6 +114,7 @@ public class Pager extends FragmentActivity{
 	// The only dynamic thing remaining in Pager would be startNextTrial
 	public void concludeTrial(int page, int position_on_page){
 		
+		logEvent("ConcludingTrial", "");
 		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
 		boolean success = (Distributions.targets[State.trial] == global_position);
 		boolean ifHighlighted = isHighlighted(global_position);
@@ -132,13 +133,16 @@ public class Pager extends FragmentActivity{
 		logTrial(ifHighlighted, duration, row, column, success, State.timeout, State.missed);		
 		
 		if (State.timeout){
+				logEvent("Timeout", "");
 				Intent intent = new Intent(this, TrialTimeout.class);
 				this.startActivity(intent);
 		}
 		else if (!success){
+			logEvent("Failure","");
 			startNextTrial("Failure");
 		}
 		else {
+			logEvent("Success","");
 			startNextTrial("Success");
 		}
 	}
@@ -201,7 +205,7 @@ public class Pager extends FragmentActivity{
 			public void onPageScrollStateChanged(int state) {
 
 				if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-					
+					logEvent("DragStart", "");
 					// don't know in which direction we're going! so we do both
 					int position = pagerAdapter.currentPosition;
 					
@@ -209,6 +213,9 @@ public class Pager extends FragmentActivity{
 						pagerAdapter.getPage(position - 1).getGridView().startPreAnimation();
 					if (position + 1 < LauncherParameters.NUM_PAGES)
 						pagerAdapter.getPage(position + 1).getGridView().startPreAnimation(); 
+				}
+				if (state ==ViewPager.SCROLL_STATE_IDLE){
+					logEvent("PageIDLE","");
 				}
 			}
 
