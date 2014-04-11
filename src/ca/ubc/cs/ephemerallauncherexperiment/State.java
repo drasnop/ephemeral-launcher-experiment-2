@@ -8,7 +8,9 @@ public class State {
 
 	// things put here should change during the experiment
 	
-	public static int block=0; 		//  0 to CONDITONS, 0 is practice
+	public static int participant;	// 0 to NUM_PARTICIPANTS-1
+	
+	public static int block=0; 		//  0 to CONDITONS-1
 	public static ExperimentParameters.ConditionEnum condition = ExperimentParameters.ConditionEnum.CONTROL;
 	
 	

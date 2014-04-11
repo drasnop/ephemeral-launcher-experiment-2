@@ -5,15 +5,43 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-public class Experiment extends Activity {
+public class Experiment extends Activity implements OnItemSelectedListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment);
+		
+		Integer participants[] = new Integer[ExperimentParameters.NUM_PARTICIPANTS];
+		for(int i=0; i<ExperimentParameters.NUM_PARTICIPANTS; i++){
+			participants[i]=i;
+		}
+		
+		Spinner spinner = (Spinner) findViewById(R.id.participants_spinner);
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,participants);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		spinner.setAdapter(adapter);
+		// Specify actions when clicked, use this because implements OnItemSelectedListerner
+		spinner.setOnItemSelectedListener(this);
 	}
+	
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        State.participant=pos;
+    	// TODO log "P"+pos
+    }
 
+    public void onNothingSelected(AdapterView<?> parent) {
+        // do nothing
+    }
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

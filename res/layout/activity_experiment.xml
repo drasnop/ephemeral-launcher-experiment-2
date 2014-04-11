@@ -9,13 +9,28 @@
     android:background="@drawable/ios_background"
     tools:context=".Experiment" >
 
+   <TextView
+       android:id="@+id/participant"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+       android:textSize="20sp"
+       android:text="@string/participant" />
+    
+    <Spinner
+   		android:id="@+id/participants_spinner"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_toRightOf="@id/participant"
+    	android:layout_alignBaseline="@id/participant"  />
+    
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/experiment_button_start"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:onClick = "startFirstCondition"
         android:textColor="@color/white" 
         />

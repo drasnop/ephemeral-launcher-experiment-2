@@ -4,9 +4,10 @@ package ca.ubc.cs.ephemerallauncherexperiment;
 public class ExperimentParameters {
 	
 	public static final int NUM_CONDITIONS=2;
-	public static final int NUM_TRIALS=5;//20
-	public static final int zipfSize = 20;
+	public static final int NUM_TRIALS=5;		//20
+	public static final int NUM_PARTICIPANTS=10;
 	
+	public static final int zipfSize = 20;
 	public static final int NUM_PAGES = 3;
 	public static final int NUM_HIGHLIGHTED_ICONS = 9;
 	
