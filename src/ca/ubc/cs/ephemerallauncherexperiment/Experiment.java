@@ -22,12 +22,12 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 			participants[i]=i;
 		}
 		
+		// Setup dropdown selector for participant number
 		Spinner spinner = (Spinner) findViewById(R.id.participants_spinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,participants);
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-		// Apply the adapter to the spinner
 		spinner.setAdapter(adapter);
 		// Specify actions when clicked, use this because implements OnItemSelectedListerner
 		spinner.setOnItemSelectedListener(this);
@@ -35,6 +35,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 	
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         State.participant=pos;
+        State.participantId="P"+pos;
     	// TODO log "P"+pos
     }
 
@@ -76,10 +77,12 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 	
 	private void initializeExperiment(){
 			
-		//Initialize condition order
-
+		// (re)Initialize everything in State
+		State.init();
+		
 		// Initialize target and highlighted icons
 		Distributions.init();
+		
 		// TODO: write the distributions in a log file (Kamyar if you want to do that don't hesitate!)
 		
 		//Initialize icon order

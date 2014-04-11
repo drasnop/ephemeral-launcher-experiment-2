@@ -8,14 +8,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/ios_background"
     tools:context=".EndOfExperiment" >
-
+    
     <TextView
+        android:id="@+id/start_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-		android:textSize="24sp"
-        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
         android:text="@string/end_of_experiment"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+    
+     <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_centerHorizontal="true"
+         android:layout_marginBottom="40dp"
+         android:onClick="finishExperiment"
+         android:text="@string/experiment_button_end"
+         android:textColor="@color/white"
+         android:textSize="20sp" />
 
 </RelativeLayout>

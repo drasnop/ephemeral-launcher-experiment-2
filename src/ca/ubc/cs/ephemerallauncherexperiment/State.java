@@ -8,11 +8,11 @@ public class State {
 
 	// things put here should change during the experiment
 	
-	public static int participant;	// 0 to NUM_PARTICIPANTS-1
+	public static String participantId = "test_participant";
+	public static int participant = 0;
 	
 	public static int block=0; 		//  0 to CONDITONS-1
-	public static ExperimentParameters.ConditionEnum condition = ExperimentParameters.ConditionEnum.CONTROL;
-	
+	public static ExperimentParameters.ConditionEnum condition = ExperimentParameters.ConditionEnum.CONTROL;	
 	
 	public static int trial=1;		// in that condition
 	
@@ -24,8 +24,6 @@ public class State {
 	
 	// TODO add current_images_names, so we can log the name of the target image after each trial
 	
-	public static String participantId = "test_participant";
-	public static int participantNum = 0;
 	
 	public static boolean timeout = false;
 	public static boolean missed = false;
@@ -56,5 +54,9 @@ public class State {
 		//AP: by Pager you mean AnimatedGridView, right?
 		//KA: right now it's in Pager
 	};
+	
+	public static void init(){
+		
+	}
 
 }

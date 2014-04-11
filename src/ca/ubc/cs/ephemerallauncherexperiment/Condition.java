@@ -16,7 +16,7 @@ public class Condition extends Activity {
 		
 		pickIconsForCondition();
 		
-		State.condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[State.participantNum][State.block]];
+		State.condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[State.participant][State.block]];
 		State.trial=1;
 		State.page=1;	// maybe useless
 		
