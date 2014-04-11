@@ -14,13 +14,16 @@
     <string name="title_activity_trial_incorrect_selection">TrialIncorrectSelection</string>
     <string name="title_activity_end_of_experiment">EndOfExperiment</string>
     <string name="title_activity_pager">Pager</string>
-    <string name="start_condition">Touch the screen to start</string>
+    <string name="start_condition">Condition #</string>
     <string name="start_trial">Touch anywhere to start</string>
     <string name="experiment_button_start">Press to start</string>
+    <string name="condition_button_start">Press to start</string>
     <string name="file_test">AM I SAVED IN A FILE RIGHT NOW? COOL!</string>
     <string name="trial_failure_message">Wrong Icon</string>
     <string name="trial_timeout_message">Timeout</string>
     <string name="end_of_condition">Thanks for hanging in there! Touch the screen to start the next block.</string>
+    <string name="end_of_experiment">Thank you for your participation!</string>
+    <string name="experiment_button_end">Close experiment</string>
    	
    	<string name="zoom_in">Zoom In</string>
     <string name="transparency">Transparency</string>

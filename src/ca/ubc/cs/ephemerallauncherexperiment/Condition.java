@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 public class Condition extends Activity {
 	
@@ -15,9 +16,12 @@ public class Condition extends Activity {
 		
 		pickIconsForCondition();
 		
+		State.condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[State.participantNum][State.block]];
 		State.trial=1;
 		State.page=1;	// maybe useless
-		State.condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[State.participantNum][State.block]];
+		
+		// Adjust the text
+		((TextView) this.findViewById(R.id.start_condition)).setText("Condition #"+State.block);
 	}
 
 	@Override

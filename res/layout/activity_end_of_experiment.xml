@@ -15,7 +15,7 @@
         android:layout_centerInParent="true"
 		android:textSize="24sp"
         android:gravity="center"
-        android:text="@string/hello_world"
+        android:text="@string/end_of_experiment"
         android:textColor="@color/white" />
 
 </RelativeLayout>
