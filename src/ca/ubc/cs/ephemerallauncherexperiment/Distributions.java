@@ -153,6 +153,8 @@ public class Distributions {
 		logStr += "zipfSize: " + String.valueOf(zipfSize) + "\n";
 		logStr += "zipfCoeff: " + String.valueOf(zipfCoeff) + "\n";
 		logStr += "Accuracy: " + String.valueOf(accuracy) + "\n";
+		logStr += "Icon Set: " + ExperimentParameters.ICON_SET;
+		logStr += "Label Set: " + ExperimentParameters.LABEL_SET;
 		
 		//logging conditions
 		logStr += lineSep;

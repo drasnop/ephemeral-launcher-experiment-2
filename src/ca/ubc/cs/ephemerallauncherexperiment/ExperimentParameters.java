@@ -18,6 +18,9 @@ public class ExperimentParameters {
 	
 	public static final String EXPERIMENT_LOG_FILE_NAME = "ExperimentLog.log";
 	
+	public static final String ICON_SET = "IconSet 1";
+	public static final String LABEL_SET = "LabelSet 1";
+	
 	public static enum ConditionEnum{
 		CONTROL, TWIST, PULSEOUT, TRANSPARENCY, GREYBLUR
 	}
