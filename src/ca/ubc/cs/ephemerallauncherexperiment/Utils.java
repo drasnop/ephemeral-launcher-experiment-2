@@ -1,11 +1,12 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
-import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+
+import android.annotation.SuppressLint;
 
 public class Utils {
 	public static String appendWithComma(String... strings) {
@@ -45,5 +46,10 @@ public class Utils {
 		for (int i = 1; i < array.length; i++) {
 			array[i] = list.get(i-1);
 		}
+	}
+	
+	public static String extractIconName(String iconResourceAddress, String iconResourceAddressPrefix){
+		int addressLength = iconResourceAddressPrefix.length();
+		return iconResourceAddress.substring(addressLength);
 	}
 }

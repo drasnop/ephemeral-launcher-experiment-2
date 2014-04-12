@@ -81,24 +81,24 @@ public class Pager extends FragmentActivity{
 	  
 	
 	private void logEvent(String eventName, String eventDescription){
-		String eventLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), eventName, eventDescription);
+		String eventLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(this), eventName, eventDescription);
 		
 		FileManager.appendLineToFile(State.currentEventsLogFile, eventLog);
 	}
 	  
-	private String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout, boolean ifMissed){
+	private String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout, boolean ifMissed, String iconName, String iconLabel){
 		String highlightedStr = ifHighlighted? "Highlighted" : "Normal"; 
 		String successStr = ifSuccess? "Success" : "Failure";
 		String timeoutStr = ifTimeout? "Timeout" : "InTime";
 		String missedStr = ifMissed? "Miss" : "Hit";
-		String log = Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr);
+		String log = Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr, iconName, iconLabel);
 		
 		return log;
 	}
 	
-	private void logTrial(boolean ifHighlighted, long duration, int row, int column,  boolean ifSuccess, boolean ifTimeout, boolean ifMissed){
+	private void logTrial(boolean ifHighlighted, long duration, int row, int column,  boolean ifSuccess, boolean ifTimeout, boolean ifMissed, String iconName, String iconLabel){
 		
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(), resultCsvLog(ifHighlighted, duration, row, column,  ifSuccess,  ifTimeout, ifMissed));
+		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(this), resultCsvLog(ifHighlighted, duration, row, column,  ifSuccess,  ifTimeout, ifMissed, iconName, iconLabel));
 		
 		FileManager.appendLineToFile(State.currentTrialsLogFile,finalTrialLog);
 	}
@@ -112,11 +112,13 @@ public class Pager extends FragmentActivity{
 	// but you are right, Trial would correspond to the next trial...
 	// What about making these log functions static, to put them in Trial?
 	// The only dynamic thing remaining in Pager would be startNextTrial
+	// KA: this possible  
+	//TODO: move every function corresponding to the general concept of Trial to Trial.java
 	public void concludeTrial(int page, int position_on_page){
 		
 		logEvent("ConcludingTrial", "");
 		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
-		boolean success = (Distributions.targets[State.trial] == global_position);
+		State.success = (Distributions.targets[State.trial] == global_position);
 		boolean ifHighlighted = isHighlighted(global_position);
 		Log.v("Pager", ifHighlighted? "Highlighted" : "Normal");
 		long duration = System.currentTimeMillis()-State.startTime;
@@ -124,20 +126,32 @@ public class Pager extends FragmentActivity{
 		int row=(int) Math.floor(position_on_page/4)+1;
 		int column=(position_on_page)%4+1;
 		
+		String iconName;
+		String iconLabel;
+		
 		// If finished due to timeout
 		if (position_on_page == -1) {
 			row = 0;
 			column = 0;
+			iconName = "None";
+			iconLabel = "None";
+		}
+		else
+		{
+			iconName = Utils.extractIconName(this.getString(State.current_images_ID[State.trial-1]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX);
+			iconLabel = this.getString(State.current_labels_ID[State.trial-1]);
+			
 		}
 				
-		logTrial(ifHighlighted, duration, row, column, success, State.timeout, State.missed);		
+		
+		logTrial(ifHighlighted, duration, row, column, State.success, State.timeout, State.missed, iconName, iconLabel);		
 		
 		if (State.timeout){
 				logEvent("Timeout", "");
 				Intent intent = new Intent(this, TrialTimeout.class);
 				this.startActivity(intent);
 		}
-		else if (!success){
+		else if (!State.success){
 			logEvent("Failure","");
 			startNextTrial("Failure");
 		}

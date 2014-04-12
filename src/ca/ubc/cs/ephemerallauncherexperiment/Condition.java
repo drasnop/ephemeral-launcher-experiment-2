@@ -39,21 +39,15 @@ public class Condition extends Activity {
 		startActivity(intent);
 	}
 
-	// AP: should we put this function in Distributions?
-	// KA: or we could initialize everything in Experiment.initializeExperiment()
-	// AP: Agreed. I was thinking of doing it once for the entire experiment.
-	// However, I'm thinking of putting the "random selection" part in Distributions, because it's sort of a distribution... thoughts?
-	//KA: Agree, just call it in initializeExperiment()
+	
 	private void pickIconsForCondition(){
-		// TODO: randomly select 60 icons
-		// For the moment: just take all our set
-		for(int i=1; i<= Distributions.NUM_POSITIONS; i++){
-			State.current_images_ID[i]=Distributions.images_ID[State.block][i-1];
+		for(int tr=1; tr<= Distributions.NUM_POSITIONS; tr++){
+			State.current_images_ID[tr]=Distributions.images_ID[State.block][tr-1];
 				
 		}
 		
-		for(int i=1; i<= Distributions.NUM_POSITIONS; i++){
-			State.current_labels_ID[i]=Distributions.labels_ID[State.block][i-1];
+		for(int tr=1; tr <= Distributions.NUM_POSITIONS; tr++){
+			State.current_labels_ID[tr]=Distributions.labels_ID[State.block][tr-1];
 				
 		}
 		//Utils.shuffleArrayExceptZero(State.current_images_ID); done in Distributions

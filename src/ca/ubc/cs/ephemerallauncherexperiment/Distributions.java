@@ -228,8 +228,8 @@ public class Distributions {
 	public static String distributionsLogFile(Context context){
 		String logStr ="";
 		
-		String lineSep = "-------------------------------------------------------\n";
-		String halfLineSep = lineSep.substring(0, (int)lineSep.length()/2) + "\n";
+		String lineSep = "\n-------------------------------------------------------\n";
+		String halfLineSep = "\n" + lineSep.substring(0, (int)lineSep.length()/2) + "\n";
 		
 		//general
 		logStr += "GENERAL \n";
@@ -256,11 +256,12 @@ public class Distributions {
 		//logging image icons and labels
 		logStr += lineSep;
 		logStr += "IMAGE ICONS AND LABELS\n";
+		String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
 		for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
 			logStr += halfLineSep;
 			logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.ConditionEnum.values()[c].toString() +"\n";
 			for (int pos=0; pos < NUM_POSITIONS; pos++){
-				logStr += String.valueOf(pos+1) + " : " + context.getString(images_ID[c][pos]) + " "  + context.getString(labels_ID[c][pos]) + " ";
+				logStr += String.valueOf(pos+1) + " : " + Utils.extractIconName(context.getString(images_ID[c][pos]), iconAddressPrefix) + " "  + context.getString(labels_ID[c][pos]) + "; " ;
 				if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
 					logStr += "\n";
 								

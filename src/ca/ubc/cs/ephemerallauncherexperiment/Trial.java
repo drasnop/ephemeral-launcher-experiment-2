@@ -79,7 +79,9 @@ public class Trial extends Activity {
 		State.targetIconPage = (int)Math.floor((targetIconPosition-1) / LauncherParameters.NUM_ICONS_PER_PAGE) +1; 
 		State.targetIconRow = (int)Math.floor((targetIconPosOnPage-1) / 4) + 1 ;
 		State.targetIconColumn = (targetIconPosOnPage-1)%4+1; 
-		
+		State.timeout=false;
+		State.missed=false;
+		State.success=false;
 		
 	}
 
