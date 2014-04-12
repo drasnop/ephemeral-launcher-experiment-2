@@ -125,21 +125,30 @@ public class Distributions {
 			targets[i]=temp.remove(0);
 		}
 		
-		// Step 4: Generate highlighted icons sequence
+		// Step 4a: Generate highlighted icons sequence based on MFU
 		
-		// For the moment, just the most frequently used
 		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
 			for(int j=0; j<LauncherParameters.NUM_HIGHLIGHTED_ICONS; j++){
 				highlighted[i][j]=positions.get(j);
 			}
 		}
 		
+		// Step 4b: Add the MRU icon if not already present
+		
+		for(int i=2; i<=ExperimentParameters.NUM_TRIALS; i++){
+			// If the MRU icon is amongst the MFU, do nothing 
+			if(!isAmongHighlighted(i, targets[i-1]))
+				highlighted[i][LauncherParameters.NUM_HIGHLIGHTED_ICONS-1]=targets[i-1];
+		}
+		
 		// Step 5: Compute the accuracy
+		
 		int successes=computeSuccesses();
 		accuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
 		Log.v("Distributions","Empirical accuracy before adjusting = "+accuracy);
 	
 		// Step 6: Adjust the accuracy
+		
 		if(accuracy<ExperimentParameters.MIN_ACCURACY){
 			int min_successes= (int) Math.ceil(ExperimentParameters.MIN_ACCURACY*ExperimentParameters.NUM_TRIALS);
 			int to_adjust=min_successes-successes;
@@ -175,8 +184,12 @@ public class Distributions {
 	}
 	
 	private static boolean isPredictionCorrect(int trial){
+		return isAmongHighlighted(trial, targets[trial]);
+	}
+	
+	private static boolean isAmongHighlighted(int trial, int icon){
 		for(int i=0; i<LauncherParameters.NUM_HIGHLIGHTED_ICONS; i++){
-			if(highlighted[trial][i]==targets[trial])
+			if(highlighted[trial][i]==icon)
 				return true;
 		}
 		return false;
