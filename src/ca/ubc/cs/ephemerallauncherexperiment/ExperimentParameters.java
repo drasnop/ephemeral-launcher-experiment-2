@@ -6,12 +6,14 @@ import android.graphics.Color;
 public class ExperimentParameters {
 	
 	public static final int NUM_CONDITIONS=2;
-	public static final int NUM_TRIALS=5;		//20
+	public static final int NUM_TRIALS=20;		//20
 	public static final int NUM_PARTICIPANTS=10;
 	
 	public static final int zipfSize = 20;
 	public static final int NUM_PAGES = 3;
 	public static final int NUM_HIGHLIGHTED_ICONS = 9;
+	
+	public static final double MIN_ACCURACY = .90;
 	
 	public static final int TRIAL_TIMEOUT_MS = 10000;	//10000	
 	public static final int TIMEOUT_CHECK_INTERVAL = 500;

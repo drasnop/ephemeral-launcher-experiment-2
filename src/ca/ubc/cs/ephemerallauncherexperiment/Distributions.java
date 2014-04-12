@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Distributions {
@@ -134,15 +135,46 @@ public class Distributions {
 		}
 		
 		// Step 5: Compute the accuracy
-		int successes=0;
-		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
-			if(correctPrediction(i))
-				successes++;
+		int successes=computeSuccesses();
+		accuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
+		Log.v("Distributions","Empirical accuracy before adjusting = "+accuracy);
+	
+		// Step 6: Adjust the accuracy
+		if(accuracy<ExperimentParameters.MIN_ACCURACY){
+			int min_successes= (int) Math.ceil(ExperimentParameters.MIN_ACCURACY*ExperimentParameters.NUM_TRIALS);
+			int to_adjust=min_successes-successes;
+			
+			// Randomly select to_adjust trials
+			ArrayList<Integer> trials = new ArrayList<Integer>();
+			for(int i=1; i<=ExperimentParameters.NUM_TRIALS;i++)
+				trials.add(i);
+			Collections.shuffle(trials);
+			for(int i=0; i<trials.size(); i++){
+				if(to_adjust>0 && !isPredictionCorrect(trials.get(i))){
+					adjustTrial(trials.get(i));
+					to_adjust--;
+				}
+				else 
+					randomlyChangeTrial(trials.get(i));
+			}
 		}
-		accuracy= ((double) successes)/ExperimentParameters.NUM_TRIALS;					
+		
+		// Step 7: Recompute the accuracy, just to be sure
+		successes=computeSuccesses();
+		accuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
+		Log.v("Distributions","Empirical accuracy after adjusting = "+accuracy);
 	}
 
-	private static boolean correctPrediction(int trial){
+	private static int computeSuccesses(){
+		int successes=0;
+		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
+			if(isPredictionCorrect(i))
+				successes++;
+		}
+		return successes;
+	}
+	
+	private static boolean isPredictionCorrect(int trial){
 		for(int i=0; i<LauncherParameters.NUM_HIGHLIGHTED_ICONS; i++){
 			if(highlighted[trial][i]==targets[trial])
 				return true;
@@ -150,6 +182,35 @@ public class Distributions {
 		return false;
 	}
 	
+	// Change one highlighted icon to make the prediction a success
+	private static void adjustTrial(int trial){
+		int icon=(int) Math.floor(Math.random()*LauncherParameters.NUM_HIGHLIGHTED_ICONS);		// int between 0 and HIGHLIGHTED-1
+		highlighted[trial][icon]=targets[trial];
+	}
+	
+	// Change one highlighted icon without modifying the correctness of the prediction 
+	private static void randomlyChangeTrial(int trial){
+		int icon;
+		int replaceBy=(int) Math.floor(Math.random()*NUM_POSITIONS);
+		
+		if(!isPredictionCorrect(trial))
+			icon=(int) Math.floor(Math.random()*LauncherParameters.NUM_HIGHLIGHTED_ICONS);		// int between 0 and HIGHLIGHTED-1
+		else
+			icon=selectOneHighlightedExceptTarget(trial);
+		
+		highlighted[trial][icon]=replaceBy;
+	}
+	
+	// Helper function
+	private static int selectOneHighlightedExceptTarget(int trial){
+		ArrayList<Integer> highlight= new ArrayList<Integer>();
+		for(int i=0;i<ExperimentParameters.NUM_HIGHLIGHTED_ICONS;i++){
+			if(highlighted[trial][i] != targets[trial])
+				highlight.add(i);
+		}
+		Collections.shuffle(highlight);
+		return highlight.get(0);
+	}
 	
 	public static String distributionsLogFile(Context context){
 		String logStr ="";
