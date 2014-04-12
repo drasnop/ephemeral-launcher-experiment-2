@@ -23,9 +23,6 @@ public class State {
 	public static int[] current_images_ID;	// from 1 to 60, 0 is irrelevant
 	public static int[] current_labels_ID;	// from 1 to 60, 0 is irrelevant
 	
-	public static String current_image_string;
-	public static int current_label_string;
-	
 	
 	public static boolean timeout;
 	public static boolean missed;
@@ -36,7 +33,7 @@ public class State {
 	public static int targetIconColumn;
 	
 	public static String stateCsvLog(Context context){
-		return Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn), context.getString(current_images_ID[trial-1]), context.getString(current_labels_ID[trial-1]));
+		return Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn), context.getString(current_images_ID[trial]), context.getString(current_labels_ID[trial]));
 	}
 	
 	public static File currentTrialsLogFile;		//the file contains per trial logs for a participant
