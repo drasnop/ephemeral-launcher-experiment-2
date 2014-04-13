@@ -79,12 +79,13 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 		if(State.participant<0){
 			Toast.makeText(this, "Please select participant #", Toast.LENGTH_SHORT).show();
 			return;
-		}
+		} else {
 		
 		initializeExperiment();
 		
 		Intent intent = new Intent(this, Condition.class);
 		startActivity(intent);
+		}
 	}
 	
 	private void initializeExperiment(){

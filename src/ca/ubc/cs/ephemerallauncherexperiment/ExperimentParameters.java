@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 public class ExperimentParameters {
 	
-	public static final int NUM_CONDITIONS=4;
+	public static final int NUM_CONDITIONS=5;
 	public static final int NUM_TRIALS=2;		//20
 	public static final int NUM_PARTICIPANTS=10;
 	
@@ -15,7 +15,7 @@ public class ExperimentParameters {
 	
 	public static final double MIN_ACCURACY = .90;
 	
-	public static final int TRIAL_TIMEOUT_MS = 10000;	//10000	
+	public static final int TRIAL_TIMEOUT_MS = 15000;	//10000	
 	public static final int TIMEOUT_CHECK_INTERVAL = 500;
 	
 	public static final String LOG_FOLDER = "EXP1";
