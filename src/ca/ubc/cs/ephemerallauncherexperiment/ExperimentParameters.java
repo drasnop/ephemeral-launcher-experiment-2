@@ -7,7 +7,7 @@ public class ExperimentParameters {
 	
 	public static final int NUM_CONDITIONS=5;
 	public static final int NUM_TRIALS=2;		//20
-	public static final int NUM_PARTICIPANTS=10;
+	public static final int NUM_PARTICIPANTS=20;
 	
 	public static final int zipfSize = 20;
 	public static final int NUM_PAGES = 3;
