@@ -116,10 +116,14 @@ public class Pager extends FragmentActivity{
 	//TODO: move every function corresponding to the general concept of Trial to Trial.java
 	public void concludeTrial(int page, int position_on_page){
 		
-		mHandler.removeCallbacks(mTimeoutChecker);
-		logEvent("ConcludingTrial", "");
 		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
 		State.success = (Distributions.targets[State.trial] == global_position);
+		
+		if(!State.success)
+			Utils.vibrate(this);
+		
+		mHandler.removeCallbacks(mTimeoutChecker);
+		logEvent("ConcludingTrial", "");
 		boolean ifHighlighted = isHighlighted(global_position);
 		Log.v("Pager", ifHighlighted? "Highlighted" : "Normal");
 		long duration = System.currentTimeMillis()-State.startTime;

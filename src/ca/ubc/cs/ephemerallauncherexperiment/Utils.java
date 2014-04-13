@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Vibrator;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Utils {
@@ -76,5 +78,10 @@ public class Utils {
 			return LauncherParameters.AnimationType.NONE;
 			
 		}
+	}
+
+	public static void vibrate(Context context) {
+		Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator.vibrate(ExperimentParameters.VIBRATION_DURATION_MS);
 	}
 }
