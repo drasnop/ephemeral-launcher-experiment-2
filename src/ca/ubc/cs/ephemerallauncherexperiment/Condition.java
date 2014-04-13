@@ -1,5 +1,6 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +14,7 @@ public class Condition extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_condition);
-		
-		State.initCondition();
-		
-		pickIconsForCondition();		
-		
-		// Adjust the text
-		((TextView) this.findViewById(R.id.start_condition)).setText("Condition #"+State.block);
+		initializeCondition();
 	}
 
 	@Override
@@ -30,7 +25,14 @@ public class Condition extends Activity {
 	}
 
 	
-
+	private void initializeCondition(){
+		State.initCondition();	
+		LauncherParameters.ANIMATION = Utils.conditionToAnimation(State.condition);	
+		pickIconsForCondition();		
+		
+		// Adjust the text
+		((TextView) this.findViewById(R.id.start_condition)).setText("Condition #"+State.block);
+	}
 	
 	public void startFirstTrial(View view) {
 
@@ -39,19 +41,15 @@ public class Condition extends Activity {
 		startActivity(intent);
 	}
 
-	
 	private void pickIconsForCondition(){
 		for(int pos=1; pos<= Distributions.NUM_POSITIONS; pos++){
 			State.current_images_ID[pos]=Distributions.images_ID[State.block][pos-1];
-				
+			State.current_images_gs_ID[pos]=Distributions.images_gs_ID[State.block][pos-1];	
 		}
 		
 		for(int pos=1; pos <= Distributions.NUM_POSITIONS; pos++){
-			State.current_labels_ID[pos]=Distributions.labels_ID[State.block][pos-1];
-				
-		}
-		//Utils.shuffleArrayExceptZero(State.current_images_ID); done in Distributions
-		
+			State.current_labels_ID[pos]=Distributions.labels_ID[State.block][pos-1];			
+		}	
 	}
 	
 	@Override //KZ

@@ -108,7 +108,7 @@ public class AnimatedGridView extends GridView {
 		case COLOR:
 		case BLUR:
 			if(isDifferentFromAllHighlighted(position)){
-				changeMaskImages();
+				// changeMaskImages();			// not anymore: we are using only greyscale+blur
 				Effects.changeToGreyScale(this.getIcon(position));
 			}
 			break;
@@ -128,7 +128,7 @@ public class AnimatedGridView extends GridView {
 		switch (LauncherParameters.ANIMATION) {
 		case COLOR:
 		case BLUR:
-			// Animation.color(this.getIcon(position));    not any more
+			Animation.color(this.getIcon(position));
 			break;
 		case ZOOM_IN:
 			Animation.zoom_in(this.getIcon(position));

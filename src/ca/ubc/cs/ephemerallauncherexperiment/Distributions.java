@@ -35,6 +35,7 @@ public class Distributions {
 	public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][LauncherParameters.NUM_HIGHLIGHTED_ICONS];
 	
 	public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][NUM_POSITIONS];
+	public static Integer[][] images_gs_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][NUM_POSITIONS];
 	public static Integer[][] labels_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][NUM_POSITIONS];
 
 	public static double accuracy;
@@ -46,10 +47,12 @@ public class Distributions {
 		}
 		Collections.shuffle(allExperimentPositions);
 		
-		for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++)
-			for (int j=0; j < NUM_POSITIONS; j++)
+		for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++){
+			for (int j=0; j < NUM_POSITIONS; j++){
 				images_ID[i][j] = LauncherParameters.images_ID[allExperimentPositions.get(i*NUM_POSITIONS+j)];
-		
+				images_gs_ID[i][j] = LauncherParameters.images_gs_ID[allExperimentPositions.get(i*NUM_POSITIONS+j)];
+			}	
+		}
 	}
 	
 	private static void labelDistributionInit(){
