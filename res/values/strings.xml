@@ -27,6 +27,7 @@
     <string name="end_of_condition">Thanks for hanging in there! Touch the screen to start the next block.</string>
     <string name="end_of_experiment">Thank you for your participation!</string>
     <string name="experiment_button_end">Close experiment</string>
+    <string name="trial_icon_label">icon_label</string>
    	
    	<string name="zoom_in">Zoom In</string>
     <string name="transparency">Transparency</string>

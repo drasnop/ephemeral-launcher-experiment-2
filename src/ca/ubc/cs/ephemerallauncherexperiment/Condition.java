@@ -41,13 +41,13 @@ public class Condition extends Activity {
 
 	
 	private void pickIconsForCondition(){
-		for(int tr=1; tr<= Distributions.NUM_POSITIONS; tr++){
-			State.current_images_ID[tr]=Distributions.images_ID[State.block][tr-1];
+		for(int pos=1; pos<= Distributions.NUM_POSITIONS; pos++){
+			State.current_images_ID[pos]=Distributions.images_ID[State.block][pos-1];
 				
 		}
 		
-		for(int tr=1; tr <= Distributions.NUM_POSITIONS; tr++){
-			State.current_labels_ID[tr]=Distributions.labels_ID[State.block][tr-1];
+		for(int pos=1; pos <= Distributions.NUM_POSITIONS; pos++){
+			State.current_labels_ID[pos]=Distributions.labels_ID[State.block][pos-1];
 				
 		}
 		//Utils.shuffleArrayExceptZero(State.current_images_ID); done in Distributions
