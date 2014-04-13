@@ -108,13 +108,13 @@ public class AnimatedGridView extends GridView {
 		case COLOR:
 		case BLUR:
 			if(isDifferentFromAllHighlighted(position)){
-				changeMaskImages();
+				// changeMaskImages();			// not anymore: we are using only greyscale+blur
 				Effects.changeToGreyScale(this.getIcon(position));
 			}
 			break;
 		case TRANSPARENCY:
-			/*if (isDifferentFromAllHighlighted(position))
-				Animation.fadeIn(this.getIcon(position));*/
+			if (isDifferentFromAllHighlighted(position))
+				Animation.fadeIn(this.getIcon(position));
 			break;
 		default:
 			break;
@@ -128,7 +128,7 @@ public class AnimatedGridView extends GridView {
 		switch (LauncherParameters.ANIMATION) {
 		case COLOR:
 		case BLUR:
-			// Animation.color(this.getIcon(position));    not any more
+			Animation.color(this.getIcon(position));
 			break;
 		case ZOOM_IN:
 			Animation.zoom_in(this.getIcon(position));
@@ -163,7 +163,7 @@ public class AnimatedGridView extends GridView {
 					LauncherParameters.COLOR__START_DELAY);
 			break;
 		case TRANSPARENCY:
-		//	if (isDifferentFromAllHighlighted(position))
+			if (isDifferentFromAllHighlighted(position))
 				Animation.fadeIn(this.getIcon(position));
 		default:
 			break;
@@ -205,7 +205,7 @@ public class AnimatedGridView extends GridView {
 
 	private boolean isDifferentFromAllHighlighted(int position) {
 		for(Integer icon:highlightedIcons){
-			if(icon.intValue() == position);
+			if(icon == position)
 				return false;
 		}
 		return true;
