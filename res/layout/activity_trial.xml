@@ -35,6 +35,7 @@
         android:layout_below="@+id/target_icon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
+        android:text="@string/trial_icon_label"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -44,6 +45,7 @@
         android:layout_above="@+id/target_icon"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
+        android:text="@string/trial_message"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
