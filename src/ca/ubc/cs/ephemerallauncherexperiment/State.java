@@ -55,6 +55,7 @@ public class State {
 		page=1;	// maybe useless	
 		current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
 		current_labels_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
+		LauncherParameters.ANIMATION = Utils.conditionToAnimation(condition);
 		
 	}
 

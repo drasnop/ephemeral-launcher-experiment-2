@@ -57,7 +57,7 @@ public class LauncherParameters {
     public static int BACKGROUND=1;		// 0=dark 1=ios 2=light
     
     public static enum AnimationType{
-    	COLOR, ZOOM_IN, ZOOM_OUT, PULSE_IN, PULSE_OUT, TRANSPARENCY, BLUR, TWIST
+    	COLOR, ZOOM_IN, ZOOM_OUT, PULSE_IN, PULSE_OUT, TRANSPARENCY, BLUR, TWIST, NONE
     }
     
     public static void switchAnimationTo(AnimationType type, PagerAdapter pagerAdapter){	

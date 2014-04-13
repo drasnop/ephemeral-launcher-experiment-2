@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Utils {
 	public static String appendWithComma(String... strings) {
@@ -51,5 +52,29 @@ public class Utils {
 	public static String extractIconName(String iconResourceAddress, String iconResourceAddressPrefix){
 		int addressLength = iconResourceAddressPrefix.length();
 		return iconResourceAddress.substring(addressLength);
+	}
+	
+	public static LauncherParameters.AnimationType conditionToAnimation(ExperimentParameters.ConditionEnum condition){
+		
+		switch (condition){
+		case GREYBLUR:
+			return LauncherParameters.AnimationType.BLUR;
+			
+		case TRANSPARENCY:
+			return LauncherParameters.AnimationType.TRANSPARENCY;
+			
+		case TWIST:
+			return LauncherParameters.AnimationType.TWIST;
+			
+		case PULSEOUT:
+			return LauncherParameters.AnimationType.PULSE_OUT;
+			
+		case CONTROL:
+			return LauncherParameters.AnimationType.NONE;
+			
+		default:
+			return LauncherParameters.AnimationType.NONE;
+			
+		}
 	}
 }
