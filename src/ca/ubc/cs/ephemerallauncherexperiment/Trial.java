@@ -31,7 +31,7 @@ public class Trial extends Activity {
 		
 		TextView target_icon_label = (TextView) this.findViewById(R.id.target_icon_label);
 		target_icon_label.setText(State.current_labels_ID[Distributions.targets[State.trial]]);
-		target_icon_label.setTextSize(ExperimentParameters.TARGET_ICON_LABEL_SIZE);
+		
 		
 		initializeTrial();
 		

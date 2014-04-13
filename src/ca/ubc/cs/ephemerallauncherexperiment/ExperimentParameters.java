@@ -25,19 +25,18 @@ public class ExperimentParameters {
 	public static final String ICON_SET = "IconSet 1";
 	public static final String LABEL_SET = "LabelSet 1";
 	public static final String ICON_RESOURCE_ADDRESS_PREFIX = "res/drawable-hdpi/";
-	
-	public static final float TARGET_ICON_LABEL_SIZE = 25f;
+
 	
 	public final static int SUCCESS_MESSAGE_DURATION_MS = 500;
-	public final static int SUCCESS_MESSAGE_DELAY_MS = 1000;
+	public final static int SUCCESS_MESSAGE_DELAY_MS = 500;
 	public final static int FAILURE_MESSAGE_DURATION_MS = 500;
-	public final static int FAILURE_MESSAGE_DELAY_MS = 2500;
+	public final static int FAILURE_MESSAGE_DELAY_MS = 1000;
 	
 	public final static int SUCCESS_MESSAGE_COLOR = Color.GREEN;
-	public final static int FAILURE_MESSAGE_COLOR = Color.RED;
+	public final static int FAILURE_MESSAGE_COLOR = Color.rgb(255, 50, 50);
 	
 	public final static float SUCCESS_MESSAGE_SIZE = 20f;
-	public final static float FAILURE_MESSAGE_SIZE = 28f;
+	public final static float FAILURE_MESSAGE_SIZE = 20f;
 	
 	public final static String SUCCESS_MESSAGE = "ca.ubc.cs.ephemerallauncherexperiment.SUCCESS_MESSAGE";
 	
