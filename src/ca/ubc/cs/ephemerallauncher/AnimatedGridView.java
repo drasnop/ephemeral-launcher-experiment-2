@@ -113,8 +113,8 @@ public class AnimatedGridView extends GridView {
 			}
 			break;
 		case TRANSPARENCY:
-			/*if (isDifferentFromAllHighlighted(position))
-				Animation.fadeIn(this.getIcon(position));*/
+			if (isDifferentFromAllHighlighted(position))
+				Animation.fadeIn(this.getIcon(position));
 			break;
 		default:
 			break;
@@ -163,7 +163,7 @@ public class AnimatedGridView extends GridView {
 					LauncherParameters.COLOR__START_DELAY);
 			break;
 		case TRANSPARENCY:
-		//	if (isDifferentFromAllHighlighted(position))
+			if (isDifferentFromAllHighlighted(position))
 				Animation.fadeIn(this.getIcon(position));
 		default:
 			break;
@@ -205,7 +205,7 @@ public class AnimatedGridView extends GridView {
 
 	private boolean isDifferentFromAllHighlighted(int position) {
 		for(Integer icon:highlightedIcons){
-			if(icon.intValue() == position);
+			if(icon == position)
 				return false;
 		}
 		return true;
