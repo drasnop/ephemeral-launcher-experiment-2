@@ -7,7 +7,7 @@ public class ExperimentParameters {
 	
 	public static final int NUM_CONDITIONS=5;
 	public static final int NUM_TRIALS=2;		//20
-	public static final int NUM_PARTICIPANTS=10;
+	public static final int NUM_PARTICIPANTS=20;
 	
 	public static final int zipfSize = 20;
 	public static final int NUM_PAGES = 3;
@@ -31,6 +31,7 @@ public class ExperimentParameters {
 	public final static int SUCCESS_MESSAGE_DELAY_MS = 500;
 	public final static int FAILURE_MESSAGE_DURATION_MS = 500;
 	public final static int FAILURE_MESSAGE_DELAY_MS = 2500;
+	public final static int VIBRATION_DURATION_MS = 250;
 	
 	public final static int SUCCESS_MESSAGE_COLOR = Color.GREEN;
 	public final static int FAILURE_MESSAGE_COLOR = Color.RED;

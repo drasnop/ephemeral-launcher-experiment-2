@@ -53,7 +53,8 @@ public class State {
 	//The initialization of the condition is currently done in Condition.onCreate, but we could make a separate function
 	//So I've moved the change of ANIMATION in there.
 	public static void initCondition() {
-		condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[participant][block]];
+		assert(Distributions.conditions.length==(ExperimentParameters.NUM_CONDITIONS*(1+ExperimentParameters.NUM_CONDITIONS%2)));
+		condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[participant%Distributions.conditions.length][block]];
 		trial=1;
 		page=1;	// maybe useless	
 		current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];

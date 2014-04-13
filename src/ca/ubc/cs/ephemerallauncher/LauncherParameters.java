@@ -54,7 +54,7 @@ public class LauncherParameters {
     public static final int TRANSPARENCY__DURATION = 1500;
     public static final float TRANSPARENCY__INTIAL = 0.4f;
     
-    public static int BACKGROUND=1;		// 0=dark 1=ios 2=light
+    public static int BACKGROUND=0;		// 0=dark 1=ios 2=light
     
     public static enum AnimationType{
     	COLOR, ZOOM_IN, ZOOM_OUT, PULSE_IN, PULSE_OUT, TRANSPARENCY, BLUR, TWIST, NONE

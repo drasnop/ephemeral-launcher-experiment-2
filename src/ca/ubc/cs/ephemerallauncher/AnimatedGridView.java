@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
-import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
@@ -108,7 +107,6 @@ public class AnimatedGridView extends GridView {
 		case COLOR:
 		case BLUR:
 			if(isDifferentFromAllHighlighted(position)){
-				// changeMaskImages();			// not anymore: we are using only greyscale+blur
 				Effects.changeToGreyScale(this.getIcon(position));
 			}
 			break;
@@ -119,9 +117,6 @@ public class AnimatedGridView extends GridView {
 		default:
 			break;
 		}
-		
-		// stupid function call to change the color of the captions
-		changeTextColor();
 	}
 	
 	private void highlightIcon(int position) {
@@ -167,39 +162,6 @@ public class AnimatedGridView extends GridView {
 				Animation.fadeIn(this.getIcon(position));
 		default:
 			break;
-		}
-	}
-
-
-	private void changeMaskImages() {
-		for (int i = 0; i < this.getChildCount(); i++) {
-			switch (LauncherParameters.ANIMATION) {
-			case COLOR:
-				this.getIcon(i).getImageGs().setImageResource(LauncherParameters.images_gs_ID[i]);
-				break;
-			case BLUR:
-				this.getIcon(i).getImageGs().setImageResource(LauncherParameters.images_b_ID[i]);
-				break;
-			default:
-				break;
-			}
-		}
-	}
-	
-	// Stupid function required because we can't change the text color globally!
-	void changeTextColor() {
-		for (int i = 0; i < this.getChildCount(); i++) {
-			switch (LauncherParameters.BACKGROUND) {
-			case 0:
-			case 1:
-				this.getIcon(i).getCaption().setTextColor(getResources().getColor(R.color.white));
-				break;
-			case 2:
-				this.getIcon(i).getCaption().setTextColor(getResources().getColor(R.color.darkgrey));
-				break;
-			default:
-				break;
-			}
 		}
 	}
 
