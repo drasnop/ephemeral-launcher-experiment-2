@@ -15,7 +15,7 @@ public class ExperimentParameters {
 	
 	public static final double MIN_ACCURACY = .90;
 	
-	public static final int TRIAL_TIMEOUT_MS = 15000;	//10000	
+	public static final int TRIAL_TIMEOUT_MS = 20000;	//10000	
 	public static final int TIMEOUT_CHECK_INTERVAL = 500;
 	
 	public static final String LOG_FOLDER = "EXP1";
@@ -40,7 +40,7 @@ public class ExperimentParameters {
 	
 	
 	public final static float SUCCESS_MESSAGE_SIZE = 20f;
-	public final static float FAILURE_MESSAGE_SIZE = 20f;
+	public final static float FAILURE_MESSAGE_SIZE = 25f;
 	
 	public final static String SUCCESS_MESSAGE = "ca.ubc.cs.ephemerallauncherexperiment.SUCCESS_MESSAGE";
 	
