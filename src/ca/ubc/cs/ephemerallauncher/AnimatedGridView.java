@@ -85,6 +85,7 @@ public class AnimatedGridView extends GridView {
 	public void backToPreAnimationState() {
 		if (LauncherParameters.ANIMATION_HAS_PREANIMATION_STATE) {
 			// TODO: stop the current animation! (in case they last 10s or so)
+			// Animation.clearAll() could be used in this case.
 			for (int i = 0; i < this.getChildCount(); i++)
 				this.getIcon(i).getImageGs().setVisibility(View.GONE);
 		}
@@ -112,8 +113,8 @@ public class AnimatedGridView extends GridView {
 			}
 			break;
 		case TRANSPARENCY:
-			if (isDifferentFromAllHighlighted(position))
-				Animation.disappear(this.getIcon(position));
+			/*if (isDifferentFromAllHighlighted(position))
+				Animation.fadeIn(this.getIcon(position));*/
 			break;
 		default:
 			break;
@@ -162,7 +163,7 @@ public class AnimatedGridView extends GridView {
 					LauncherParameters.COLOR__START_DELAY);
 			break;
 		case TRANSPARENCY:
-			if (isDifferentFromAllHighlighted(position))
+		//	if (isDifferentFromAllHighlighted(position))
 				Animation.fadeIn(this.getIcon(position));
 		default:
 			break;
@@ -204,7 +205,7 @@ public class AnimatedGridView extends GridView {
 
 	private boolean isDifferentFromAllHighlighted(int position) {
 		for(Integer icon:highlightedIcons){
-			if(position == icon);
+			if(icon.intValue() == position);
 				return false;
 		}
 		return true;

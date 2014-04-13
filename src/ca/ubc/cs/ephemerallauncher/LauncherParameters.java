@@ -176,7 +176,13 @@ public class LauncherParameters {
 		R.drawable.icon_271, R.drawable.icon_272, R.drawable.icon_273, 
 		R.drawable.icon_274, R.drawable.icon_275, R.drawable.icon_276, 
 		R.drawable.icon_277, R.drawable.icon_278, R.drawable.icon_279, 
-		R.drawable.icon_280, R.drawable.icon_281 };
+		R.drawable.icon_280, R.drawable.icon_281, R.drawable.icon_282, 
+		R.drawable.icon_283, R.drawable.icon_284, R.drawable.icon_285, 
+		R.drawable.icon_286, R.drawable.icon_287, R.drawable.icon_288, 
+		R.drawable.icon_289, R.drawable.icon_290, R.drawable.icon_291, 
+		R.drawable.icon_292, R.drawable.icon_293, R.drawable.icon_294, 
+		R.drawable.icon_295, R.drawable.icon_296, R.drawable.icon_297, 
+		R.drawable.icon_298, R.drawable.icon_299, R.drawable.icon_300};
 	
 	public static final Integer[] images_gs_ID = {R.drawable.icon_0_gs, R.drawable.icon_1_gs,
 		R.drawable.icon_2_gs, R.drawable.icon_3_gs, R.drawable.icon_4_gs,

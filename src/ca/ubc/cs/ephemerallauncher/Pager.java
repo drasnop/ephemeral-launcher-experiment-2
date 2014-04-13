@@ -243,7 +243,7 @@ public class Pager extends FragmentActivity{
 				pagerAdapter.previousPosition=pagerAdapter.currentPosition;
 				pagerAdapter.currentPosition = position;
 				
-				Animation.clearAll();
+				//Animation.clearAll();
 				
 				logEvent("NewPage", "");
 				
