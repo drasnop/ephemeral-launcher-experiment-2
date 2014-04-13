@@ -494,6 +494,5 @@ public class LauncherParameters {
 		R.string.icon_307_label, R.string.icon_308_label, R.string.icon_309_label, 
 		R.string.icon_310_label, R.string.icon_311_label, R.string.icon_312_label, 
 		R.string.icon_313_label, R.string.icon_314_label, R.string.icon_315_label, 
-		R.string.icon_316_label, R.string.icon_317_label, R.string.icon_318_label 
-};
+		R.string.icon_316_label, R.string.icon_317_label, R.string.icon_318_label};
 }

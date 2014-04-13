@@ -261,7 +261,7 @@ public class Distributions {
 			logStr += halfLineSep;
 			logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.ConditionEnum.values()[c].toString() +"\n";
 			for (int pos=0; pos < NUM_POSITIONS; pos++){
-				logStr += String.valueOf(pos+1) + " : " + Utils.extractIconName(context.getString(images_ID[c][pos]), iconAddressPrefix) + " "  + context.getString(labels_ID[c][pos]) + "; " ;
+				logStr += String.valueOf(pos+1) + ": " + Utils.extractIconName(context.getString(images_ID[c][pos]), iconAddressPrefix) + " "  + context.getString(labels_ID[c][pos]) + "; " ;
 				if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
 					logStr += "\n";
 								
