@@ -5,8 +5,8 @@ import android.graphics.Color;
 
 public class ExperimentParameters {
 	
-	public static final int NUM_CONDITIONS=1;
-	public static final int NUM_TRIALS=20;		//20
+	public static final int NUM_CONDITIONS=5;
+	public static final int NUM_TRIALS=40;		//20
 	public static final int NUM_PARTICIPANTS=20;
 	
 	public static final int zipfSize = 20;
@@ -35,9 +35,6 @@ public class ExperimentParameters {
 	
 	public final static int SUCCESS_MESSAGE_COLOR = Color.GREEN;
 	public final static int FAILURE_MESSAGE_COLOR = Color.rgb(255, 50, 50);
-	
-	
-	
 	
 	public final static float SUCCESS_MESSAGE_SIZE = 20f;
 	public final static float FAILURE_MESSAGE_SIZE = 25f;
