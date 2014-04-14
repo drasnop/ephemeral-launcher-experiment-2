@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
 import ca.ubc.cs.ephemerallauncherexperiment.EndOfCondition;
@@ -133,7 +132,6 @@ public class Pager extends FragmentActivity{
 		mHandler.removeCallbacks(mTimeoutChecker);
 		logEvent("ConcludingTrial", "");
 		boolean ifHighlighted = isHighlighted(global_position);
-		Log.v("Pager", ifHighlighted? "Highlighted" : "Normal");
 		long duration = System.currentTimeMillis()-State.startTime;
 		
 		int row=(int) Math.floor(position_on_page/4)+1;
