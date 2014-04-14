@@ -54,7 +54,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 		return fileName;
 	}
 	
-	private String getDistributionsFileName(){
+	public static String getDistributionsFileName(){
 		String fileName = Utils.getTimeStamp(true) + "__" + State.participantId + "__DISTRIBUTIONS" + ".log";
 		return fileName;
 	}
@@ -99,7 +99,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 		
 		//Log distributions		
 		State.currentDistributionsLogFile = FileManager.getFile(this,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
-		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.distributionsLogFile(), false);
+		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.distributionsLogFile(this), false);
 	}
 	
 
