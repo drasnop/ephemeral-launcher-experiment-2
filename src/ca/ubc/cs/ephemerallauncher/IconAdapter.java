@@ -38,7 +38,6 @@ public class IconAdapter extends BaseAdapter {
 
 		if(global_position>Distributions.NUM_POSITIONS){
 			Log.e("Adapter", "We should never get this global position: "+Integer.toString(global_position) + " " + Integer.toString(position));
-			//TODO I have no idea why we get a 61 on the third page...
 			global_position=Distributions.NUM_POSITIONS;
 		}
 		
@@ -55,8 +54,7 @@ public class IconAdapter extends BaseAdapter {
 			icon.getImageGs().setImageResource(State.current_images_gs_ID[global_position]);
 			icon.getImageGs().setVisibility(ViewGroup.GONE);
 			
-			// The caption TODO
-			//icon.getCaption().setText(LauncherParameters.captions_ID[position]);
+			// The caption
 			icon.getCaption().setText(State.current_labels_ID[global_position]);
 			
 		} else {
