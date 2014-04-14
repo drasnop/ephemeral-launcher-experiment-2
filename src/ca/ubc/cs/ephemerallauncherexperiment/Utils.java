@@ -84,4 +84,12 @@ public class Utils {
 		Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(ExperimentParameters.VIBRATION_DURATION_MS);
 	}
+	
+	public static String padWithZero(int i){
+		String res="";
+		if(i<10)
+			res+="0";
+		res+=i;
+		return res;
+	}
 }

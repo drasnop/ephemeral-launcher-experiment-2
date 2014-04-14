@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Distributions {
@@ -31,7 +32,8 @@ public class Distributions {
 	};
 	
 	private static int[] zipf = new int[zipfSize+1];
-	public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1]; 
+	public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1];
+	public static int[] target_ranks = new int[ExperimentParameters.NUM_TRIALS+1];	// just used for logging
 	public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][LauncherParameters.NUM_HIGHLIGHTED_ICONS];
 	
 	public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][NUM_POSITIONS];
@@ -113,19 +115,22 @@ public class Distributions {
 
 		// Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to  the Zipfian distribution
 		
-		ArrayList<Integer> targetsList = new ArrayList<Integer>();
+		ArrayList<Pair<Integer,Integer>> targetsList = new ArrayList<Pair<Integer,Integer>>();
 		for(int i=1; i<=zipfSize; i++){
 			for(int j=0; j<zipf[i]; j++){
-				targetsList.add(positions.get(i-1));
+				targetsList.add(new Pair<Integer, Integer>(positions.get(i-1),i));
 			}
 		}
 		assert(targetsList.size()==ExperimentParameters.NUM_TRIALS);
 		Collections.shuffle(targetsList);
 		
-		List<Integer> temp = targetsList.subList(0, ExperimentParameters.NUM_TRIALS);
+		List<Pair<Integer, Integer>> temp = targetsList.subList(0, ExperimentParameters.NUM_TRIALS);
 		assert(temp.size() == ExperimentParameters.NUM_TRIALS);
+		Pair<Integer,Integer> target; 
 		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
-			targets[i]=temp.remove(0);
+			target=temp.remove(0);
+			targets[i]=target.first;
+			target_ranks[i]=target.second;
 		}
 		
 		// Step 4a: Generate highlighted icons sequence based on MFU
@@ -255,6 +260,26 @@ public class Distributions {
 		for (int i=0; i < zipfSize; i++)
 			logStr += String.valueOf(zipf[i+1]) + " ";
 		
+		//logging target positions
+		logStr += lineSep;
+		logStr += "TARGET POSITIONS (positions start from 1) (Zipfian rank indicated below) \n";
+		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
+			logStr += Utils.padWithZero(targets[tr+1]) + " ";
+		}
+		logStr+="\n";
+		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
+			logStr += Utils.padWithZero(target_ranks[tr+1]) + " ";
+		}
+		
+		//logging highlighted icons
+		logStr += lineSep;
+		logStr += "HIGHLIGHTED ICONS' POSITIONS \n";
+		
+		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
+			for (int icon = 0; icon < ExperimentParameters.NUM_HIGHLIGHTED_ICONS; icon++)
+				logStr += Utils.padWithZero(highlighted[tr+1][icon]) + " ";
+			logStr += "\n";
+		}
 		
 		//logging image icons and labels
 		logStr += lineSep;
@@ -274,22 +299,6 @@ public class Distributions {
 		
 	
 		
-		//logging target positions
-		logStr += lineSep;
-		logStr += "TARGET POSITIONS (positions start from 1) \n";
-		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-			logStr += String.valueOf(targets[tr+1]) + " ";
-		}
-		
-		//logging highlighted icons
-		logStr += lineSep;
-		logStr += "HIGHLIGHTED ICONS' POSITIONS \n";
-		
-		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-			for (int icon = 0; icon < ExperimentParameters.NUM_HIGHLIGHTED_ICONS; icon++)
-				logStr += String.valueOf(highlighted[tr+1][icon]) + " ";
-			logStr += "\n";
-		}
 		
 		return logStr;
 	}
