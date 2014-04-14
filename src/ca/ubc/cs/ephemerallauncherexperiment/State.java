@@ -33,7 +33,7 @@ public class State {
 	public static int targetIconColumn;
 	
 	public static String stateCsvLog(Context context){
-		return Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn), context.getString(current_images_ID[trial]), context.getString(current_labels_ID[trial]));
+		return Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn), Utils.extractIconName(context.getString(current_images_ID[trial]),ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX), context.getString(current_labels_ID[trial]));
 	}
 	
 	public static File currentTrialsLogFile;		//the file contains per trial logs for a participant

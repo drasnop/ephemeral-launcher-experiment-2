@@ -56,12 +56,12 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 	public void onBackPressed(){}
 
 	private String getTrialLogFileName(){
-		String fileName =  Utils.getTimeStamp(true) + "__" + State.participantId+".log";
+		String fileName =  Utils.getTimeStamp(true) + "__" + State.participantId+".csv";
 		return fileName;
 	}
 	
 	private String getEventsLogFileName(){
-		String fileName = Utils.getTimeStamp(true) + "__" + State.participantId + "__EVENTS" + ".log";
+		String fileName = Utils.getTimeStamp(true) + "__" + State.participantId + "__EVENTS" + ".csv";
 		return fileName;
 	}
 	
