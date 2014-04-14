@@ -124,8 +124,10 @@ public class Pager extends FragmentActivity{
 		
 		if(!State.success){
 			Utils.vibrate(this);
+			
 			// update the MRU of the next trial
-			Distributions.highlightIconAtTrial(global_position, State.trial+1);
+			if(!State.timeout)
+				Distributions.highlightIconAtTrial(global_position, State.trial+1);			
 		}
 		
 		mHandler.removeCallbacks(mTimeoutChecker);
