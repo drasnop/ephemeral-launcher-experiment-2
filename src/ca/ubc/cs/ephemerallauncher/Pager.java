@@ -144,8 +144,8 @@ public class Pager extends FragmentActivity{
 		}
 		else
 		{
-			iconName = Utils.extractIconName(this.getString(State.current_images_ID[State.trial]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX);
-			iconLabel = this.getString(State.current_labels_ID[State.trial]);
+			iconName = Utils.extractIconName(this.getString(State.current_images_ID[global_position]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX);
+			iconLabel = this.getString(State.current_labels_ID[global_position]);
 			
 		}
 				
