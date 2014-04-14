@@ -98,7 +98,7 @@ public class Pager extends FragmentActivity{
 	
 	private void logTrial(boolean ifHighlighted, long duration, int row, int column,  boolean ifSuccess, boolean ifTimeout, boolean ifMissed, String iconName, String iconLabel){
 		
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(this), resultCsvLog(ifHighlighted, duration, row, column,  ifSuccess,  ifTimeout, ifMissed, iconName, iconLabel));
+		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(this), String.valueOf(Distributions.target_ranks[State.trial]),resultCsvLog(ifHighlighted, duration, row, column,  ifSuccess,  ifTimeout, ifMissed, iconName, iconLabel));
 		
 		FileManager.appendLineToFile(State.currentTrialsLogFile,finalTrialLog);
 	}
