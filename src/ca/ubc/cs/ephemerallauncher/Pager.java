@@ -118,10 +118,15 @@ public class Pager extends FragmentActivity{
 	public void concludeTrial(int page, int position_on_page){
 		
 		int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
+		Distributions.selected[State.trial]=global_position;
+		
 		State.success = (Distributions.targets[State.trial] == global_position);
 		
-		if(!State.success)
+		if(!State.success){
 			Utils.vibrate(this);
+			// update the MRU of the next trial
+			Distributions.highlightIconAtTrial(global_position, State.trial+1);
+		}
 		
 		mHandler.removeCallbacks(mTimeoutChecker);
 		logEvent("ConcludingTrial", "");

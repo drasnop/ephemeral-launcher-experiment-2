@@ -99,7 +99,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 		
 		//Log distributions		
 		State.currentDistributionsLogFile = FileManager.getFile(this,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
-		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.distributionsLogFile(this), false);
+		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.distributionsLogFile(), false);
 	}
 	
 

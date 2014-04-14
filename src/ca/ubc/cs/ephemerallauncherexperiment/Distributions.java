@@ -34,6 +34,7 @@ public class Distributions {
 	private static int[] zipf = new int[zipfSize+1];
 	public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1];
 	public static int[] target_ranks = new int[ExperimentParameters.NUM_TRIALS+1];	// just used for logging
+	public static int[] selected = new int[ExperimentParameters.NUM_TRIALS+1];		// just used for logging
 	public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][LauncherParameters.NUM_HIGHLIGHTED_ICONS];
 	
 	public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][NUM_POSITIONS];
@@ -143,11 +144,8 @@ public class Distributions {
 		
 		// Step 4b: Add the MRU icon if not already present
 		
-		for(int i=2; i<=ExperimentParameters.NUM_TRIALS; i++){
-			// If the MRU icon is amongst the MFU, do nothing 
-			if(!isAmongHighlighted(i, targets[i-1]))
-				highlighted[i][LauncherParameters.NUM_HIGHLIGHTED_ICONS-1]=targets[i-1];
-		}
+		for(int i=2; i<=ExperimentParameters.NUM_TRIALS; i++)
+			highlightIconAtTrial(targets[i-1], i);
 		
 		// Step 5: Compute the accuracy
 		
@@ -203,6 +201,12 @@ public class Distributions {
 		return false;
 	}
 	
+	public static void highlightIconAtTrial(int icon, int trial){
+		// If the MRU icon is amongst the MFU, do nothing 
+		if(!isAmongHighlighted(trial, icon))
+			highlighted[trial][LauncherParameters.NUM_HIGHLIGHTED_ICONS-1]=icon;
+	}
+	
 	// Change one highlighted icon to make the prediction a success
 	private static void adjustTrial(int trial){
 		int icon=(int) Math.floor(Math.random()*LauncherParameters.NUM_HIGHLIGHTED_ICONS);		// int between 0 and HIGHLIGHTED-1
@@ -233,7 +237,7 @@ public class Distributions {
 		return highlight.get(0);
 	}
 	
-	public static String distributionsLogFile(Context context){
+	public static String distributionsLogFile(){
 		String logStr ="";
 		
 		String lineSep = "\n-------------------------------------------------------\n";
@@ -289,7 +293,7 @@ public class Distributions {
 			logStr += halfLineSep;
 			logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.ConditionEnum.values()[c].toString() +"\n";
 			for (int pos=0; pos < NUM_POSITIONS; pos++){
-				logStr += String.valueOf(pos+1) + ": " + Utils.extractIconName(context.getString(images_ID[c][pos]), iconAddressPrefix) + " "  + context.getString(labels_ID[c][pos]) + "; " ;
+				logStr += String.valueOf(pos+1) + ": " + Utils.extractIconName(String.valueOf(images_ID[c][pos]), iconAddressPrefix) + " "  + String.valueOf(labels_ID[c][pos]) + "; " ;
 				if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
 					logStr += "\n";
 								
@@ -303,4 +307,28 @@ public class Distributions {
 		return logStr;
 	}
 	
+	public static String postExperimentDistributionLogFile(Context context){
+		String logStr ="";
+		
+		String lineSep = "\n-------------------------------------------------------\n";
+		
+		//logging selected positions
+		logStr += lineSep;
+		logStr += "SELECTED POSITIONS (positions start from 1) \n";
+		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
+			logStr += String.valueOf(selected[tr+1]) + " ";
+		}
+		
+		//logging highlighted icons
+		logStr += lineSep;
+		logStr += "ACTUAL HIGHLIGHTED ICONS' POSITIONS (with empirical MRU) \n";
+		
+		for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
+			for (int icon = 0; icon < ExperimentParameters.NUM_HIGHLIGHTED_ICONS; icon++)
+				logStr += Utils.padWithZero(highlighted[tr+1][icon]) + " ";
+			logStr += "\n";
+		}
+		
+		return logStr;
+	}
 }
