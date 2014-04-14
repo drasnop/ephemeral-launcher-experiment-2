@@ -112,7 +112,7 @@ public class AnimatedGridView extends GridView {
 			break;
 		case TRANSPARENCY:
 			if (isDifferentFromAllHighlighted(position))
-				Animation.fadeIn(this.getIcon(position));
+				Animation.changeToTransparent(this.getIcon(position));
 			break;
 		default:
 			break;

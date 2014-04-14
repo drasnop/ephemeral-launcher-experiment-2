@@ -87,7 +87,7 @@ public class Animation {
 		animatorList.add(Effects.fadeIn(icon,LauncherParameters.TRANSPARENCY__DURATION,LauncherParameters.TRANSPARENCY__DELAY,LauncherParameters.TRANSPARENCY__INTIAL,1f));
 	};
 	
-	public static void disappear(Icon icon){
+	public static void changeToTransparent(Icon icon){
 		animatorList.add(Effects.fadeOut(icon, 0, 0,1f,LauncherParameters.TRANSPARENCY__INTIAL));
 	}
 	
