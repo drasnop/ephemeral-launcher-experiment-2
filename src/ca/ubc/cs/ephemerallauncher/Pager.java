@@ -271,12 +271,11 @@ public class Pager extends FragmentActivity{
 
 		// Switch to initial animation type when the layout has been created, then plays it
 		pager.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {		
-			boolean firstTime=true;		// This is a workaround, but seems to work pretty well...
 			public void onGlobalLayout() {
-				if(firstTime){
-					LauncherParameters.switchAnimationTo(LauncherParameters.ANIMATION, pagerAdapter);
-					firstTime=false;
-				}
+				LauncherParameters.switchAnimationTo(LauncherParameters.ANIMATION, pagerAdapter);
+
+		        // unregister listener (this is important)
+		        pager.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 			}
 		});
 
