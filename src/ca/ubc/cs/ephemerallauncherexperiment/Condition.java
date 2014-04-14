@@ -1,12 +1,11 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
-import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Condition extends Activity {
 	
@@ -16,14 +15,6 @@ public class Condition extends Activity {
 		setContentView(R.layout.activity_condition);
 		initializeCondition();
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.condition, menu);
-		return true;
-	}
-
 	
 	private void initializeCondition(){
 		State.initCondition();	
