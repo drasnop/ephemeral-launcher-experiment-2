@@ -175,11 +175,15 @@ public class Distributions {
 		}
 		
 		// Step 7: Recompute the accuracy, just to be sure
-		successes=computeSuccesses();
-		accuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
+		computeAccuracy();
 		Log.v("Distributions","Empirical accuracy after adjusting = "+accuracy);
 	}
 
+	public static void computeAccuracy(){
+		int successes=computeSuccesses();
+		accuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
+	}
+	
 	private static int computeSuccesses(){
 		int successes=0;
 		for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
@@ -307,6 +311,9 @@ public class Distributions {
 		String logStr ="";
 		
 		String lineSep = "\n-------------------------------------------------------\n";
+		
+		logStr += lineSep;
+		logStr += "Post-experiment accuracy: " + String.valueOf(accuracy) + "\n";
 		
 		//logging selected positions
 		logStr += lineSep;
