@@ -56,7 +56,7 @@ public class Utils {
 		return iconResourceAddress.substring(addressLength);
 	}
 	
-	public static LauncherParameters.AnimationType effectToAnimation(ExperimentParameters.EffectEnum condition){
+	public static LauncherParameters.AnimationType effectToAnimation(ExperimentParameters.EFFECTS condition){
 		
 		switch (condition){
 		/*case GREYBLUR:

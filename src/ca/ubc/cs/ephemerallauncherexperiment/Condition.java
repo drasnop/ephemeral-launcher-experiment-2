@@ -17,7 +17,7 @@ public class Condition extends Activity {
 	}
 	
 	private void initializeCondition(){
-		State.initCondition();	
+		State.initStateForCondition();
 		LauncherParameters.ANIMATION = Utils.effectToAnimation(State.effect);
 		pickIconsForCondition();		
 		

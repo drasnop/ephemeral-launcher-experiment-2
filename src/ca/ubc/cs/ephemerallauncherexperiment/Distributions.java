@@ -18,7 +18,7 @@ public class Distributions {
     // latin square
     // http://www.maths.qmul.ac.uk/~rab/DOEbook/doeweb6.pdf
     // http://statpages.org/latinsq.html and look for latinsq5.txt or .csv in Drive
-    public static int[][] conditions = {
+    public static final int[][] LATINSQ = {
             {0, 1, 11, 2, 10, 3, 9, 4, 8, 5, 7, 6},
             {1, 2, 0, 3, 11, 4, 10, 5, 9, 6, 8, 7},
             {2, 3, 1, 4, 0, 5, 11, 6, 10, 7, 9, 8},
@@ -31,6 +31,22 @@ public class Distributions {
             {9, 10, 8, 11, 7, 0, 6, 1, 5, 2, 4, 3},
             {10, 11, 9, 0, 8, 1, 7, 2, 6, 3, 5, 4},
             {11, 0, 10, 1, 9, 2, 8, 3, 7, 4, 6, 5}
+    };
+
+    // effects 0-2,  num_pages 0-1, accuracy 0-1
+    public static final int[][] CONDITIONS ={
+            {0,0,0},
+            {0,0,1},
+            {0,1,0},
+            {0,1,1},
+            {1,0,0},
+            {1,0,1},
+            {1,1,0},
+            {1,1,1},
+            {2,0,0},
+            {2,0,1},
+            {2,1,0},
+            {2,1,1}
     };
 
     private static int[] zipf = new int[zipfSize+1];
@@ -236,7 +252,7 @@ public class Distributions {
     // Helper function
     private static int selectOneHighlightedExceptTarget(int trial){
         ArrayList<Integer> highlight= new ArrayList<Integer>();
-        for(int i=0;i<ExperimentParameters.NUM_HIGHLIGHTED_ICONS;i++){
+        for(int i=0;i<State.num_highlighted_icons;i++){
             if(highlighted[trial][i] != targets[trial])
                 highlight.add(i);
         }
@@ -262,8 +278,8 @@ public class Distributions {
         //logging conditions
         logStr += lineSep;
         logStr += "CONDITIONS \n";
-        for (int i=0; i < ExperimentParameters.EffectEnum.values().length; i++)
-            logStr += ExperimentParameters.EffectEnum.values()[i].toString() + " ";
+        for (int i=0; i < ExperimentParameters.EFFECTS.values().length; i++)
+            logStr += ExperimentParameters.EFFECTS.values()[i].toString() + " ";
 
         //logging zipf
         logStr += lineSep;
@@ -287,7 +303,7 @@ public class Distributions {
         logStr += "HIGHLIGHTED ICONS' POSITIONS \n";
 
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            for (int icon = 0; icon < ExperimentParameters.NUM_HIGHLIGHTED_ICONS; icon++)
+            for (int icon = 0; icon < State.num_highlighted_icons; icon++)
                 logStr += Utils.padWithZero(highlighted[tr+1][icon]) + " ";
             logStr += "\n";
         }
@@ -298,7 +314,7 @@ public class Distributions {
         String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
         for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
             logStr += halfLineSep;
-            logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.EffectEnum.values()[c].toString() +"\n";
+            logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.EFFECTS.values()[c].toString() +"\n";
             for (int pos=0; pos < NUM_POSITIONS; pos++){
                 logStr += String.valueOf(pos+1) + ": " + Utils.extractIconName(context.getString(images_ID[c][pos]), iconAddressPrefix) + " "  +context.getString(labels_ID[c][pos]) + "; " ;
                 if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
@@ -330,7 +346,7 @@ public class Distributions {
         logStr += "ACTUAL HIGHLIGHTED ICONS' POSITIONS (with empirical MRU) \n";
 
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            for (int icon = 0; icon < ExperimentParameters.NUM_HIGHLIGHTED_ICONS; icon++)
+            for (int icon = 0; icon < State.num_highlighted_icons; icon++)
                 logStr += Utils.padWithZero(highlighted[tr+1][icon]) + " ";
             logStr += "\n";
         }

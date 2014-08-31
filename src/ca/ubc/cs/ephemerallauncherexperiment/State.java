@@ -5,19 +5,23 @@ import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 import java.io.File;
 
+// things in this class should change during the experiment
 public class State {
-
-	// things put here should change during the experiment
 	
 	public static String participantId;
 	public static int participant;
 	
 	public static int block; 		//  0 to CONDITIONS-1
-    public static int condition;
-    public static ExperimentParameters.EffectEnum effect;
-	
-	public static int trial;		// in that condition
-	
+    public static int trial;		// in that condition
+
+    public static int condition;    //  0 to CONDITION-1
+	public static ExperimentParameters.EFFECTS effect;
+    public static int num_pages;
+    public static double accuracy;
+    public static int num_highlighted_icons;
+
+    //////////////   utilities  //////////////////////
+
 	public static int page;		// current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
 	public static long startTime;
 	
@@ -53,11 +57,16 @@ public class State {
 	//AP: No, because I intended this function to be initStateForCondition (only concerns the variables in State).
 	//The initialization of the condition is currently done in Condition.onCreate, but we could make a separate function
 	//So I've moved the change of ANIMATION in there.
-	public static void initCondition() {
-		/*assert(Distributions.conditions.length==(ExperimentParameters.NUM_CONDITIONS*(1+ExperimentParameters.NUM_CONDITIONS%2)));*/
-		effect = ExperimentParameters.EffectEnum.values()[Distributions.conditions[participant%Distributions.conditions.length][block]% ExperimentParameters.EffectEnum.values().length];
-		trial=1;
-		page=1;	// maybe useless	
+	public static void initStateForCondition() {
+        condition=Distributions.LATINSQ[participant%Distributions.LATINSQ.length][block];
+        effect = ExperimentParameters.EFFECTS.values()[Distributions.CONDITIONS[condition][0]];
+        num_pages = ExperimentParameters.NUM_PAGES[Distributions.CONDITIONS[condition][1]];
+        accuracy = ExperimentParameters.ACCURACY[Distributions.CONDITIONS[condition][1]][Distributions.CONDITIONS[condition][2]];
+        num_highlighted_icons = num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
+
+        trial=1;
+        page=1;	// maybe useless
+
 		current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
 		/*current_images_gs_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];*/
 		current_labels_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];

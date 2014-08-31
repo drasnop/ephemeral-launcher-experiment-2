@@ -7,12 +7,14 @@ public class ExperimentParameters {
 	
 	public static final int NUM_CONDITIONS=12;
 	public static final int NUM_TRIALS=5;		//20
-	public static final int NUM_PARTICIPANTS=20;
+	public static final int NUM_PARTICIPANTS=12;
 	
 	public static final int zipfSize = 20;
-	public static final int NUM_PAGES = 3;
-	public static final int NUM_HIGHLIGHTED_ICONS = 9;
-	
+	public static final int[] NUM_PAGES = {3,5};
+    public static final double[][] ACCURACY = {{.75,.90},{.80,.95}};
+	public static final int NUM_HIGHLIGHTED_ICONS_PER_PAGE = 3;
+
+
 	public static final double MIN_ACCURACY = .80;
 	
 	public static final int TRIAL_TIMEOUT_MS = 20000;	//10000	
@@ -41,11 +43,12 @@ public class ExperimentParameters {
 	
 	public final static String SUCCESS_MESSAGE = "ca.ubc.cs.ephemerallauncherexperiment.SUCCESS_MESSAGE";
 	
-	public static enum EffectEnum {
+	public static enum EFFECTS {
 		CONTROL, TWIST, PULSEOUT
 	}
 	
 	public static String csvFile(){
-		return Utils.appendWithComma(String.valueOf(NUM_CONDITIONS), String.valueOf(NUM_TRIALS), String.valueOf(NUM_PAGES), String.valueOf(NUM_HIGHLIGHTED_ICONS), String.valueOf(TRIAL_TIMEOUT_MS));
+        //TODO: update this to print all values of pages
+		return Utils.appendWithComma(String.valueOf(NUM_CONDITIONS), String.valueOf(NUM_TRIALS), String.valueOf(ExperimentParameters.NUM_PAGES[0]), String.valueOf(ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE), String.valueOf(TRIAL_TIMEOUT_MS));
 	}
 }
