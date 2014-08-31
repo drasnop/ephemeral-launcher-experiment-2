@@ -35,7 +35,7 @@ public class Condition extends Activity {
 	private void pickIconsForCondition(){
 		for(int pos=1; pos<= Distributions.NUM_POSITIONS; pos++){
 			State.current_images_ID[pos]=Distributions.images_ID[State.block][pos-1];
-			State.current_images_gs_ID[pos]=Distributions.images_gs_ID[State.block][pos-1];	
+			/*State.current_images_gs_ID[pos]=Distributions.images_gs_ID[State.block][pos-1];*/
 		}
 		
 		for(int pos=1; pos <= Distributions.NUM_POSITIONS; pos++){

@@ -5,8 +5,8 @@ import android.graphics.Color;
 
 public class ExperimentParameters {
 	
-	public static final int NUM_CONDITIONS=5;
-	public static final int NUM_TRIALS=40;		//20
+	public static final int NUM_CONDITIONS=3;
+	public static final int NUM_TRIALS=5;		//20
 	public static final int NUM_PARTICIPANTS=20;
 	
 	public static final int zipfSize = 20;

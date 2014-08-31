@@ -49,10 +49,10 @@ public class IconAdapter extends BaseAdapter {
 			
 			// Set up the colored image
 			icon.getImage().setImageResource(State.current_images_ID[global_position]);
-			
+
 			// Set up the greyscale image
-			icon.getImageGs().setImageResource(State.current_images_gs_ID[global_position]);
-			icon.getImageGs().setVisibility(ViewGroup.GONE);
+			// icon.getImageGs().setImageResource(State.current_images_gs_ID[global_position]);
+			// icon.getImageGs().setVisibility(ViewGroup.GONE);
 			
 			// The caption
 			icon.getCaption().setText(State.current_labels_ID[global_position]);

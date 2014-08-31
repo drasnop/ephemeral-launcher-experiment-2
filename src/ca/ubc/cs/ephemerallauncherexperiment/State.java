@@ -1,9 +1,9 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
-import java.io.File;
-
 import android.content.Context;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
+
+import java.io.File;
 
 public class State {
 
@@ -21,7 +21,7 @@ public class State {
 	public static long startTime;
 	
 	public static int[] current_images_ID;		// from 1 to 60, 0 is irrelevant
-	public static int[] current_images_gs_ID;	// from 1 to 60, 0 is irrelevant
+	/*public static int[] current_images_gs_ID;	// from 1 to 60, 0 is irrelevant*/
 	public static int[] current_labels_ID;		// from 1 to 60, 0 is irrelevant
 	
 	public static boolean timeout;
@@ -58,7 +58,7 @@ public class State {
 		trial=1;
 		page=1;	// maybe useless	
 		current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
-		current_images_gs_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
+		/*current_images_gs_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];*/
 		current_labels_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];
 	}
 

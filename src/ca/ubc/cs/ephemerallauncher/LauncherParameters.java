@@ -184,7 +184,7 @@ public class LauncherParameters {
             R.drawable.icon_295, R.drawable.icon_296, R.drawable.icon_297,
             R.drawable.icon_298, R.drawable.icon_299, R.drawable.icon_300};
 
-    public static final Integer[] images_gs_ID = {R.drawable.icon_0_gs,
+   /* public static final Integer[] images_gs_ID = {R.drawable.icon_0_gs,
             R.drawable.icon_1_gs, R.drawable.icon_2_gs, R.drawable.icon_3_gs,
             R.drawable.icon_4_gs, R.drawable.icon_5_gs, R.drawable.icon_6_gs,
             R.drawable.icon_7_gs, R.drawable.icon_8_gs, R.drawable.icon_9_gs,
@@ -386,7 +386,7 @@ public class LauncherParameters {
             R.drawable.icon_289_b, R.drawable.icon_290_b, R.drawable.icon_291_b,
             R.drawable.icon_292_b, R.drawable.icon_293_b, R.drawable.icon_294_b,
             R.drawable.icon_295_b, R.drawable.icon_296_b, R.drawable.icon_297_b,
-            R.drawable.icon_298_b, R.drawable.icon_299_b, R.drawable.icon_300_b};
+            R.drawable.icon_298_b, R.drawable.icon_299_b, R.drawable.icon_300_b};*/
 
     public static final Integer[] labels_ID = { R.string.icon_0_label,
             R.string.icon_1_label, R.string.icon_2_label, R.string.icon_3_label,
