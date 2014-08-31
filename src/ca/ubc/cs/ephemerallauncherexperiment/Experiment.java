@@ -45,31 +45,25 @@ public class Experiment extends Activity implements OnItemSelectedListener {
     }
 
 	private String getTrialLogFileName(){
-		String fileName =  Utils.getTimeStamp(true) + "__" + State.participantId+".csv";
-		return fileName;
+		return Utils.getTimeStamp(true) + "__" + State.participantId+".csv";
 	}
 	
 	private String getEventsLogFileName(){
-		String fileName = Utils.getTimeStamp(true) + "__" + State.participantId + "__EVENTS" + ".csv";
-		return fileName;
+		return Utils.getTimeStamp(true) + "__" + State.participantId + "__EVENTS" + ".csv";
 	}
 	
 	public static String getDistributionsFileName(){
-		String fileName = Utils.getTimeStamp(true) + "__" + State.participantId + "__DISTRIBUTIONS" + ".log";
-		return fileName;
+		return Utils.getTimeStamp(true) + "__" + State.participantId + "__DISTRIBUTIONS" + ".log";
 	}
 	
 	private String getExperimentLogFileName(){
-		String fileName = ExperimentParameters.EXPERIMENT_LOG_FILE_NAME;
-		return fileName;
+		return ExperimentParameters.EXPERIMENT_LOG_FILE_NAME;
 	}
 	
 	public void startFirstCondition(View view){	
 		if(State.participant<0){
 			Toast.makeText(this, "Please select participant #", Toast.LENGTH_SHORT).show();
-			return;
 		} else {
-		
 		initializeExperiment();
 		
 		Intent intent = new Intent(this, Condition.class);
@@ -80,7 +74,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 	private void initializeExperiment(){
 		
 		// Initialize target, highlighted icons, images and labels 
-		Distributions.init();	
+		Distributions.initForExperiment();
 		
 		//Initialize trial log file		
 		State.currentTrialsLogFile = FileManager.getFile(this, ExperimentParameters.LOG_FOLDER, getTrialLogFileName());

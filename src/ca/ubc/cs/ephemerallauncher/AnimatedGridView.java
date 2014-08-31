@@ -41,7 +41,7 @@ public class AnimatedGridView extends GridView {
 		int position;			// from 1 to NUM_PAGES*NUM_ICONS_PER_PAGE
 		int position_on_page;	// from 0 to NUM_ICONS_PER_PAGE-1
 		String log="icons: ";
-		for(int i=0; i<LauncherParameters.NUM_HIGHLIGHTED_ICONS; i++){
+		for(int i=0; i<State.num_highlighted_icons; i++){
 			position=Distributions.highlighted[State.trial][i];
 			log=log+position;
 			if(this.page_number == (position-1)/LauncherParameters.NUM_ICONS_PER_PAGE){

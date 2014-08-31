@@ -18,7 +18,7 @@ public class EndOfExperiment extends Activity {
 		
 		//Log empirical distributions (post-hoc)		
 		State.currentDistributionsLogFile = FileManager.getFile(this,  ExperimentParameters.LOG_FOLDER, Experiment.getDistributionsFileName());
-		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.postExperimentDistributionLogFile(this), false);
+		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.postExperimentDistributionLogFile(), false);
 	}
 
 	public void finishExperiment(View view){

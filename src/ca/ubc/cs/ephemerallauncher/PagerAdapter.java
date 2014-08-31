@@ -3,6 +3,7 @@ package ca.ubc.cs.ephemerallauncher;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import ca.ubc.cs.ephemerallauncherexperiment.State;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return LauncherParameters.NUM_PAGES;
+		return State.num_pages;
 	}
 
 	// helper function to make calls simpler when launching animations

@@ -18,8 +18,8 @@ public class Condition extends Activity {
 	
 	private void initializeCondition(){
 		State.initStateForCondition();
+        Distributions.initForCondition();
 		LauncherParameters.ANIMATION = Utils.effectToAnimation(State.effect);
-		pickIconsForCondition();		
 		
 		// Adjust the text
 		((TextView) this.findViewById(R.id.start_condition)).setText("Condition #"+State.block);
@@ -30,17 +30,6 @@ public class Condition extends Activity {
 		Intent intent = new Intent(this, Trial.class);
 		intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, "None");
 		startActivity(intent);
-	}
-
-	private void pickIconsForCondition(){
-		for(int pos=1; pos<= Distributions.NUM_POSITIONS; pos++){
-			State.current_images_ID[pos]=Distributions.images_ID[State.block][pos-1];
-			/*State.current_images_gs_ID[pos]=Distributions.images_gs_ID[State.block][pos-1];*/
-		}
-		
-		for(int pos=1; pos <= Distributions.NUM_POSITIONS; pos++){
-			State.current_labels_ID[pos]=Distributions.labels_ID[State.block][pos-1];			
-		}	
 	}
 	
 	@Override //KZ

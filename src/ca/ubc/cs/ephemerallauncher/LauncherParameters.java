@@ -1,20 +1,14 @@
 package ca.ubc.cs.ephemerallauncher;
 
 import ca.ubc.cs.ephemerallauncherexperiment.R;
-import ca.ubc.cs.ephemerallauncherexperiment.State;
 
 public class LauncherParameters {
 
-    public static final int NUM_PAGES = State.num_pages;
-    public static final int NUM_HIGHLIGHTED_ICONS = State.num_highlighted_icons;
     public static final int NUM_ICONS_PER_PAGE = 20;
 
     public static AnimationType ANIMATION = AnimationType.PULSE_OUT;		// Will be used as initial animation type
     public static boolean ANIMATION_AFFECTS_OTHER_ICONS;				// Will be initialized automatically
     public static boolean ANIMATION_HAS_PREANIMATION_STATE;				// Will be initialized automatically
-
-    public static final boolean HIGLIGHT_ICONS_EARLY = true;			// if true, the icons are highlighted when the user starts scrolling to the next page
-    // if false, they are highlighted only when the user lands on the next page
 
     // for non-highlighted icons
     public static final int COLOR__START_DELAY = 500;			// ms 

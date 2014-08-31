@@ -202,7 +202,7 @@ public class Pager extends FragmentActivity{
 
 		// Create grid views for each page
 		ArrayList<Page> pages = new ArrayList<Page>();
-		for (int i = 0; i < LauncherParameters.NUM_PAGES; i++) {
+		for (int i = 0; i < State.num_pages; i++) {
 			pages.add(new Page(this,i));
 		}
 		
@@ -223,7 +223,7 @@ public class Pager extends FragmentActivity{
 					
 					if (position - 1 >= 0)
 						pagerAdapter.getPage(position - 1).getGridView().startPreAnimation();
-					if (position + 1 < LauncherParameters.NUM_PAGES)
+					if (position + 1 < State.num_pages)
 						pagerAdapter.getPage(position + 1).getGridView().startPreAnimation(); 
 				}
 				if (state ==ViewPager.SCROLL_STATE_IDLE){
