@@ -1,10 +1,10 @@
 package ca.ubc.cs.ephemerallauncher;
 
-import java.util.ArrayList;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import java.util.ArrayList;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 

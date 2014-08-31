@@ -1,12 +1,13 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import android.content.Context;
-import android.os.Environment;
 
 public class FileManager {
 	
@@ -69,7 +70,7 @@ public class FileManager {
 	    File file = new File(context.getExternalFilesDir(
 	            "EXPERIMENT_DATA"), dirName);
 	    if (!file.mkdirs()) {
-	        //Log.e("LOG", "Directory not created");
+	        Log.e("LOG", "Directory not created");
 	    }
 	    return file;
 	}

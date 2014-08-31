@@ -1,7 +1,5 @@
 package ca.ubc.cs.ephemerallauncher;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,23 +7,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
-import ca.ubc.cs.ephemerallauncherexperiment.EndOfCondition;
-import ca.ubc.cs.ephemerallauncherexperiment.EndOfExperiment;
-import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
-import ca.ubc.cs.ephemerallauncherexperiment.FileManager;
-import ca.ubc.cs.ephemerallauncherexperiment.R;
-import ca.ubc.cs.ephemerallauncherexperiment.State;
-import ca.ubc.cs.ephemerallauncherexperiment.Trial;
-import ca.ubc.cs.ephemerallauncherexperiment.TrialTimeout;
-import ca.ubc.cs.ephemerallauncherexperiment.Utils;
+import ca.ubc.cs.ephemerallauncherexperiment.*;
+
+import java.util.ArrayList;
 
 public class Pager extends FragmentActivity{
 
 	PagerAdapter pagerAdapter;
 	ViewPager pager;
-	long startTime;
-	
 		
 	private int mInterval = ExperimentParameters.TIMEOUT_CHECK_INTERVAL; 
 	private Handler mHandler;
@@ -91,9 +80,7 @@ public class Pager extends FragmentActivity{
 		String successStr = ifSuccess? "Success" : "Failure";
 		String timeoutStr = ifTimeout? "Timeout" : "InTime";
 		String missedStr = ifMissed? "Miss" : "Hit";
-		String log = Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr, iconName, iconLabel);
-		
-		return log;
+		return Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr, iconName, iconLabel);
 	}
 	
 	private void logTrial(boolean ifHighlighted, long duration, int row, int column,  boolean ifSuccess, boolean ifTimeout, boolean ifMissed, String iconName, String iconLabel){

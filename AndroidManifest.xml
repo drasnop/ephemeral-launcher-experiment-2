@@ -29,7 +29,7 @@
             android:name="ca.ubc.cs.ephemerallauncherexperiment.Condition"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_condition"
-            android:parentActivityName="ca.ubc.ca.ephemerallauncherexperiment.Experiment" >
+            android:parentActivityName="ca.ubc.cs.ephemerallauncherexperiment.Experiment" >
         </activity>
         <activity
             android:name="ca.ubc.cs.ephemerallauncherexperiment.Trial"
@@ -53,15 +53,6 @@
             android:name="ca.ubc.cs.ephemerallauncherexperiment.TrialTimeout"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_trial_timeout"
-            android:parentActivityName="ca.ubc.cs.ephemerallauncherexperiment.Trial" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.ubc.cs.ephemerallauncherexperiment.Trial" />
-        </activity>
-        <activity
-            android:name="ca.ubc.cs.ephemerallauncherexperiment.TrialIncorrectSelection"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_trial_incorrect_selection"
             android:parentActivityName="ca.ubc.cs.ephemerallauncherexperiment.Trial" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

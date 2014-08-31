@@ -23,7 +23,7 @@
     <string name="trial_failure_message">✗ Wrong Icon</string>
     <string name="trial_timeout_message">Timeout</string>
     <string name="trial_success_message">✓ Good job!</string>
-    <string name="trial_none_message"></string>
+    <string name="trial_none_message"/>
     <string name="end_of_condition">End of condition.\nTime to take a break!</string>
     <string name="end_of_experiment">Thank you for your participation!</string>
     <string name="experiment_button_end">Close experiment</string>

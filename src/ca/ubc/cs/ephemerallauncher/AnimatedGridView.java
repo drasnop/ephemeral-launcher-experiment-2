@@ -1,7 +1,5 @@
 package ca.ubc.cs.ephemerallauncher;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
+
+import java.util.ArrayList;
 
 /* A custom GridView that supports changes/fadesIn of colored icons 
  */
