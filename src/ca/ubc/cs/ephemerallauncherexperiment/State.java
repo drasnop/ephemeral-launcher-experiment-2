@@ -12,8 +12,9 @@ public class State {
 	public static String participantId;
 	public static int participant;
 	
-	public static int block; 		//  0 to CONDITONS-1
-	public static ExperimentParameters.ConditionEnum condition;	
+	public static int block; 		//  0 to CONDITIONS-1
+    public static int condition;
+    public static ExperimentParameters.EffectEnum effect;
 	
 	public static int trial;		// in that condition
 	
@@ -33,7 +34,7 @@ public class State {
 	public static int targetIconColumn;
 	
 	public static String stateCsvLog(Context context){
-		return Utils.appendWithComma(participantId, String.valueOf(block), condition.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn), Utils.extractIconName(context.getString(current_images_ID[Distributions.targets[trial]]),ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX), context.getString(current_labels_ID[Distributions.targets[trial]]));
+		return Utils.appendWithComma(participantId, String.valueOf(block), effect.toString(), String.valueOf(trial), String.valueOf(page), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn), Utils.extractIconName(context.getString(current_images_ID[Distributions.targets[trial]]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX), context.getString(current_labels_ID[Distributions.targets[trial]]));
 	}
 	
 	public static File currentTrialsLogFile;		//the file contains per trial logs for a participant
@@ -53,8 +54,8 @@ public class State {
 	//The initialization of the condition is currently done in Condition.onCreate, but we could make a separate function
 	//So I've moved the change of ANIMATION in there.
 	public static void initCondition() {
-		assert(Distributions.conditions.length==(ExperimentParameters.NUM_CONDITIONS*(1+ExperimentParameters.NUM_CONDITIONS%2)));
-		condition = ExperimentParameters.ConditionEnum.values()[Distributions.conditions[participant%Distributions.conditions.length][block]];
+		/*assert(Distributions.conditions.length==(ExperimentParameters.NUM_CONDITIONS*(1+ExperimentParameters.NUM_CONDITIONS%2)));*/
+		effect = ExperimentParameters.EffectEnum.values()[Distributions.conditions[participant%Distributions.conditions.length][block]% ExperimentParameters.EffectEnum.values().length];
 		trial=1;
 		page=1;	// maybe useless	
 		current_images_ID = new int[LauncherParameters.NUM_PAGES*LauncherParameters.NUM_ICONS_PER_PAGE+1];

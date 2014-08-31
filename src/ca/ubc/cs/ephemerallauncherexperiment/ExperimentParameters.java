@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 public class ExperimentParameters {
 	
-	public static final int NUM_CONDITIONS=3;
+	public static final int NUM_CONDITIONS=12;
 	public static final int NUM_TRIALS=5;		//20
 	public static final int NUM_PARTICIPANTS=20;
 	
@@ -41,8 +41,8 @@ public class ExperimentParameters {
 	
 	public final static String SUCCESS_MESSAGE = "ca.ubc.cs.ephemerallauncherexperiment.SUCCESS_MESSAGE";
 	
-	public static enum ConditionEnum{
-		CONTROL, TWIST, PULSEOUT, TRANSPARENCY, GREYBLUR
+	public static enum EffectEnum {
+		CONTROL, TWIST, PULSEOUT
 	}
 	
 	public static String csvFile(){

@@ -18,7 +18,7 @@ public class Condition extends Activity {
 	
 	private void initializeCondition(){
 		State.initCondition();	
-		LauncherParameters.ANIMATION = Utils.conditionToAnimation(State.condition);	
+		LauncherParameters.ANIMATION = Utils.effectToAnimation(State.effect);
 		pickIconsForCondition();		
 		
 		// Adjust the text

@@ -1,15 +1,15 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Vibrator;
+import ca.ubc.cs.ephemerallauncher.LauncherParameters;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Vibrator;
-import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Utils {
 	public static String appendWithComma(String... strings) {
@@ -56,14 +56,14 @@ public class Utils {
 		return iconResourceAddress.substring(addressLength);
 	}
 	
-	public static LauncherParameters.AnimationType conditionToAnimation(ExperimentParameters.ConditionEnum condition){
+	public static LauncherParameters.AnimationType effectToAnimation(ExperimentParameters.EffectEnum condition){
 		
 		switch (condition){
-		case GREYBLUR:
+		/*case GREYBLUR:
 			return LauncherParameters.AnimationType.BLUR;
 			
 		case TRANSPARENCY:
-			return LauncherParameters.AnimationType.TRANSPARENCY;
+			return LauncherParameters.AnimationType.TRANSPARENCY;*/
 			
 		case TWIST:
 			return LauncherParameters.AnimationType.TWIST;
