@@ -16,9 +16,8 @@ public class EndOfExperiment extends Activity {
 		Distributions.computeAccuracy();
 		Log.v("Distributions","Empirical accuracy after experiment = "+Distributions.accuracy);
 		
-		//Log empirical distributions (post-hoc)		
-		State.currentDistributionsLogFile = FileManager.getFile(this,  ExperimentParameters.LOG_FOLDER, Experiment.getDistributionsFileName());
-		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.postExperimentDistributionLogFile(), false);
+		//Log empirical distributions (post-hoc)
+        Logging.logPostExperimentDistributions(this);
 	}
 
 	public void finishExperiment(View view){

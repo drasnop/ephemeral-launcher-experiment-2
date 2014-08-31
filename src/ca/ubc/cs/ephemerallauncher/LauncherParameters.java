@@ -1,10 +1,11 @@
 package ca.ubc.cs.ephemerallauncher;
 
+import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 
 public class LauncherParameters {
 
-    public static final int NUM_ICONS_PER_PAGE = 20;
+    public static final int NUM_ICONS_PER_PAGE = ExperimentParameters.NUM_ICONS_PER_PAGE;
 
     public static AnimationType ANIMATION = AnimationType.PULSE_OUT;		// Will be used as initial animation type
     public static boolean ANIMATION_AFFECTS_OTHER_ICONS;				// Will be initialized automatically

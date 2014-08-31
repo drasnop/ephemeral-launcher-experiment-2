@@ -43,22 +43,6 @@ public class Experiment extends Activity implements OnItemSelectedListener {
     public void onNothingSelected(AdapterView<?> parent) {
         // do nothing
     }
-
-	private String getTrialLogFileName(){
-		return Utils.getTimeStamp(true) + "__" + State.participantId+".csv";
-	}
-	
-	private String getEventsLogFileName(){
-		return Utils.getTimeStamp(true) + "__" + State.participantId + "__EVENTS" + ".csv";
-	}
-	
-	public static String getDistributionsFileName(){
-		return Utils.getTimeStamp(true) + "__" + State.participantId + "__DISTRIBUTIONS" + ".log";
-	}
-	
-	private String getExperimentLogFileName(){
-		return ExperimentParameters.EXPERIMENT_LOG_FILE_NAME;
-	}
 	
 	public void startFirstCondition(View view){	
 		if(State.participant<0){
@@ -75,25 +59,12 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 		
 		// Initialize target, highlighted icons, images and labels 
 		Distributions.initForExperiment();
+
+        // Initialize logging
+        Logging.initialize(this);
 		
-		//Initialize trial log file		
-		State.currentTrialsLogFile = FileManager.getFile(this, ExperimentParameters.LOG_FOLDER, getTrialLogFileName());
-		FileManager.writeToFile(State.currentTrialsLogFile, Utils.appendWithComma(this.getString(R.string.state_log_header), this.getString(R.string.trial_log_header)), false);
-		
-		//Initialize event log file		
-		State.currentEventsLogFile = FileManager.getFile(this, ExperimentParameters.LOG_FOLDER, getEventsLogFileName());
-		FileManager.writeToFile(State.currentEventsLogFile, Utils.appendWithComma(this.getString(R.string.state_log_header), this.getString(R.string.events_log_header)), false);
-		
-		//Initialize experiment log file		
-		State.currentExperimentLogFile = FileManager.getFile(this, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
-		if (!State.currentExperimentLogFile.exists()){
-			FileManager.writeToFile(State.currentExperimentLogFile, Utils.appendWithComma(this.getString(R.string.experiment_log_header), this.getString(R.string.experiment_parameters_log_header)), false);
-		}		
-		FileManager.appendLineToFile(State.currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.csvFile()));
-		
-		//Log distributions		
-		State.currentDistributionsLogFile = FileManager.getFile(this,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
-		FileManager.writeLineToFile(State.currentDistributionsLogFile, Distributions.distributionsLogFile(this), false);
+		//Log distributions
+        Logging.logDistributions(this);
 	}
 	
 

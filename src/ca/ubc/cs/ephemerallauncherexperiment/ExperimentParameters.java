@@ -8,15 +8,18 @@ public class ExperimentParameters {
 	public static final int NUM_CONDITIONS=12;
 	public static final int NUM_TRIALS=5;		//20
 	public static final int NUM_PARTICIPANTS=12;
-	
-	public static final int zipfSize = 20;
+
+    public static final int NUM_ICONS_PER_PAGE=20;
 	public static final int[] NUM_PAGES = {3,5};
+    public static final int NUM_HIGHLIGHTED_ICONS_PER_PAGE = 3;
+    public static final int MAX_NUM_POSITIONS = NUM_PAGES[1]*NUM_ICONS_PER_PAGE;
+
     public static final double[][] ACCURACY = {{.75,.90},{.80,.95}};
-	public static final int NUM_HIGHLIGHTED_ICONS_PER_PAGE = 3;
+	// TODO: remove
+    public static final double MIN_ACCURACY = .80;
 
+    public static final int zipfSize = 20;
 
-	public static final double MIN_ACCURACY = .80;
-	
 	public static final int TRIAL_TIMEOUT_MS = 20000;	//10000	
 	public static final int TIMEOUT_CHECK_INTERVAL = 500;
 	

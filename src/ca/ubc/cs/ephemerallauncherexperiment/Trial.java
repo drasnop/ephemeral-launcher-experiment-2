@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ubc.cs.ephemerallauncher.Effects;
-import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 public class Trial extends Activity {
 
@@ -72,8 +71,8 @@ public class Trial extends Activity {
 	
 	private void initializeTrial(){
 		int targetIconPosition = Distributions.targets[State.trial]; //starts from 1
-		int targetIconPosOnPage = (targetIconPosition-1) % LauncherParameters.NUM_ICONS_PER_PAGE + 1;
-		State.targetIconPage = (int)Math.floor((targetIconPosition-1) / LauncherParameters.NUM_ICONS_PER_PAGE) +1; 
+		int targetIconPosOnPage = (targetIconPosition-1) % ExperimentParameters.NUM_ICONS_PER_PAGE + 1;
+		State.targetIconPage = (int)Math.floor((targetIconPosition-1) / ExperimentParameters.NUM_ICONS_PER_PAGE) +1;
 		State.targetIconRow = (int)Math.floor((targetIconPosOnPage-1) / 4) + 1 ;
 		State.targetIconColumn = (targetIconPosOnPage-1)%4+1; 
 		State.timeout=false;

@@ -1,7 +1,6 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
 import android.content.Context;
-import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
 import java.io.File;
 
@@ -17,7 +16,7 @@ public class State {
     public static int condition;    //  0 to CONDITION-1
 	public static ExperimentParameters.EFFECTS effect;
     public static int num_pages;
-    public static int num_positions = num_pages * LauncherParameters.NUM_ICONS_PER_PAGE;
+    public static int num_positions;
     public static double accuracy;
     public static int num_highlighted_icons;
 
@@ -52,25 +51,22 @@ public class State {
 		block=0;
 		participant=-1;
 	}
-	
-	//KA: don't you think it's better to put this in condition rather than State, as we have initializeExperiment in Experiment, 
-	//initializeTrial in trial and initDistributions in Distributions.
-	//AP: No, because I intended this function to be initStateForCondition (only concerns the variables in State).
-	//The initialization of the condition is currently done in Condition.onCreate, but we could make a separate function
-	//So I've moved the change of ANIMATION in there.
+
 	public static void initStateForCondition() {
+
         condition= ExperimentParameters.LATINSQ[participant% ExperimentParameters.LATINSQ.length][block];
         effect = ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][0]];
         num_pages = ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]];
+        num_positions = num_pages * ExperimentParameters.NUM_ICONS_PER_PAGE;
         accuracy = ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][1]][ExperimentParameters.CONDITIONS[condition][2]];
         num_highlighted_icons = num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
 
         trial=1;
         page=1;	// maybe useless
 
-		current_images_ID = new int[State.num_pages*LauncherParameters.NUM_ICONS_PER_PAGE+1];
-		/*current_images_gs_ID = new int[State.num_pages*LauncherParameters.NUM_ICONS_PER_PAGE+1];*/
-		current_labels_ID = new int[State.num_pages*LauncherParameters.NUM_ICONS_PER_PAGE+1];
+		current_images_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];
+		/*current_images_gs_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];*/
+		current_labels_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];
 
         for(int pos=1; pos<= num_positions; pos++){
             State.current_images_ID[pos]=Distributions.images_ID[State.block][pos-1];

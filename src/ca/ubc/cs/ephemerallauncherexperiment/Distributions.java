@@ -1,6 +1,5 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
-import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
@@ -14,30 +13,31 @@ public class Distributions {
     public static final double zipfCoeff = 1;
     public static final int zipfSize = ExperimentParameters.zipfSize;
 
-    private static int[] zipf = new int[zipfSize+1];
+    protected static int[] zipfian = new int[zipfSize+1];
     public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1];
     public static int[] target_ranks = new int[ExperimentParameters.NUM_TRIALS+1];	// just used for logging
     public static int[] selected = new int[ExperimentParameters.NUM_TRIALS+1];		// just used for logging
-    // TODO: dynamic
-    public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][State.num_highlighted_icons];
 
-    public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][State.num_positions];
-    /*public static Integer[][] images_gs_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][num_positions];*/
-    public static Integer[][] labels_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][State.num_positions];
+    // We take the maximum number of icons needed for any condition; therefore for half the conditions the array will not be full
+    public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.NUM_PAGES[1]*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE];
+    public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];
+    /*public static Integer[][] images_gs_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];*/
+    public static Integer[][] labels_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];
 
     public static double accuracy;
 
     private static void iconDistributionInit() {
         ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
-        for (int i = 0; i < State.num_positions *ExperimentParameters.NUM_CONDITIONS; i++) {
+        // TODO: this is too much: only half the trials have that many positions...
+        for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS*ExperimentParameters.NUM_CONDITIONS; i++) {
             allExperimentPositions.add(i);
         }
         Collections.shuffle(allExperimentPositions);
 
         for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++){
-            for (int j=0; j < State.num_positions; j++){
+            for (int j=0; j < ExperimentParameters.MAX_NUM_POSITIONS; j++){
                 // TODO: remove modulo and select differently the icons
-                images_ID[i][j] = LauncherParameters.images_ID[allExperimentPositions.get(i* State.num_positions +j)%LauncherParameters.images_ID.length];
+                images_ID[i][j] = LauncherParameters.images_ID[allExperimentPositions.get(i* ExperimentParameters.MAX_NUM_POSITIONS +j)%LauncherParameters.images_ID.length];
 				/*images_gs_ID[i][j] = LauncherParameters.images_gs_ID[allExperimentPositions.get(i*num_positions+j)];*/
             }
         }
@@ -45,6 +45,20 @@ public class Distributions {
 
     private static void labelDistributionInit(){
         ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
+        // TODO: this is too much: only half the trials have that many positions...
+        for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS*ExperimentParameters.NUM_CONDITIONS; i++) {
+            allExperimentPositions.add(i);
+        }
+        Collections.shuffle(allExperimentPositions);
+
+        for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++){
+            for (int j=0; j < ExperimentParameters.MAX_NUM_POSITIONS; j++){
+                // TODO: remove modulo and select differently the icons
+                labels_ID[i][j] = LauncherParameters.labels_ID[allExperimentPositions.get(i* ExperimentParameters.MAX_NUM_POSITIONS +j)%LauncherParameters.labels_ID.length];
+            }
+        }
+
+        /*ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
         for (int i = 0; i < State.num_positions *ExperimentParameters.NUM_CONDITIONS; i++) {
             allExperimentPositions.add(i);
         }
@@ -52,7 +66,7 @@ public class Distributions {
 
         for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++)
             for (int j=0; j < State.num_positions; j++)
-                labels_ID[i][j] = LauncherParameters.labels_ID[allExperimentPositions.get(i* State.num_positions +j)];
+                labels_ID[i][j] = LauncherParameters.labels_ID[allExperimentPositions.get(i* State.num_positions +j)];*/
     }
 
 
@@ -84,7 +98,7 @@ public class Distributions {
                 // Of course, this doesn't work if all the frequencies are already > 0
                 // In that case, we're out of luck. The assert below will just fail.
             }
-            zipf[i]=frequency;
+            zipfian[i]=frequency;
             sum_frequencies+=frequency;
         }
         assert(sum_frequencies==ExperimentParameters.NUM_TRIALS);
@@ -101,11 +115,11 @@ public class Distributions {
         List<Integer> positions = allPositions.subList(0, zipfSize); // Extract from index 0 (included) to zipfSize (excluded)
         assert (positions.size() == zipfSize);
 
-        // Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to  the Zipfian distribution
+        // Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to the Zipfian distribution
 
         ArrayList<Pair<Integer,Integer>> targetsList = new ArrayList<Pair<Integer,Integer>>();
         for(int i=1; i<=zipfSize; i++){
-            for(int j=0; j<zipf[i]; j++){
+            for(int j=0; j< zipfian[i]; j++){
                 targetsList.add(new Pair<Integer, Integer>(positions.get(i-1),i));
             }
         }
@@ -228,97 +242,4 @@ public class Distributions {
         return highlight.get(0);
     }
 
-    public static String distributionsLogFile(Context context){
-        String logStr ="";
-
-        String lineSep = "\n-------------------------------------------------------\n";
-        String halfLineSep = "\n" + lineSep.substring(0, lineSep.length()/2) + "\n";
-
-        //general
-        logStr += "GENERAL \n";
-        logStr += "participantID: " + State.participantId + "\n";
-        logStr += "zipfSize: " + String.valueOf(zipfSize) + "\n";
-        logStr += "zipfCoeff: " + String.valueOf(zipfCoeff) + "\n";
-        logStr += "Accuracy: " + String.valueOf(accuracy) + "\n";
-        logStr += "Icon Set: " + ExperimentParameters.ICON_SET;
-        logStr += "Label Set: " + ExperimentParameters.LABEL_SET;
-
-        //logging conditions
-        logStr += lineSep;
-        logStr += "CONDITIONS \n";
-        for (int i=0; i < ExperimentParameters.EFFECTS.values().length; i++)
-            logStr += ExperimentParameters.EFFECTS.values()[i].toString() + " ";
-
-        //logging zipf
-        logStr += lineSep;
-        logStr += "ZIPF \n";
-        for (int i=0; i < zipfSize; i++)
-            logStr += String.valueOf(zipf[i+1]) + " ";
-
-        //logging target positions
-        logStr += lineSep;
-        logStr += "TARGET POSITIONS (positions start from 1) (Zipfian rank indicated below) \n";
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            logStr += Utils.padWithZero(targets[tr+1]) + " ";
-        }
-        logStr+="\n";
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            logStr += Utils.padWithZero(target_ranks[tr+1]) + " ";
-        }
-
-        //logging highlighted icons
-        logStr += lineSep;
-        logStr += "HIGHLIGHTED ICONS' POSITIONS \n";
-
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            for (int icon = 0; icon < State.num_highlighted_icons; icon++)
-                logStr += Utils.padWithZero(highlighted[tr+1][icon]) + " ";
-            logStr += "\n";
-        }
-
-        //logging image icons and labels
-        logStr += lineSep;
-        logStr += "IMAGE ICONS AND LABELS\n";
-        String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
-        for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
-            logStr += halfLineSep;
-            logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.EFFECTS.values()[c].toString() +"\n";
-            for (int pos=0; pos < State.num_positions; pos++){
-                logStr += String.valueOf(pos+1) + ": " + Utils.extractIconName(context.getString(images_ID[c][pos]), iconAddressPrefix) + " "  +context.getString(labels_ID[c][pos]) + "; " ;
-                if ((pos+1) % LauncherParameters.NUM_ICONS_PER_PAGE == 0)
-                    logStr += "\n";
-
-            }
-        }
-
-        return logStr;
-    }
-
-    public static String postExperimentDistributionLogFile(){
-        String logStr ="";
-
-        String lineSep = "\n-------------------------------------------------------\n";
-
-        logStr += lineSep;
-        logStr += "Post-experiment accuracy: " + String.valueOf(accuracy) + "\n";
-
-        //logging selected positions
-        logStr += lineSep;
-        logStr += "SELECTED POSITIONS (positions start from 1) \n";
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            logStr += String.valueOf(selected[tr+1]) + " ";
-        }
-
-        //logging highlighted icons
-        logStr += lineSep;
-        logStr += "ACTUAL HIGHLIGHTED ICONS' POSITIONS (with empirical MRU) \n";
-
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            for (int icon = 0; icon < State.num_highlighted_icons; icon++)
-                logStr += Utils.padWithZero(highlighted[tr+1][icon]) + " ";
-            logStr += "\n";
-        }
-
-        return logStr;
-    }
 }
