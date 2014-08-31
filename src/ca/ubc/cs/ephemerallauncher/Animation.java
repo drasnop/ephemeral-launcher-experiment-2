@@ -5,9 +5,6 @@ import android.animation.Animator;
 import java.util.ArrayList;
 
 
-
-
-
 public class Animation {
 
     private static ArrayList<Animator> animatorList = new ArrayList<Animator>();
