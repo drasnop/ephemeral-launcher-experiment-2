@@ -2,9 +2,6 @@ package ca.ubc.cs.ephemerallauncherexperiment;
 
 import android.content.Context;
 
-/**
- * Created by Antoine on 2014-08-31.
- */
 public class Logging {
 
     private static String getTrialLogFileName(){
