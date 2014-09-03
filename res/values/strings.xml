@@ -40,7 +40,7 @@
     <string name="twist">Twist</string>
     <string name="change_bkg">Change background</string>
     <string name="state_log_header">TimeStamp, Participant ID, Block #, Condition, Trial #, Start Time(ms), Target Icon Page #, Target Icon Row #, Target Icon Column #, Target Icon Name, Target Icon Label, Zipfian rank</string>
-    <string name="trial_log_header">Highlighted, Duration(ms), Icon Page #, Icon Row #, Icon Col #, Success, Timeout, Miss, #PagesVisited, Icon Name, Icon Label</string>
+    <string name="trial_log_header">Highlighted, Duration(ms), Icon Page #, Icon Row #, Icon Col #, Success, Timeout, Miss, #PagesVisited, Icon Name, Icon Label, (Page #, TimeOnPage, TimeSwiping)</string>
     <string name="events_log_header">Event Name, Event Description</string>
     <string name="experiment_log_header">TimeStamp, Participant ID</string>
     <string name="experiment_parameters_log_header">#Conditions, #Trials, #PagesLow, #PagesHigh, AccuracyLow, AccuracyHigh , #Highlighted Icons, Timeout, Duration(ms)</string>

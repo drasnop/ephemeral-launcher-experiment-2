@@ -7,10 +7,13 @@ import java.io.File;
 public class Logging {
 
     public static long startTime;
-    public static File currentTrialsLogFile;		//the file contains per trial logs for a participant
-    public static File currentEventsLogFile;		//the file contains per event (command) logs for a participant
-    public static File currentExperimentLogFile;	//the file contains the general experiment logs
-    public static File currentDistributionsLogFile; //the file contains all information about distributions
+    public static long previousPageLandingTime;       // timestamp of when the previous page was reached
+    public static long previousPageStartDragging;     // timestamp of when users started swiping on the previous page
+    public static String pages_times;                 // string of pairs (page#, time spent on it)
+    public static File currentTrialsLogFile;		// the file contains per trial logs for a participant
+    public static File currentEventsLogFile;		// the file contains per event (command) logs for a participant
+    public static File currentExperimentLogFile;	// the file contains the general experiment logs
+    public static File currentDistributionsLogFile; // the file contains all information about distributions
 
     //////////////////////////    Initialize    ////////////////////////////////////
 
@@ -168,7 +171,7 @@ public class Logging {
     }
 
     public static void logTrial(Context context, Result result){
-        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result));
+        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result),Logging.pages_times);
         FileManager.appendLineToFile(Logging.currentTrialsLogFile,finalTrialLog);
     }
 }

@@ -32,9 +32,10 @@ public class Pager extends FragmentActivity{
     @Override
     protected void onStart(){
         super.onStart();
+        // We wait until the last minute to record the starting time
         Logging.startTime = System.currentTimeMillis();
-        State.timeout = false;
-        State.missed = false;
+        Logging.previousPageLandingTime = Logging.startTime;
+        Logging.pages_times = "";
         mTimeoutChecker.run();
 
         logEvent("TrialStarted","");
@@ -84,7 +85,7 @@ public class Pager extends FragmentActivity{
     // What about making these log functions static, to put them in Trial?
     // The only dynamic thing remaining in Pager would be startNextTrial
     // KA: this possible
-    //TODO: move every function corresponding to the general concept of Trial to Trial.java
+    // Maybe: move every function corresponding to the general concept of Trial to Trial.java
     public void concludeTrial(int page, int position_on_page){
 
         int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
@@ -201,6 +202,8 @@ public class Pager extends FragmentActivity{
                         pagerAdapter.getPage(position - 1).getGridView().startPreAnimation();
                     if (position + 1 < State.num_pages)
                         pagerAdapter.getPage(position + 1).getGridView().startPreAnimation();
+
+                    Logging.previousPageStartDragging=System.currentTimeMillis();
                 }
                 if (state ==ViewPager.SCROLL_STATE_IDLE){
                     logEvent("PageIDLE","");
@@ -212,8 +215,17 @@ public class Pager extends FragmentActivity{
             }
 
             public void onPageSelected(int position) {
+                // log
+                long current_time=System.currentTimeMillis();
+                long time_spent_swiping=current_time-Logging.previousPageStartDragging;
+                long time_spent_on_page=Logging.previousPageStartDragging-Logging.previousPageLandingTime;
+
+                Logging.pages_times += "("+State.page + "," + time_spent_on_page +"," + time_spent_swiping + "), ";
+
+                // update
                 State.page=position+1;
                 State.num_pages_visited++;
+                Logging.previousPageLandingTime=current_time;
 
                 pagerAdapter.previousPosition=pagerAdapter.currentPosition;
                 pagerAdapter.currentPosition = position;

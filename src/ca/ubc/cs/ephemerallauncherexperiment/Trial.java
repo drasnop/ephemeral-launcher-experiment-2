@@ -70,15 +70,17 @@ public class Trial extends Activity {
 	}
 	
 	private void initializeTrial(){
+        State.timeout=false;
+        State.missed=false;
+        State.success=false;
+        State.page=1;
+        State.num_pages_visited=1;
+
 		int targetIconPosition = Distributions.targets[State.trial]; //starts from 1
 		int targetIconPosOnPage = (targetIconPosition-1) % ExperimentParameters.NUM_ICONS_PER_PAGE + 1;
 		State.targetIconPage = (int)Math.floor((targetIconPosition-1) / ExperimentParameters.NUM_ICONS_PER_PAGE) +1;
 		State.targetIconRow = (int)Math.floor((targetIconPosOnPage-1) / 4) + 1 ;
-		State.targetIconColumn = (targetIconPosOnPage-1)%4+1; 
-		State.timeout=false;
-		State.missed=false;
-		State.success=false;
-		
+		State.targetIconColumn = (targetIconPosOnPage-1)%4+1;
 	}
 	
 	private void startPager(){

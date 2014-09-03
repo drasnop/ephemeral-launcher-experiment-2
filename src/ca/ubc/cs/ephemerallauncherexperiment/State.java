@@ -48,8 +48,6 @@ public class State {
         num_highlighted_icons = num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
 
         trial=1;
-        page=1;
-        num_pages_visited=1;
 
 		current_images_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];
 		/*current_images_gs_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];*/
