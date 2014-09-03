@@ -78,10 +78,12 @@ public class ExperimentParameters {
 
     public static enum EFFECTS {
 		CONTROL, TWIST, PULSEOUT
-	}
-	
-	public static String csvFile(){
-        //TODO: update this to print all values of pages
-		return Utils.appendWithComma(String.valueOf(NUM_CONDITIONS), String.valueOf(NUM_TRIALS), String.valueOf(ExperimentParameters.NUM_PAGES[0]), String.valueOf(ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE), String.valueOf(TRIAL_TIMEOUT_MS));
-	}
+    }
+
+    public static String experimentToString(){
+        return Utils.appendWithComma(String.valueOf(NUM_CONDITIONS), String.valueOf(NUM_TRIALS),
+                String.valueOf(NUM_PAGES[0]), String.valueOf(NUM_PAGES[1]), String.valueOf(ACCURACY[0]), String.valueOf(ACCURACY[1]),
+                String.valueOf(NUM_HIGHLIGHTED_ICONS_PER_PAGE), String.valueOf(TRIAL_TIMEOUT_MS));
+    }
+
 }

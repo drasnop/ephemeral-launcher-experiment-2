@@ -12,6 +12,8 @@ public class Logging {
     public static File currentExperimentLogFile;	//the file contains the general experiment logs
     public static File currentDistributionsLogFile; //the file contains all information about distributions
 
+    //////////////////////////    Initialize    ////////////////////////////////////
+
     private static String getTrialLogFileName(){
         return Utils.getTimeStamp(true) + "__" + State.participantId+".csv";
     }
@@ -43,8 +45,10 @@ public class Logging {
         if (!currentExperimentLogFile.exists()){
             FileManager.writeToFile(currentExperimentLogFile, Utils.appendWithComma(context.getString(R.string.experiment_log_header), context.getString(R.string.experiment_parameters_log_header)), false);
         }
-        FileManager.appendLineToFile(currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.csvFile()));
+        FileManager.appendLineToFile(currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.experimentToString()));
     }
+
+    ////////////////////////////    Log distributions    ///////////////////////////
 
     public static void logDistributions(Context context) {
         currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
@@ -145,6 +149,8 @@ public class Logging {
 
         FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
     }
+
+    ///////////////////////////    Log trial    ///////////////////////////////////
 
     public static String stateCsvLog(Context context){
         return Utils.appendWithComma(State.participantId, String.valueOf(State.block), State.effect.toString(), String.valueOf(State.trial), String.valueOf(startTime),
