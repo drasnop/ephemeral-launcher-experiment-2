@@ -27,10 +27,6 @@ public class State {
 
 	public static int page;		                // current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
     public static int num_pages_visited;        // from 1 to infinity, since the beginning of the trial = number of swipes + 1
-
-    public static int[] current_images_ID;		// from 1 to 60, 0 is irrelevant
-	/*public static int[] current_images_gs_ID;	// from 1 to 60, 0 is irrelevant*/
-	public static int[] current_labels_ID;		// from 1 to 60, 0 is irrelevant
 	
 	public static boolean timeout;
 	public static boolean missed;
@@ -54,21 +50,6 @@ public class State {
         accuracy = ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][2]];
 
         trial=1;
-
-		current_images_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];
-		/*current_images_gs_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];*/
-		current_labels_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];
-
-
-        //TODO this probably should be done after all the rest of the init initDistforconditions
-        for(int pos=1; pos<= num_positions(); pos++){
-            State.current_images_ID[pos]=Distributions.images_ID[pos-1];
-			/*State.current_images_gs_ID[pos]=Distributions.images_gs_ID[pos-1];*/
-        }
-
-        for(int pos=1; pos <= num_positions(); pos++){
-            State.current_labels_ID[pos]=Distributions.labels_ID[pos-1];
-        }
     }
 
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
 import ca.ubc.cs.ephemerallauncherexperiment.R;
 import ca.ubc.cs.ephemerallauncherexperiment.State;
 
@@ -47,14 +48,14 @@ public class IconAdapter extends BaseAdapter {
 			icon=(Icon) LayoutInflater.from(mContext).inflate(R.layout.icon, parent,false);
 			
 			// Set up the colored image
-			icon.getImage().setImageResource(State.current_images_ID[global_position]);
+			icon.getImage().setImageResource(Distributions.images_ID[global_position]);
 
 			// Set up the greyscale image
-			// icon.getImageGs().setImageResource(State.current_images_gs_ID[global_position]);
+			// icon.getImageGs().setImageResource(Distributions.images_gs_ID[global_position]);
 			// icon.getImageGs().setVisibility(ViewGroup.GONE);
 			
 			// The caption
-			icon.getCaption().setText(State.current_labels_ID[global_position]);
+			icon.getCaption().setText(Distributions.labels_ID[global_position]);
 			
 		} else {
 			// [AP: I haven't quite figured out when this happens...

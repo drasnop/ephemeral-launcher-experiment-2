@@ -59,7 +59,6 @@ public class Logging {
         String logStr ="";
 
         String lineSep = "\n-------------------------------------------------------\n";
-        String halfLineSep = "\n" + lineSep.substring(0, lineSep.length()/2) + "\n";
 
         //general
         logStr += "GENERAL \n";
@@ -166,7 +165,7 @@ public class Logging {
     public static String stateCsvLog(Context context){
         return Utils.appendWithComma(State.participantId, String.valueOf(State.block), State.effect.toString(), String.valueOf(State.trial), String.valueOf(startTime),
                 String.valueOf(State.targetIconPage), String.valueOf(State.targetIconRow), String.valueOf(State.targetIconColumn),
-                Utils.extractIconName(context.getString(State.current_images_ID[Distributions.targets[State.trial]]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX), context.getString(State.current_labels_ID[Distributions.targets[State.trial]]),
+                Utils.extractIconName(context.getString(Distributions.images_ID[Distributions.targets[State.trial]]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX), context.getString(Distributions.labels_ID[Distributions.targets[State.trial]]),
                 String.valueOf(Distributions.target_ranks[State.trial]));
     }
 

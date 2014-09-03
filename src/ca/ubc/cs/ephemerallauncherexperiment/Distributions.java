@@ -24,9 +24,9 @@ public class Distributions {
     // We take the maximum number of icons needed for any condition; therefore for half the conditions the array will not be full
     public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.NUM_PAGES[1]*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE];
     //TODO no need for a 2D array here!
-    public static Integer[] images_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS];
-    /*public static Integer[] images_gs_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS];*/
-    public static Integer[] labels_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS];
+    public static Integer[] images_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
+    /*public static Integer[] images_gs_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];*/
+    public static Integer[] labels_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
 
     public static double empiricalAccuracy;
 
@@ -204,7 +204,7 @@ public class Distributions {
         // Step c: choose and COPY other icons for this condition
         int nonTargetIcon;
         int j=0;
-        for(int p=0; p<State.num_positions();p++){
+        for(int p=1; p<=State.num_positions();p++){
             if(!targets_list.contains(p)){
                 nonTargetIcon = allAvailableIcons.get(j);
                 j++;
