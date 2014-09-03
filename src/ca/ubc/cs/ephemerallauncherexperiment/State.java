@@ -16,9 +16,10 @@ public class State {
     public static double accuracy;
     public static int num_highlighted_icons;
 
-    //////////////   utilities  //////////////////////
+    //////////////   utilities for logging   //////////////////////
 
-	public static int page;		// current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
+	public static int page;		                // current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
+    public static int num_pages_visited;        // from 1 to infinity, since the beginning of the trial = number of swipes + 1
 
     public static int[] current_images_ID;		// from 1 to 60, 0 is irrelevant
 	/*public static int[] current_images_gs_ID;	// from 1 to 60, 0 is irrelevant*/
@@ -47,7 +48,8 @@ public class State {
         num_highlighted_icons = num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
 
         trial=1;
-        page=1;	// maybe useless
+        page=1;
+        num_pages_visited=1;
 
 		current_images_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];
 		/*current_images_gs_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];*/

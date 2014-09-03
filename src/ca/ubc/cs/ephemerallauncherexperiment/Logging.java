@@ -164,7 +164,7 @@ public class Logging {
         String successStr = State.success? "Success" : "Failure";
         String timeoutStr = State.timeout? "Timeout" : "InTime";
         String missedStr = State.missed? "Miss" : "Hit";
-        return Utils.appendWithComma(highlightedStr, String.valueOf(result.duration), String.valueOf(State.page), String.valueOf(result.row), String.valueOf(result.column), successStr, timeoutStr, missedStr, result.iconName, result.iconLabel);
+        return Utils.appendWithComma(highlightedStr, String.valueOf(result.duration), String.valueOf(State.page), String.valueOf(result.row), String.valueOf(result.column), successStr, timeoutStr, missedStr, String.valueOf(State.num_pages_visited),result.iconName, result.iconLabel);
     }
 
     public static void logTrial(Context context, Result result){
