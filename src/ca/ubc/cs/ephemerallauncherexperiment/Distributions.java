@@ -24,9 +24,9 @@ public class Distributions {
     // We take the maximum number of icons needed for any condition; therefore for half the conditions the array will not be full
     public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.NUM_PAGES[1]*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE];
     //TODO no need for a 2D array here!
-    public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];
-    /*public static Integer[][] images_gs_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];*/
-    public static Integer[][] labels_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];
+    public static Integer[] images_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS];
+    /*public static Integer[] images_gs_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS];*/
+    public static Integer[] labels_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS];
 
     public static double empiricalAccuracy;
 
@@ -45,35 +45,6 @@ public class Distributions {
         for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian(); i++) {
             allAvailableIcons.add(i);
         }
-    }
-
-    private static void iconDistributionInitCondition() {
-        // Step a: shuffle the remaining icons
-        Collections.shuffle(allAvailableIcons);
-
-        // Step b: choose and remove target icons for this condition
-        int targetIcon;
-        for(int i=0; i<numNonZeroInZipfian();i++){
-            targetIcon=allAvailableIcons.remove(0);
-            images_ID[State.block][targets_list.get(i)] = LauncherParameters.images_ID[targetIcon];
-            /*images_gs_ID[State.block][targets_list[i]] = LauncherParameters.images_gs_ID[target];*/
-            labels_ID[State.block][targets_list.get(i)] = LauncherParameters.labels_ID[targetIcon];
-        }
-
-        // Step c: choose and COPY other icons for this condition
-        int nonTargetIcon;
-        int j=0;
-        for(int p=0; p<State.num_positions();p++){
-            if(!targets_list.contains(p)){
-                nonTargetIcon = allAvailableIcons.get(j);
-                j++;
-                images_ID[State.block][p] = LauncherParameters.images_ID[nonTargetIcon];
-                /*images_gs_ID[State.block][i] = LauncherParameters.images_gs_ID[nontarget]; */
-                labels_ID[State.block][p] = LauncherParameters.labels_ID[nonTargetIcon];
-            }
-            // Otherwise do nothing; the icon has been chosen at step b
-        }
-        assert(j==State.num_positions()-numNonZeroInZipfian());
     }
 
 
@@ -110,7 +81,9 @@ public class Distributions {
         iconDistributionInitExperiment();
     }
 
+    // Happens AFTER State.initForCondition();
     public static void initForCondition() {
+
         // Step 2: Pick zipfSize positions for the target icon, in [1..State.num_pages*20]
 
         ArrayList<Integer> allPositions = new ArrayList<Integer>();
@@ -213,6 +186,40 @@ public class Distributions {
         // Step 8: Select the other icons (=pictures+labels) to be displayed
         iconDistributionInitCondition();
     }
+
+    // Happens at the end of the initiation process
+    private static void iconDistributionInitCondition() {
+        // Step a: shuffle the remaining icons
+        Collections.shuffle(allAvailableIcons);
+
+        // Step b: choose and remove target icons for this condition
+        int targetIcon;
+        for(int i=0; i<numNonZeroInZipfian();i++){
+            targetIcon=allAvailableIcons.remove(0);
+            images_ID[targets_list.get(i)] = LauncherParameters.images_ID[targetIcon];
+            /*images_gs_ID[targets_list[i]] = LauncherParameters.images_gs_ID[target];*/
+            labels_ID[targets_list.get(i)] = LauncherParameters.labels_ID[targetIcon];
+        }
+
+        // Step c: choose and COPY other icons for this condition
+        int nonTargetIcon;
+        int j=0;
+        for(int p=0; p<State.num_positions();p++){
+            if(!targets_list.contains(p)){
+                nonTargetIcon = allAvailableIcons.get(j);
+                j++;
+                images_ID[p] = LauncherParameters.images_ID[nonTargetIcon];
+                /*images_gs_ID[State.block][i] = LauncherParameters.images_gs_ID[nontarget]; */
+                labels_ID[p] = LauncherParameters.labels_ID[nonTargetIcon];
+            }
+            // Otherwise do nothing; the icon has been chosen at step b
+        }
+        assert(j==State.num_positions()-numNonZeroInZipfian());
+    }
+
+
+    ///////////////////    Helper functions    //////////////////////////////////
+
 
     public static void computeAccuracy(){
         int successes=computeSuccesses();

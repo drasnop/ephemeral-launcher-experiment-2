@@ -106,6 +106,8 @@ public class Logging {
         //logging image icons and labels
         logStr += lineSep;
         logStr += "IMAGE ICONS AND LABELS\n";
+        //TODO log image icons and labels dynamically, condition after condition, instead of all at once
+       /*
         String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
         for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
             logStr += halfLineSep;
@@ -118,6 +120,7 @@ public class Logging {
 
             }
         }
+        */
 
         FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
     }

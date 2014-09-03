@@ -45,6 +45,7 @@ public class State {
 		participant=-1;
 	}
 
+    // Happens BEFORE Distributions.initForCondition();
 	public static void initStateForCondition() {
 
         condition= ExperimentParameters.LATINSQ[participant% ExperimentParameters.LATINSQ.length][block];
@@ -58,13 +59,17 @@ public class State {
 		/*current_images_gs_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];*/
 		current_labels_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];
 
+
+        //TODO this probably should be done after all the rest of the init initDistforconditions
         for(int pos=1; pos<= num_positions(); pos++){
-            State.current_images_ID[pos]=Distributions.images_ID[State.block][pos-1];
-			/*State.current_images_gs_ID[pos]=Distributions.images_gs_ID[State.block][pos-1];*/
+            State.current_images_ID[pos]=Distributions.images_ID[pos-1];
+			/*State.current_images_gs_ID[pos]=Distributions.images_gs_ID[pos-1];*/
         }
 
         for(int pos=1; pos <= num_positions(); pos++){
-            State.current_labels_ID[pos]=Distributions.labels_ID[State.block][pos-1];
+            State.current_labels_ID[pos]=Distributions.labels_ID[pos-1];
         }
     }
+
+
 }
