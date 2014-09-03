@@ -51,7 +51,7 @@ public class Logging {
         logStr += "participantID: " + State.participantId + "\n";
         logStr += "zipfSize: " + String.valueOf(Distributions.zipfSize) + "\n";
         logStr += "zipfCoeff: " + String.valueOf(Distributions.zipfCoeff) + "\n";
-        logStr += "Accuracy: " + String.valueOf(Distributions.accuracy) + "\n";
+        logStr += "Accuracy: " + String.valueOf(Distributions.empiricalAccuracy) + "\n";
         logStr += "Icon Set: " + ExperimentParameters.ICON_SET;
         logStr += "Label Set: " + ExperimentParameters.LABEL_SET;
 
@@ -116,7 +116,7 @@ public class Logging {
         String lineSep = "\n-------------------------------------------------------\n";
 
         logStr += lineSep;
-        logStr += "Post-experiment accuracy: " + String.valueOf(Distributions.accuracy) + "\n";
+        logStr += "Post-experiment accuracy: " + String.valueOf(Distributions.empiricalAccuracy) + "\n";
 
         //logging selected positions
         logStr += lineSep;

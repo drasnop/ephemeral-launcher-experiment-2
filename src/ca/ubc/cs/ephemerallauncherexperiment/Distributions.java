@@ -24,7 +24,7 @@ public class Distributions {
     /*public static Integer[][] images_gs_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];*/
     public static Integer[][] labels_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];
 
-    private static double empiricalAccuracy;
+    public static double empiricalAccuracy;
 
     private static void iconDistributionInit() {
         ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
