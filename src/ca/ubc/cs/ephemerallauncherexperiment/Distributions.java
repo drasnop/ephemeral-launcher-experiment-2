@@ -42,6 +42,7 @@ public class Distributions {
 
     // Reusing icons except for the ones that were targets
     private static void iconDistributionInitExperiment() {
+        assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() <= 301);
         for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian(); i++) {
             allAvailableIcons.add(i);
         }
@@ -120,6 +121,7 @@ public class Distributions {
 
         for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
             for(int j=0; j<State.num_highlighted_icons(); j++){
+                // TODO fix out of bound for get
                 highlighted[i][j]=positions.get(j);
             }
         }
@@ -192,12 +194,13 @@ public class Distributions {
         // Step a: shuffle the remaining icons
         Collections.shuffle(allAvailableIcons);
 
+        /*
         // Step b: choose and remove target icons for this condition
         int targetIcon;
         for(int i=0; i<numNonZeroInZipfian();i++){
             targetIcon=allAvailableIcons.remove(0);
             images_ID[targets_list.get(i)] = LauncherParameters.images_ID[targetIcon];
-            /*images_gs_ID[targets_list[i]] = LauncherParameters.images_gs_ID[target];*/
+            /*images_gs_ID[targets_list[i]] = LauncherParameters.images_gs_ID[target];
             labels_ID[targets_list.get(i)] = LauncherParameters.labels_ID[targetIcon];
         }
 
@@ -209,12 +212,30 @@ public class Distributions {
                 nonTargetIcon = allAvailableIcons.get(j);
                 j++;
                 images_ID[p] = LauncherParameters.images_ID[nonTargetIcon];
-                /*images_gs_ID[State.block][i] = LauncherParameters.images_gs_ID[nontarget]; */
+                /*images_gs_ID[State.block][i] = LauncherParameters.images_gs_ID[nontarget];
                 labels_ID[p] = LauncherParameters.labels_ID[nonTargetIcon];
             }
             // Otherwise do nothing; the icon has been chosen at step b
         }
         assert(j==State.num_positions()-numNonZeroInZipfian());
+        */
+
+        // all at once
+        int position;
+        int offset=0;
+        for(int p=1; p<=State.num_positions();p++){
+            if(targets_list.contains(p)){
+                position=allAvailableIcons.remove(p-offset); // because we have removed offset icons from the list in between
+                offset++;
+            }
+            else{
+                position=allAvailableIcons.get(p-offset);   // because we have removed offset icons from the list in between
+            }
+            images_ID[p] = LauncherParameters.images_ID[position];
+            /*images_gs_ID[p] = LauncherParameters.images_gs_ID[positions];*/
+            labels_ID[p] = LauncherParameters.labels_ID[position];
+        }
+
     }
 
 

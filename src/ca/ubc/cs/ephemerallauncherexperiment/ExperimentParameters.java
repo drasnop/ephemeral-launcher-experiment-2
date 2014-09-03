@@ -15,7 +15,7 @@ public class ExperimentParameters {
 
     public static final double[] ACCURACY = {.80,.95};
 
-    public static final int zipfSize = 20;
+    public static final int zipfSize = 15;  // because it works out well for 40 trials
 
 	public static final int TRIAL_TIMEOUT_MS = 20000;	//10000	
 	public static final int TIMEOUT_CHECK_INTERVAL = 500;
