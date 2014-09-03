@@ -74,7 +74,7 @@ public class Logging {
         logStr += lineSep;
         logStr += "CONDITIONS \n";
         for (int i=0; i < ExperimentParameters.EFFECTS.values().length; i++)
-            logStr += ExperimentParameters.EFFECTS.values()[i].toString() + " ";
+            logStr += logCondition(i);
 
         //logging zipfian
         logStr += lineSep;
@@ -109,8 +109,7 @@ public class Logging {
         String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
         for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
             logStr += halfLineSep;
-            //TODO: create function for printing CONDITION properly (all variables)
-            logStr += "CONDITION " + String.valueOf(c+1) + ": " + ExperimentParameters.EFFECTS.values()[c%3].toString() +"\n";
+            logStr += "CONDITION " + String.valueOf(c) + ": " + logCondition(c) +"\n";
             for (int pos=0; pos < State.num_positions; pos++){
                 logStr += String.valueOf(pos+1) + ": " + Utils.extractIconName(context.getString(Distributions.images_ID[c][pos]), iconAddressPrefix) + " "  +context.getString(Distributions.labels_ID[c][pos]) + "; " ;
                 if ((pos+1) % ExperimentParameters.NUM_ICONS_PER_PAGE == 0) {
@@ -121,6 +120,12 @@ public class Logging {
         }
 
         FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
+    }
+
+    private static String logCondition(int condition){
+        return ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][0]]+", "
+                +ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]]+","
+                +ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][2]]+" ";
     }
 
     public static void logPostExperimentDistributions(Context context) {

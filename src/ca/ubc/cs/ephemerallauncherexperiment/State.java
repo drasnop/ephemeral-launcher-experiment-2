@@ -9,7 +9,7 @@ public class State {
 	public static int block; 		//  0 to CONDITIONS-1
     public static int trial;		// in that condition
 
-    public static int condition;    //  0 to CONDITION-1
+    public static int condition;    //  0 to CONDITION-1, index in the ExperimentParameters.CONDITIONS array
 	public static ExperimentParameters.EFFECTS effect;
     public static int num_pages;
     public static int num_positions;
