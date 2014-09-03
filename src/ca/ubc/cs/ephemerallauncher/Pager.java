@@ -104,7 +104,6 @@ public class Pager extends FragmentActivity{
 		
 		mHandler.removeCallbacks(mTimeoutChecker);
 		logEvent("ConcludingTrial", "");
-		boolean ifHighlighted = isHighlighted(global_position);
 		long duration = System.currentTimeMillis()- Logging.startTime;
 		
 		int row=(int) Math.floor(position_on_page/4)+1;
@@ -128,7 +127,7 @@ public class Pager extends FragmentActivity{
 		}
 				
 		
-		Logging.logTrial(this, ifHighlighted, duration, row, column, iconName, iconLabel);
+		Logging.logTrial(this, new Result(duration, row, column, iconName, iconLabel));
 		
 		if (State.timeout){
 				logEvent("Timeout", "");
@@ -173,14 +172,6 @@ public class Pager extends FragmentActivity{
 			this.startActivity(intent);
 		}
 		
-	}
-	
-	private boolean isHighlighted(int position){
-		for(Integer icon:Distributions.highlighted[State.trial]){
-			if(position == icon)
-				return true;
-		}
-		return false;
 	}
 	
 	private void setUpPager(){

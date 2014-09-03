@@ -201,7 +201,15 @@ public class Distributions {
                 return true;
         }
         return false;
-}
+    }
+
+    public static boolean isHighlighted(int position){
+        for(Integer icon:Distributions.highlighted[State.trial]){
+            if(position == icon)
+                return true;
+        }
+        return false;
+    }
 
     public static void highlightIconAtTrial(int icon, int trial){
         // If the MRU icon is amongst the MFU, do nothing
@@ -265,4 +273,5 @@ public class Distributions {
         }
         return allPositionsExceptHighlighted.get(0);
     }
+
 }

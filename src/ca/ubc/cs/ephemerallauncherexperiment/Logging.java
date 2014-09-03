@@ -12,27 +12,6 @@ public class Logging {
     public static File currentExperimentLogFile;	//the file contains the general experiment logs
     public static File currentDistributionsLogFile; //the file contains all information about distributions
 
-    // Just a PODS to hold the results of a trial
-    // There's probably a cleaner way to do this...
-    class Results {
-        public boolean ifHighlighted;
-        public double duration;
-        public int row;
-        public int column;
-        public String iconName;
-        public String iconLabel;
-
-
-        Results(boolean ifHighlighted, double duration, int row, int column, String iconName, String iconLabel) {
-            this.ifHighlighted = ifHighlighted;
-            this.duration = duration;
-            this.row = row;
-            this.column = column;
-            this.iconName = iconName;
-            this.iconLabel = iconLabel;
-        }
-    }
-
     private static String getTrialLogFileName(){
         return Utils.getTimeStamp(true) + "__" + State.participantId+".csv";
     }
@@ -174,16 +153,16 @@ public class Logging {
                 String.valueOf(Distributions.target_ranks[State.trial]));
     }
 
-    public static String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, String iconName, String iconLabel){
-        String highlightedStr = ifHighlighted? "Highlighted" : "Normal";
+    public static String resultCsvLog(Result result){
+        String highlightedStr = result.ifHighlighted? "Highlighted" : "Normal";
         String successStr = State.success? "Success" : "Failure";
         String timeoutStr = State.timeout? "Timeout" : "InTime";
         String missedStr = State.missed? "Miss" : "Hit";
-        return Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(State.page), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr, iconName, iconLabel);
+        return Utils.appendWithComma(highlightedStr, String.valueOf(result.duration), String.valueOf(State.page), String.valueOf(result.row), String.valueOf(result.column), successStr, timeoutStr, missedStr, result.iconName, result.iconLabel);
     }
 
-    public static void logTrial(Context context, boolean ifHighlighted, long duration, int row, int column, String iconName, String iconLabel){
-        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(ifHighlighted, duration, row, column, iconName, iconLabel));
+    public static void logTrial(Context context, Result result){
+        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result));
         FileManager.appendLineToFile(Logging.currentTrialsLogFile,finalTrialLog);
     }
 }
