@@ -33,7 +33,7 @@ public class Pager extends FragmentActivity{
 	@Override
 	protected void onStart(){
 		super.onStart();
-		State.startTime = System.currentTimeMillis();
+		Logging.startTime = System.currentTimeMillis();
 		State.timeout = false;
 		State.missed = false;
 		mTimeoutChecker.run();
@@ -47,7 +47,7 @@ public class Pager extends FragmentActivity{
 	}
 	
 	private void checkForTimeout(){
-		if (System.currentTimeMillis() - State.startTime > ExperimentParameters.TRIAL_TIMEOUT_MS && !State.timeout){
+		if (System.currentTimeMillis() - Logging.startTime > ExperimentParameters.TRIAL_TIMEOUT_MS && !State.timeout){
 			State.timeout = true;
 			mHandler.removeCallbacks(mTimeoutChecker);
 			concludeTrial(-1,-1);	
@@ -70,24 +70,9 @@ public class Pager extends FragmentActivity{
 	  
 	
 	private void logEvent(String eventName, String eventDescription){
-		String eventLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(this), eventName, eventDescription);
+		String eventLog = Utils.appendWithComma(Utils.getTimeStamp(false), Logging.stateCsvLog(this), eventName, eventDescription);
 		
-		FileManager.appendLineToFile(State.currentEventsLogFile, eventLog);
-	}
-	  
-	private String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, boolean ifSuccess, boolean ifTimeout, boolean ifMissed, String iconName, String iconLabel){
-		String highlightedStr = ifHighlighted? "Highlighted" : "Normal"; 
-		String successStr = ifSuccess? "Success" : "Failure";
-		String timeoutStr = ifTimeout? "Timeout" : "InTime";
-		String missedStr = ifMissed? "Miss" : "Hit";
-		return Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(State.page), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr, iconName, iconLabel);
-	}
-	
-	private void logTrial(boolean ifHighlighted, long duration, int row, int column,  boolean ifSuccess, boolean ifTimeout, boolean ifMissed, String iconName, String iconLabel){
-		
-		String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), State.stateCsvLog(this), String.valueOf(Distributions.target_ranks[State.trial]),resultCsvLog(ifHighlighted, duration, row, column,  ifSuccess,  ifTimeout, ifMissed, iconName, iconLabel));
-		
-		FileManager.appendLineToFile(State.currentTrialsLogFile,finalTrialLog);
+		FileManager.appendLineToFile(Logging.currentEventsLogFile, eventLog);
 	}
 	
 	// AP: it would be great if we could have this function in Trial instead...
@@ -112,6 +97,7 @@ public class Pager extends FragmentActivity{
 			Utils.vibrate(this);
 			
 			// update the MRU of the next trial
+            // TODO check if this is still necessary when highlighting randomly
 			if(!State.timeout && State.trial<ExperimentParameters.NUM_TRIALS)
 				Distributions.highlightIconAtTrial(global_position, State.trial+1);			
 		}
@@ -119,7 +105,7 @@ public class Pager extends FragmentActivity{
 		mHandler.removeCallbacks(mTimeoutChecker);
 		logEvent("ConcludingTrial", "");
 		boolean ifHighlighted = isHighlighted(global_position);
-		long duration = System.currentTimeMillis()-State.startTime;
+		long duration = System.currentTimeMillis()- Logging.startTime;
 		
 		int row=(int) Math.floor(position_on_page/4)+1;
 		int column=(position_on_page)%4+1;
@@ -142,7 +128,7 @@ public class Pager extends FragmentActivity{
 		}
 				
 		
-		logTrial(ifHighlighted, duration, row, column, State.success, State.timeout, State.missed, iconName, iconLabel);		
+		Logging.logTrial(this, ifHighlighted, duration, row, column, iconName, iconLabel);
 		
 		if (State.timeout){
 				logEvent("Timeout", "");

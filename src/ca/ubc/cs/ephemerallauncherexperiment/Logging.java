@@ -2,7 +2,36 @@ package ca.ubc.cs.ephemerallauncherexperiment;
 
 import android.content.Context;
 
+import java.io.File;
+
 public class Logging {
+
+    public static long startTime;
+    public static File currentTrialsLogFile;		//the file contains per trial logs for a participant
+    public static File currentEventsLogFile;		//the file contains per event (command) logs for a participant
+    public static File currentExperimentLogFile;	//the file contains the general experiment logs
+    public static File currentDistributionsLogFile; //the file contains all information about distributions
+
+    // Just a PODS to hold the results of a trial
+    // There's probably a cleaner way to do this...
+    class Results {
+        public boolean ifHighlighted;
+        public double duration;
+        public int row;
+        public int column;
+        public String iconName;
+        public String iconLabel;
+
+
+        Results(boolean ifHighlighted, double duration, int row, int column, String iconName, String iconLabel) {
+            this.ifHighlighted = ifHighlighted;
+            this.duration = duration;
+            this.row = row;
+            this.column = column;
+            this.iconName = iconName;
+            this.iconLabel = iconLabel;
+        }
+    }
 
     private static String getTrialLogFileName(){
         return Utils.getTimeStamp(true) + "__" + State.participantId+".csv";
@@ -23,23 +52,23 @@ public class Logging {
     public static void initialize(Context context) {
 
         //Initialize trial log file
-        State.currentTrialsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getTrialLogFileName());
-        FileManager.writeToFile(State.currentTrialsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.trial_log_header)), false);
+        currentTrialsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getTrialLogFileName());
+        FileManager.writeToFile(currentTrialsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.trial_log_header)), false);
 
         //Initialize event log file
-        State.currentEventsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getEventsLogFileName());
-        FileManager.writeToFile(State.currentEventsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.events_log_header)), false);
+        currentEventsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getEventsLogFileName());
+        FileManager.writeToFile(currentEventsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.events_log_header)), false);
 
         //Initialize experiment log file
-        State.currentExperimentLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
-        if (!State.currentExperimentLogFile.exists()){
-            FileManager.writeToFile(State.currentExperimentLogFile, Utils.appendWithComma(context.getString(R.string.experiment_log_header), context.getString(R.string.experiment_parameters_log_header)), false);
+        currentExperimentLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
+        if (!currentExperimentLogFile.exists()){
+            FileManager.writeToFile(currentExperimentLogFile, Utils.appendWithComma(context.getString(R.string.experiment_log_header), context.getString(R.string.experiment_parameters_log_header)), false);
         }
-        FileManager.appendLineToFile(State.currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.csvFile()));
+        FileManager.appendLineToFile(currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.csvFile()));
     }
 
     public static void logDistributions(Context context) {
-        State.currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+        currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
 
         String logStr ="";
 
@@ -105,11 +134,11 @@ public class Logging {
             }
         }
 
-        FileManager.writeLineToFile(State.currentDistributionsLogFile, logStr, false);
+        FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
     }
 
     public static void logPostExperimentDistributions(Context context) {
-        State.currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+        currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
 
         String logStr ="";
 
@@ -135,6 +164,26 @@ public class Logging {
             logStr += "\n";
         }
 
-        FileManager.writeLineToFile(State.currentDistributionsLogFile, logStr, false);
+        FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
+    }
+
+    public static String stateCsvLog(Context context){
+        return Utils.appendWithComma(State.participantId, String.valueOf(State.block), State.effect.toString(), String.valueOf(State.trial), String.valueOf(startTime),
+                String.valueOf(State.targetIconPage), String.valueOf(State.targetIconRow), String.valueOf(State.targetIconColumn),
+                Utils.extractIconName(context.getString(State.current_images_ID[Distributions.targets[State.trial]]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX), context.getString(State.current_labels_ID[Distributions.targets[State.trial]]),
+                String.valueOf(Distributions.target_ranks[State.trial]));
+    }
+
+    public static String resultCsvLog(boolean ifHighlighted, long duration, int row, int column, String iconName, String iconLabel){
+        String highlightedStr = ifHighlighted? "Highlighted" : "Normal";
+        String successStr = State.success? "Success" : "Failure";
+        String timeoutStr = State.timeout? "Timeout" : "InTime";
+        String missedStr = State.missed? "Miss" : "Hit";
+        return Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(State.page), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr, iconName, iconLabel);
+    }
+
+    public static void logTrial(Context context, boolean ifHighlighted, long duration, int row, int column, String iconName, String iconLabel){
+        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(ifHighlighted, duration, row, column, iconName, iconLabel));
+        FileManager.appendLineToFile(Logging.currentTrialsLogFile,finalTrialLog);
     }
 }

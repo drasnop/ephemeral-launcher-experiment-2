@@ -13,7 +13,7 @@ public class FileManager {
 	
 		
 	public static void openFile(Context c, String folderName, String fileName) {
-		State.currentTrialsLogFile = getFile(c, folderName, fileName);
+		Logging.currentTrialsLogFile = getFile(c, folderName, fileName);
 	}
 	
 	public static File getFile(Context c, String folderName, String fileName) {
@@ -28,7 +28,7 @@ public class FileManager {
 		writeLineToFile(file, content, true);
 	}
 	public static void appendToFile(String content) {
-		appendToFile(State.currentTrialsLogFile, content);
+		appendToFile(Logging.currentTrialsLogFile, content);
 	}
 	public static void appendToFile(File file, String content) {
 		writeToFile(file, content, true);
@@ -42,7 +42,7 @@ public class FileManager {
 		writeToFile(content, ifAppendData);
 	}
 	public static void writeToFile(String content, boolean ifAppendData) {
-		writeToFile(State.currentTrialsLogFile, content, ifAppendData);
+		writeToFile(Logging.currentTrialsLogFile, content, ifAppendData);
 	}
 	public static void writeToFile(File file, String content, boolean ifAppendData) {
 		

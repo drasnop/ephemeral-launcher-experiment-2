@@ -1,9 +1,5 @@
 package ca.ubc.cs.ephemerallauncherexperiment;
 
-import android.content.Context;
-
-import java.io.File;
-
 // things in this class should change during the experiment
 public class State {
 	
@@ -23,9 +19,8 @@ public class State {
     //////////////   utilities  //////////////////////
 
 	public static int page;		// current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
-	public static long startTime;
-	
-	public static int[] current_images_ID;		// from 1 to 60, 0 is irrelevant
+
+    public static int[] current_images_ID;		// from 1 to 60, 0 is irrelevant
 	/*public static int[] current_images_gs_ID;	// from 1 to 60, 0 is irrelevant*/
 	public static int[] current_labels_ID;		// from 1 to 60, 0 is irrelevant
 	
@@ -36,18 +31,8 @@ public class State {
 	public static int targetIconPage;
 	public static int targetIconRow;
 	public static int targetIconColumn;
-	
-	public static String stateCsvLog(Context context){
-		return Utils.appendWithComma(participantId, String.valueOf(block), effect.toString(), String.valueOf(trial), String.valueOf(startTime), String.valueOf(targetIconPage), String.valueOf(targetIconRow), String.valueOf(targetIconColumn), Utils.extractIconName(context.getString(current_images_ID[Distributions.targets[trial]]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX), context.getString(current_labels_ID[Distributions.targets[trial]]));
-	}
-	
-	public static File currentTrialsLogFile;		//the file contains per trial logs for a participant
-	public static File currentEventsLogFile;		//the file contains per event (command) logs for a participant
-	public static File currentExperimentLogFile;	//the file contains the general experiment logs
-	public static File currentDistributionsLogFile; //the file contains all information about distributions
-	
-	
-	public static void initExperiment(){
+
+    public static void initExperiment(){
 		block=0;
 		participant=-1;
 	}
