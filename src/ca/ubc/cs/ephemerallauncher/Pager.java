@@ -80,7 +80,7 @@ public class Pager extends FragmentActivity{
 		String successStr = ifSuccess? "Success" : "Failure";
 		String timeoutStr = ifTimeout? "Timeout" : "InTime";
 		String missedStr = ifMissed? "Miss" : "Hit";
-		return Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr, iconName, iconLabel);
+		return Utils.appendWithComma(highlightedStr, String.valueOf(duration), String.valueOf(State.page), String.valueOf(row), String.valueOf(column), successStr, timeoutStr, missedStr, iconName, iconLabel);
 	}
 	
 	private void logTrial(boolean ifHighlighted, long duration, int row, int column,  boolean ifSuccess, boolean ifTimeout, boolean ifMissed, String iconName, String iconLabel){
