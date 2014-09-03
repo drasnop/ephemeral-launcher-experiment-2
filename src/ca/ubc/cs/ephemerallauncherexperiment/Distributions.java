@@ -39,34 +39,9 @@ public class Distributions {
                 // TODO: remove modulo and select differently the icons
                 images_ID[i][j] = LauncherParameters.images_ID[allExperimentPositions.get(i* ExperimentParameters.MAX_NUM_POSITIONS +j)%LauncherParameters.images_ID.length];
 				/*images_gs_ID[i][j] = LauncherParameters.images_gs_ID[allExperimentPositions.get(i*num_positions+j)];*/
-            }
-        }
-    }
-
-    private static void labelDistributionInit(){
-        ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
-        // TODO: this is too much: only half the trials have that many positions...
-        for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS*ExperimentParameters.NUM_CONDITIONS; i++) {
-            allExperimentPositions.add(i);
-        }
-        Collections.shuffle(allExperimentPositions);
-
-        for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++){
-            for (int j=0; j < ExperimentParameters.MAX_NUM_POSITIONS; j++){
-                // TODO: remove modulo and select differently the icons
                 labels_ID[i][j] = LauncherParameters.labels_ID[allExperimentPositions.get(i* ExperimentParameters.MAX_NUM_POSITIONS +j)%LauncherParameters.labels_ID.length];
             }
         }
-
-        /*ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
-        for (int i = 0; i < State.num_positions *ExperimentParameters.NUM_CONDITIONS; i++) {
-            allExperimentPositions.add(i);
-        }
-        Collections.shuffle(allExperimentPositions);
-
-        for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++)
-            for (int j=0; j < State.num_positions; j++)
-                labels_ID[i][j] = LauncherParameters.labels_ID[allExperimentPositions.get(i* State.num_positions +j)];*/
     }
 
 
@@ -75,7 +50,6 @@ public class Distributions {
         // Step 0:  Randomly select the icons and labels for the entire experiment
 
         iconDistributionInit();
-        labelDistributionInit();
 
         // Step 1: Generate Zipfian distribution of frequencies (the first cell of the array is not used)
 
@@ -156,6 +130,7 @@ public class Distributions {
 
         // Step 6: Adjust the accuracy
 
+        //TODO: get rid of min accuracy. how to adjust down?
         if(accuracy<ExperimentParameters.MIN_ACCURACY){
             int min_successes= (int) Math.ceil(ExperimentParameters.MIN_ACCURACY*ExperimentParameters.NUM_TRIALS);
             int to_adjust=min_successes-successes;

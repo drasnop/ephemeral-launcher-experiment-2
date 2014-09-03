@@ -17,9 +17,10 @@ public class FileManager {
 	}
 	
 	public static File getFile(Context c, String folderName, String fileName) {
+        Log.v("FileManager","getFile "+fileName);
 		return new File(getExtStorageDir(c, folderName),fileName);
-	}
-	
+    }
+
 	public static void appendLineToFile(String content){
 		writeLineToFile(content, true);
 	}
@@ -79,9 +80,6 @@ public class FileManager {
 	/* Checks if external storage is available for read and write */
 	public boolean isExternalStorageWritable() {
 	    String state = Environment.getExternalStorageState();
-	    if (Environment.MEDIA_MOUNTED.equals(state)) {
-	        return true;
-	    }
-	    return false;
+	    return Environment.MEDIA_MOUNTED.equals(state);
 	}
 }

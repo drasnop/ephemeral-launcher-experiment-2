@@ -10,7 +10,7 @@ public class ExperimentParameters {
 	public static final int NUM_PARTICIPANTS=12;
 
     public static final int NUM_ICONS_PER_PAGE=20;
-	public static final int[] NUM_PAGES = {3,5};
+	public static final int[] NUM_PAGES = {3,6};
     public static final int NUM_HIGHLIGHTED_ICONS_PER_PAGE = 3;
     public static final int MAX_NUM_POSITIONS = NUM_PAGES[1]*NUM_ICONS_PER_PAGE;
 
