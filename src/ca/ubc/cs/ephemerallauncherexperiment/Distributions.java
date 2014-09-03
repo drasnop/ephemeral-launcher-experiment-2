@@ -18,40 +18,68 @@ public class Distributions {
     public static int[] target_ranks = new int[ExperimentParameters.NUM_TRIALS+1];	// just used for logging
     public static int[] selected = new int[ExperimentParameters.NUM_TRIALS+1];		// just used for logging
 
+    public static ArrayList<Integer> allAvailableIcons = new ArrayList<Integer>();
+    public static List<Integer> targets_list = new ArrayList<Integer>();
+
     // We take the maximum number of icons needed for any condition; therefore for half the conditions the array will not be full
     public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.NUM_PAGES[1]*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE];
+    //TODO no need for a 2D array here!
     public static Integer[][] images_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];
     /*public static Integer[][] images_gs_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];*/
     public static Integer[][] labels_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];
 
     public static double empiricalAccuracy;
 
-    private static void iconDistributionInit() {
-        ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
-        // TODO: this is too much: only half the trials have that many positions...
-        for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS*ExperimentParameters.NUM_CONDITIONS; i++) {
-            allExperimentPositions.add(i);
+    // Actual number of targets, which can be smaller than zipfSize
+    public static int numNonZeroInZipfian(){
+        int count=0;
+        for(Integer f : zipfian){
+            if(f>0)
+                count++;
         }
-        Collections.shuffle(allExperimentPositions);
+        return count;
+    }
 
-        for (int i = 0; i < ExperimentParameters.NUM_CONDITIONS; i++){
-            for (int j=0; j < ExperimentParameters.MAX_NUM_POSITIONS; j++){
-                // TODO: remove modulo and select differently the icons
-                images_ID[i][j] = LauncherParameters.images_ID[allExperimentPositions.get(i* ExperimentParameters.MAX_NUM_POSITIONS +j)%LauncherParameters.images_ID.length];
-				/*images_gs_ID[i][j] = LauncherParameters.images_gs_ID[allExperimentPositions.get(i*num_positions+j)];*/
-                labels_ID[i][j] = LauncherParameters.labels_ID[allExperimentPositions.get(i* ExperimentParameters.MAX_NUM_POSITIONS +j)%LauncherParameters.labels_ID.length];
-            }
+    // Reusing icons except for the ones that were targets
+    private static void iconDistributionInitExperiment() {
+        for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian(); i++) {
+            allAvailableIcons.add(i);
         }
+    }
+
+    private static void iconDistributionInitCondition() {
+        // Step a: shuffle the remaining icons
+        Collections.shuffle(allAvailableIcons);
+
+        // Step b: choose and remove target icons for this condition
+        int targetIcon;
+        for(int i=0; i<numNonZeroInZipfian();i++){
+            targetIcon=allAvailableIcons.remove(0);
+            images_ID[State.block][targets_list.get(i)] = LauncherParameters.images_ID[targetIcon];
+            /*images_gs_ID[State.block][targets_list[i]] = LauncherParameters.images_gs_ID[target];*/
+            labels_ID[State.block][targets_list.get(i)] = LauncherParameters.labels_ID[targetIcon];
+        }
+
+        // Step c: choose and COPY other icons for this condition
+        int nonTargetIcon;
+        int j=0;
+        for(int p=0; p<State.num_positions();p++){
+            if(!targets_list.contains(p)){
+                nonTargetIcon = allAvailableIcons.get(j);
+                j++;
+                images_ID[State.block][p] = LauncherParameters.images_ID[nonTargetIcon];
+                /*images_gs_ID[State.block][i] = LauncherParameters.images_gs_ID[nontarget]; */
+                labels_ID[State.block][p] = LauncherParameters.labels_ID[nonTargetIcon];
+            }
+            // Otherwise do nothing; the icon has been chosen at step b
+        }
+        assert(j==State.num_positions()-numNonZeroInZipfian());
     }
 
 
     public static void initForExperiment() {
 
-        // Step 0:  Randomly select the icons and labels for the entire experiment
-
-        iconDistributionInit();
-
-        // Step 1: Generate Zipfian distribution of frequencies (the first cell of the array is not used)
+        // Step 0: Generate Zipfian distribution of frequencies (the first cell of the array is not used)
 
         double denominator = 0;
         int sum_frequencies = 0;
@@ -76,6 +104,10 @@ public class Distributions {
             sum_frequencies+=frequency;
         }
         assert(sum_frequencies==ExperimentParameters.NUM_TRIALS);
+
+        // Step 1:  Prepare the random selection of icons and labels for the entire experiment
+
+        iconDistributionInitExperiment();
     }
 
     public static void initForCondition() {
@@ -86,7 +118,9 @@ public class Distributions {
             allPositions.add(i);
         }
         Collections.shuffle(allPositions);
+        // TODO replace zipfSize by numNonZeroZipfian
         List<Integer> positions = allPositions.subList(0, zipfSize); // Extract from index 0 (included) to zipfSize (excluded)
+        targets_list = positions.subList(0,numNonZeroInZipfian());
         assert (positions.size() == zipfSize);
 
         // Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to the Zipfian distribution
@@ -175,6 +209,9 @@ public class Distributions {
         // Step 7: Recompute the accuracy, just to be sure
         computeAccuracy();
         Log.v("Distributions","Empirical accuracy after adjusting = "+ empiricalAccuracy);
+
+        // Step 8: Select the other icons (=pictures+labels) to be displayed
+        iconDistributionInitCondition();
     }
 
     public static void computeAccuracy(){
