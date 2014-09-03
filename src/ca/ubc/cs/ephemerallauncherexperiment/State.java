@@ -12,9 +12,16 @@ public class State {
     public static int condition;    //  0 to CONDITION-1, index in the ExperimentParameters.CONDITIONS array
 	public static ExperimentParameters.EFFECTS effect;
     public static int num_pages;
-    public static int num_positions;
     public static double accuracy;
-    public static int num_highlighted_icons;
+
+    public static int num_positions(){
+        return num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE;
+    }
+
+    public static int num_highlighted_icons(){
+        return num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
+    }
+
 
     //////////////   utilities for logging   //////////////////////
 
@@ -43,9 +50,7 @@ public class State {
         condition= ExperimentParameters.LATINSQ[participant% ExperimentParameters.LATINSQ.length][block];
         effect = ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][0]];
         num_pages = ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]];
-        num_positions = num_pages * ExperimentParameters.NUM_ICONS_PER_PAGE;
         accuracy = ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][2]];
-        num_highlighted_icons = num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
 
         trial=1;
 
@@ -53,12 +58,12 @@ public class State {
 		/*current_images_gs_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];*/
 		current_labels_ID = new int[State.num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE+1];
 
-        for(int pos=1; pos<= num_positions; pos++){
+        for(int pos=1; pos<= num_positions(); pos++){
             State.current_images_ID[pos]=Distributions.images_ID[State.block][pos-1];
 			/*State.current_images_gs_ID[pos]=Distributions.images_gs_ID[State.block][pos-1];*/
         }
 
-        for(int pos=1; pos <= num_positions; pos++){
+        for(int pos=1; pos <= num_positions(); pos++){
             State.current_labels_ID[pos]=Distributions.labels_ID[State.block][pos-1];
         }
     }

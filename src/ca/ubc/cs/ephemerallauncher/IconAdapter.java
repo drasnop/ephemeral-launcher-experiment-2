@@ -35,9 +35,9 @@ public class IconAdapter extends BaseAdapter {
 		Icon icon;
 		int global_position=page_number*LauncherParameters.NUM_ICONS_PER_PAGE+position+1;	// 1..60
 
-		if(global_position> State.num_positions){
+		if(global_position> State.num_positions()){
 			Log.e("Adapter", "We should never get this global position: "+Integer.toString(global_position) + " " + Integer.toString(position));
-			global_position= State.num_positions;
+			global_position= State.num_positions();
 		}
 		
 		if (convertView == null) {

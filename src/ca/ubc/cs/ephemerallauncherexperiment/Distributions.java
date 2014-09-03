@@ -82,7 +82,7 @@ public class Distributions {
         // Step 2: Pick zipfSize positions for the target icon, in [1..State.num_pages*20]
 
         ArrayList<Integer> allPositions = new ArrayList<Integer>();
-        for (int i = 1; i <= State.num_positions; i++) {
+        for (int i = 1; i <= State.num_positions(); i++) {
             allPositions.add(i);
         }
         Collections.shuffle(allPositions);
@@ -112,7 +112,7 @@ public class Distributions {
         // Step 4a: Generate highlighted icons sequence based on MFU
 
         for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
-            for(int j=0; j<State.num_highlighted_icons; j++){
+            for(int j=0; j<State.num_highlighted_icons(); j++){
                 highlighted[i][j]=positions.get(j);
             }
         }
@@ -196,7 +196,7 @@ public class Distributions {
     }
 
     private static boolean isAmongHighlighted(int trial, int icon){
-        for(int i=0; i<State.num_highlighted_icons; i++){
+        for(int i=0; i<State.num_highlighted_icons(); i++){
             if(highlighted[trial][i]==icon)
                 return true;
         }
@@ -214,12 +214,12 @@ public class Distributions {
     public static void highlightIconAtTrial(int icon, int trial){
         // If the MRU icon is amongst the MFU, do nothing
         if(!isAmongHighlighted(trial, icon))
-            highlighted[trial][State.num_highlighted_icons-1]=icon;
+            highlighted[trial][State.num_highlighted_icons()-1]=icon;
     }
 
     // Change one highlighted icon to make the prediction a success
     private static void adjustTrialSuccess(int trial){
-        int icon=(int) Math.floor(Math.random()*State.num_highlighted_icons);		// int between 0 and HIGHLIGHTED-1
+        int icon=(int) Math.floor(Math.random()*State.num_highlighted_icons());		// int between 0 and HIGHLIGHTED-1
         highlighted[trial][icon]=targets[trial];
     }
 
@@ -233,10 +233,10 @@ public class Distributions {
     // Change one highlighted icon without modifying the correctness of the prediction
     private static void randomlyChangeTrial(int trial){
         int icon;
-        int replaceBy=(int) Math.floor(Math.random()* State.num_positions);
+        int replaceBy=(int) Math.floor(Math.random()* State.num_positions());
 
         if(!isPredictionCorrect(trial))
-            icon=(int) Math.floor(Math.random()*State.num_highlighted_icons);		// int between 0 and HIGHLIGHTED-1
+            icon=(int) Math.floor(Math.random()*State.num_highlighted_icons());		// int between 0 and HIGHLIGHTED-1
         else
             icon=selectOneHighlightedExceptTarget(trial);
 
@@ -247,7 +247,7 @@ public class Distributions {
     private static int selectOneHighlightedExceptTarget(int trial){
         assert(isPredictionCorrect(trial));
         ArrayList<Integer> highlight= new ArrayList<Integer>();
-        for(int i=0;i<State.num_highlighted_icons;i++){
+        for(int i=0;i<State.num_highlighted_icons();i++){
             if(highlighted[trial][i] != targets[trial])
                 highlight.add(i);
         }
@@ -257,7 +257,7 @@ public class Distributions {
 
     private static int findTargetAmongHighlighted(int trial){
         assert(isPredictionCorrect(trial));
-        for(int i=0;i<State.num_highlighted_icons;i++){
+        for(int i=0;i<State.num_highlighted_icons();i++){
             if(highlighted[trial][i] == targets[trial])
                 return i;
         }
@@ -267,7 +267,7 @@ public class Distributions {
     private static int selectIconNotHighlightedNotTarget(int trial){
         assert(isPredictionCorrect(trial));
         ArrayList<Integer> allPositionsExceptHighlighted= new ArrayList<Integer>(); // also encompasses target since prediction is correct
-        for(int i=0; i<State.num_positions;i++){
+        for(int i=0; i<State.num_positions();i++){
             if(!isAmongHighlighted(trial,i))
                 allPositionsExceptHighlighted.add(i);
         }

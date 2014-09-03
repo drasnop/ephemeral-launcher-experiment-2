@@ -98,7 +98,7 @@ public class Logging {
         logStr += "HIGHLIGHTED ICONS' POSITIONS \n";
 
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            for (int icon = 0; icon < State.num_highlighted_icons; icon++)
+            for (int icon = 0; icon < State.num_highlighted_icons(); icon++)
                 logStr += Utils.padWithZero(Distributions.highlighted[tr+1][icon]) + " ";
             logStr += "\n";
         }
@@ -110,7 +110,7 @@ public class Logging {
         for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
             logStr += halfLineSep;
             logStr += "CONDITION " + String.valueOf(c) + ": " + logCondition(c) +"\n";
-            for (int pos=0; pos < State.num_positions; pos++){
+            for (int pos=0; pos < State.num_positions(); pos++){
                 logStr += String.valueOf(pos+1) + ": " + Utils.extractIconName(context.getString(Distributions.images_ID[c][pos]), iconAddressPrefix) + " "  +context.getString(Distributions.labels_ID[c][pos]) + "; " ;
                 if ((pos+1) % ExperimentParameters.NUM_ICONS_PER_PAGE == 0) {
                     logStr += "\n";
@@ -150,7 +150,7 @@ public class Logging {
         logStr += "ACTUAL HIGHLIGHTED ICONS' POSITIONS (with empirical MRU) \n";
 
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            for (int icon = 0; icon < State.num_highlighted_icons; icon++)
+            for (int icon = 0; icon < State.num_highlighted_icons(); icon++)
                 logStr += Utils.padWithZero(Distributions.highlighted[tr+1][icon]) + " ";
             logStr += "\n";
         }
