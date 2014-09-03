@@ -2,7 +2,6 @@ package ca.ubc.cs.ephemerallauncherexperiment;
 
 import android.graphics.Color;
 
-
 public class ExperimentParameters {
 	
 	public static final int NUM_CONDITIONS=12;
