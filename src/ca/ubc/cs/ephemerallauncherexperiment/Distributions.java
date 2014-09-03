@@ -24,7 +24,7 @@ public class Distributions {
     /*public static Integer[][] images_gs_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];*/
     public static Integer[][] labels_ID = new Integer[ExperimentParameters.NUM_CONDITIONS][ExperimentParameters.MAX_NUM_POSITIONS];
 
-    public static double accuracy;
+    private static double empiricalAccuracy;
 
     private static void iconDistributionInit() {
         ArrayList<Integer> allExperimentPositions = new ArrayList<Integer>();
@@ -91,7 +91,7 @@ public class Distributions {
 
         // Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to the Zipfian distribution
 
-        ArrayList<Pair<Integer,Integer>> targetsList = new ArrayList<Pair<Integer,Integer>>();
+        ArrayList<Pair<Integer,Integer>> targetsList = new ArrayList<Pair<Integer,Integer>>();  // (position, zipfian rank)
         for(int i=1; i<=zipfSize; i++){
             for(int j=0; j< zipfian[i]; j++){
                 targetsList.add(new Pair<Integer, Integer>(positions.get(i-1),i));
@@ -100,7 +100,7 @@ public class Distributions {
         assert(targetsList.size()==ExperimentParameters.NUM_TRIALS);
         Collections.shuffle(targetsList);
 
-        List<Pair<Integer, Integer>> temp = targetsList.subList(0, ExperimentParameters.NUM_TRIALS);
+        List<Pair<Integer, Integer>> temp = targetsList.subList(0, ExperimentParameters.NUM_TRIALS);    // do we really need that temp one?
         assert(temp.size() == ExperimentParameters.NUM_TRIALS);
         Pair<Integer,Integer> target;
         for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
@@ -125,15 +125,15 @@ public class Distributions {
         // Step 5: Compute the accuracy
 
         int successes=computeSuccesses();
-        accuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
-        Log.v("Distributions","Empirical accuracy before adjusting = "+accuracy);
+        empiricalAccuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
+        Log.v("Distributions","Empirical accuracy before adjusting = "+ empiricalAccuracy);
 
-        // Step 6: Adjust the accuracy
+        // Step 6a: Adjust the accuracy up if necessary
 
-        //TODO: get rid of min accuracy. how to adjust down?
-        if(accuracy<ExperimentParameters.MIN_ACCURACY){
-            int min_successes= (int) Math.ceil(ExperimentParameters.MIN_ACCURACY*ExperimentParameters.NUM_TRIALS);
-            int to_adjust=min_successes-successes;
+        int min_successes= (int) Math.ceil(State.accuracy*ExperimentParameters.NUM_TRIALS);
+        int to_adjust=min_successes-successes;
+
+        if(to_adjust>0){ // successes < min_successes
 
             // Randomly select to_adjust trials
             ArrayList<Integer> trials = new ArrayList<Integer>();
@@ -142,7 +142,29 @@ public class Distributions {
             Collections.shuffle(trials);
             for(Integer t:trials){
                 if(to_adjust>0 && !isPredictionCorrect(t)){
-                    adjustTrial(t);
+                    adjustTrialSuccess(t);
+                    to_adjust--;
+                }
+                else
+                    randomlyChangeTrial(t);
+            }
+        }
+
+        // Step 6b: Adjust the accuracy down if necessary
+
+        int max_successes= (int) Math.floor(State.accuracy*ExperimentParameters.NUM_TRIALS);
+        to_adjust=successes-max_successes;
+
+        if(to_adjust>0){ // successes > max_successes
+
+            // Randomly select to_adjust trials
+            ArrayList<Integer> trials = new ArrayList<Integer>();
+            for(int i=1; i<=ExperimentParameters.NUM_TRIALS;i++)
+                trials.add(i);
+            Collections.shuffle(trials);
+            for(Integer t:trials){
+                if(to_adjust>0 && isPredictionCorrect(t)){
+                    adjustTrialFailure(t);
                     to_adjust--;
                 }
                 else
@@ -152,12 +174,12 @@ public class Distributions {
 
         // Step 7: Recompute the accuracy, just to be sure
         computeAccuracy();
-        Log.v("Distributions","Empirical accuracy after adjusting = "+accuracy);
+        Log.v("Distributions","Empirical accuracy after adjusting = "+ empiricalAccuracy);
     }
 
     public static void computeAccuracy(){
         int successes=computeSuccesses();
-        accuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
+        empiricalAccuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
     }
 
     private static int computeSuccesses(){
@@ -179,7 +201,7 @@ public class Distributions {
                 return true;
         }
         return false;
-    }
+}
 
     public static void highlightIconAtTrial(int icon, int trial){
         // If the MRU icon is amongst the MFU, do nothing
@@ -188,9 +210,16 @@ public class Distributions {
     }
 
     // Change one highlighted icon to make the prediction a success
-    private static void adjustTrial(int trial){
+    private static void adjustTrialSuccess(int trial){
         int icon=(int) Math.floor(Math.random()*State.num_highlighted_icons);		// int between 0 and HIGHLIGHTED-1
         highlighted[trial][icon]=targets[trial];
+    }
+
+    // Change one highlighted icon to make the prediction a failure
+    private static void adjustTrialFailure(int trial){
+        int icon = findTargetAmongHighlighted(trial);
+        int replaceBy=selectIconNotHighlightedNotTarget(trial);
+        highlighted[trial][icon]=replaceBy;
     }
 
     // Change one highlighted icon without modifying the correctness of the prediction
@@ -208,6 +237,7 @@ public class Distributions {
 
     // Helper function
     private static int selectOneHighlightedExceptTarget(int trial){
+        assert(isPredictionCorrect(trial));
         ArrayList<Integer> highlight= new ArrayList<Integer>();
         for(int i=0;i<State.num_highlighted_icons;i++){
             if(highlighted[trial][i] != targets[trial])
@@ -217,4 +247,22 @@ public class Distributions {
         return highlight.get(0);
     }
 
+    private static int findTargetAmongHighlighted(int trial){
+        assert(isPredictionCorrect(trial));
+        for(int i=0;i<State.num_highlighted_icons;i++){
+            if(highlighted[trial][i] == targets[trial])
+                return i;
+        }
+        return -1;
+    }
+
+    private static int selectIconNotHighlightedNotTarget(int trial){
+        assert(isPredictionCorrect(trial));
+        ArrayList<Integer> allPositionsExceptHighlighted= new ArrayList<Integer>(); // also encompasses target since prediction is correct
+        for(int i=0; i<State.num_positions;i++){
+            if(!isAmongHighlighted(trial,i))
+                allPositionsExceptHighlighted.add(i);
+        }
+        return allPositionsExceptHighlighted.get(0);
+    }
 }

@@ -58,7 +58,7 @@ public class State {
         effect = ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][0]];
         num_pages = ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]];
         num_positions = num_pages * ExperimentParameters.NUM_ICONS_PER_PAGE;
-        accuracy = ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][1]][ExperimentParameters.CONDITIONS[condition][2]];
+        accuracy = ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][2]];
         num_highlighted_icons = num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
 
         trial=1;
