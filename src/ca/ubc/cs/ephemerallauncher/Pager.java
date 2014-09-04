@@ -47,7 +47,7 @@ public class Pager extends FragmentActivity{
     }
 
     private void checkForTimeout(){
-        if (System.currentTimeMillis() - Logging.startTime > ExperimentParameters.TRIAL_TIMEOUT_MS && !State.timeout){
+        if (System.currentTimeMillis() - Logging.startTime > State.trial_timeout_ms && !State.timeout){
             State.timeout = true;
             mHandler.removeCallbacks(mTimeoutChecker);
             concludeTrial(-1,-1);
@@ -149,8 +149,6 @@ public class Pager extends FragmentActivity{
             // end condition
 
             State.block++;
-
-            State.trial=1;
 
             if (State.block == ExperimentParameters.NUM_CONDITIONS)
             {

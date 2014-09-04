@@ -27,8 +27,10 @@ public class Distributions {
     /*public static Integer[] images_gs_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];*/
     public static Integer[] labels_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
 
-    public static Integer[] images_ID_practice = new Integer[ExperimentParameters.NUM_PRACTICE_TRIALS];
-    public static Integer[] labels_ID_practice = new Integer[ExperimentParameters.NUM_PRACTICE_TRIALS];
+    public static Integer image_ID_practice;
+    public static Integer label_ID_practice;
+    public static Integer image_ID_stored;
+    public static Integer label_ID_stored;
 
     public static double empiricalAccuracy;
 
@@ -54,12 +56,9 @@ public class Distributions {
         }
 
         // Select the target icons that will be used for the practice trials throughout the experiment
-        int icon;
-        for (int i = 0; i < ExperimentParameters.NUM_PRACTICE_TRIALS; i++) {
-            icon = allAvailableIcons.remove(0);
-            images_ID_practice[i] = LauncherParameters.images_ID[icon];
-            labels_ID_practice[i] = LauncherParameters.labels_ID[icon];
-        }
+        int icon = allAvailableIcons.remove(0);
+        image_ID_practice = LauncherParameters.images_ID[icon];
+        label_ID_practice = LauncherParameters.labels_ID[icon];
     }
 
 
@@ -131,16 +130,19 @@ public class Distributions {
             target_ranks[i]=target.second;
         }
 
+        // starting from here, we take into account the practice trial
+        targets[0]=positionsOfTargets.get(0);   // choose target of rank 1, so it will be highlighted
+
         // Step 4a: Prepare highlighted icons array
 
-        for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++) {
+        for(int i=0; i<=ExperimentParameters.NUM_TRIALS; i++) {
             for (int j = 0; j < ExperimentParameters.MAX_NUM_HIGHLIGHTED_ICONS; j++)
                 highlighted[i][j] = -1;
         }
 
         // Step 4b: Generate highlighted icons sequence based on MFU
 
-        for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
+        for(int i=0; i<=ExperimentParameters.NUM_TRIALS; i++){
             // Fill up with MFU first
             for(int j=0; j<Math.min(State.num_highlighted_icons(),positionsOfTargets.size()); j++)
                 highlighted[i][j]=positionsOfTargets.get(j);
@@ -150,13 +152,14 @@ public class Distributions {
         }
 
         // Step 4c: Add random highlighted icons
-        for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
+        for(int i=0; i<=ExperimentParameters.NUM_TRIALS; i++){
             for(int j=1; j<=State.num_randomly_highlighted_icons; j++){
                 highlighted[i][State.num_highlighted_icons()-j]=selectIconNotHighlightedNotTarget(i);   // start at the end, to remove the least MFU
             }
         }
 
         // Step 4d: Add the MRU icon(s) if not already present (highlights at least 1 mru)
+        // of course, no MRU in the practice trial
 
         for(int m=1; m<ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[State.condition][1]]; m++){
             for(int i=1+m; i<=ExperimentParameters.NUM_TRIALS; i++)
@@ -164,6 +167,7 @@ public class Distributions {
         }
 
         // Step 5: Compute the accuracy
+        // we stop taking into account practice trial from here
 
         int successes=computeSuccesses();
         empiricalAccuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
@@ -242,8 +246,18 @@ public class Distributions {
             labels_ID[p] = LauncherParameters.labels_ID[icon];
         }
 
+        // Step c: temporarily swap an icon with the practice target icon
+        image_ID_stored = images_ID[targets[0]];
+        images_ID[targets[0]] = image_ID_practice;
+
+        label_ID_stored = labels_ID[targets[0]];
+        labels_ID[targets[0]] = label_ID_practice;
     }
 
+    public static void unSwapIconsAfterPractice(){
+        images_ID[targets[0]] = image_ID_stored;
+        labels_ID[targets[0]] = label_ID_stored;
+    }
 
     ///////////////////    Helper functions    //////////////////////////////////
 

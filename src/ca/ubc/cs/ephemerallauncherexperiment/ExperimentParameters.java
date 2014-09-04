@@ -22,7 +22,8 @@ public class ExperimentParameters {
 
     public static final int MAX_NUM_HIGHLIGHTED_ICONS = NUM_PAGES[1]*NUM_HIGHLIGHTED_ICONS_PER_PAGE;
 
-	public static final int TRIAL_TIMEOUT_MS = 20000;	//10000
+    public static final int REGULAR_TRIAL_TIMEOUT_MS = 20000;
+    public static final int PRACTICE_TRIAL_TIMEOUT_MS = 60000;
 	public static final int TIMEOUT_CHECK_INTERVAL = 500;
 
 	public static final String LOG_FOLDER = "EXP1";
@@ -90,7 +91,7 @@ public class ExperimentParameters {
     public static String experimentToString(){
         return Utils.appendWithComma(String.valueOf(NUM_CONDITIONS), String.valueOf(NUM_TRIALS),
                 String.valueOf(NUM_PAGES[0]), String.valueOf(NUM_PAGES[1]), String.valueOf(ACCURACY[0]), String.valueOf(ACCURACY[1]),
-                String.valueOf(NUM_HIGHLIGHTED_ICONS_PER_PAGE), String.valueOf(TRIAL_TIMEOUT_MS));
+                String.valueOf(NUM_HIGHLIGHTED_ICONS_PER_PAGE), String.valueOf(State.trial_timeout_ms));
     }
 
 }

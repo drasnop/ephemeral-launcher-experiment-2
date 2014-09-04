@@ -3,6 +3,7 @@ package ca.ubc.cs.ephemerallauncherexperiment;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -54,11 +55,13 @@ public class Trial extends Activity {
 			message_text.setText("");
 			
 		}
+        else if (message.equals("Practice")){
+            message_text.setText(this.getString(R.string.trial_practice_message));
+            message_text.setTextColor(Color.CYAN);
+        }
 		else if (message.equals("None")){
 			message_text.setText(this.getString(R.string.trial_none_message));
 		}
-		
-		
 		
 		RelativeLayout trial = (RelativeLayout) this.findViewById(R.id.trial);
 		trial.setOnClickListener(new OnClickListener() {
@@ -81,6 +84,11 @@ public class Trial extends Activity {
 		State.targetIconPage = (int)Math.floor((targetIconPosition-1) / ExperimentParameters.NUM_ICONS_PER_PAGE) +1;
 		State.targetIconRow = (int)Math.floor((targetIconPosOnPage-1) / 4) + 1 ;
 		State.targetIconColumn = (targetIconPosOnPage-1)%4+1;
+
+        if(State.trial==1){
+            Distributions.unSwapIconsAfterPractice();
+            State.trial_timeout_ms = ExperimentParameters.REGULAR_TRIAL_TIMEOUT_MS;
+        }
 	}
 	
 	private void startPager(){

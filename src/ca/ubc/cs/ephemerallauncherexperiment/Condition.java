@@ -29,9 +29,9 @@ public class Condition extends Activity {
 	}
 	
 	public void startFirstTrial(View view) {
-
 		Intent intent = new Intent(this, Trial.class);
-		intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, "None");
+		intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, "Practice");
+        State.trial_timeout_ms = ExperimentParameters.PRACTICE_TRIAL_TIMEOUT_MS;
 		startActivity(intent);
 	}
 	

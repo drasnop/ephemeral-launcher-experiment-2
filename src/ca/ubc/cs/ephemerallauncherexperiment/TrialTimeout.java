@@ -23,8 +23,6 @@ public class TrialTimeout extends Activity {
 
 			State.block++;
 
-			State.trial = 1;
-
 			if (State.block == ExperimentParameters.NUM_CONDITIONS) {
 				Intent intent = new Intent(this, EndOfExperiment.class);
 				intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);

@@ -16,6 +16,7 @@ public class State {
 
     public static int num_randomly_highlighted_icons;
     public static int num_mru_highlighted_icons;
+    public static int trial_timeout_ms = 20000;
 
     public static int num_positions(){
         return num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE;
@@ -24,7 +25,6 @@ public class State {
     public static int num_highlighted_icons(){
         return num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
     }
-
 
     //////////////   utilities for logging   //////////////////////
 
@@ -55,7 +55,7 @@ public class State {
         num_randomly_highlighted_icons = ExperimentParameters.NUM_RANDOMLY_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[condition][1]];
         num_mru_highlighted_icons = ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[condition][1]];
 
-        trial=1;
+        trial=0;
     }
 
 
