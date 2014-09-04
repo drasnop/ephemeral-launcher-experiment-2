@@ -277,9 +277,9 @@ public class Distributions {
         return isAmongHighlighted(trial, targets[trial]);
     }
 
-    private static boolean isAmongHighlighted(int trial, int icon){
+    private static boolean isAmongHighlighted(int trial, int position){
         for(int i=0; i<State.num_highlighted_icons(); i++){
-            if(highlighted[trial][i]==icon)     // highlighted may still be incomplete (= full of -1)
+            if(highlighted[trial][i]==position)     // highlighted may still be incomplete (= full of -1)
                 return true;
         }
         return false;
@@ -293,8 +293,8 @@ public class Distributions {
         return false;
     }
 
-    private static boolean isTarget(int trial, int i){
-        return targets[trial]==i;
+    private static boolean isTarget(int trial, int position){
+        return targets[trial]==position;
     }
 
     public static void highlightIconAtTrial(int icon, int trial){
@@ -351,13 +351,13 @@ public class Distributions {
     }
 
     private static int selectIconNotHighlightedNotTarget(int trial){
-        ArrayList<Integer> allPositionsExceptHighlighted= new ArrayList<Integer>();
-            for(int i=0; i<State.num_positions();i++){
-            if(!isAmongHighlighted(trial,i) && !isTarget(trial,i))
-                allPositionsExceptHighlighted.add(i);
+        ArrayList<Integer> allPositionsExceptHighlightedAndTarget= new ArrayList<Integer>();
+        for(int p=1; p<=State.num_positions();p++){
+            if(!isAmongHighlighted(trial,p) && !isTarget(trial,p))
+                allPositionsExceptHighlightedAndTarget.add(p);
         }
-        Collections.shuffle(allPositionsExceptHighlighted);
-        return allPositionsExceptHighlighted.get(0);
+        Collections.shuffle(allPositionsExceptHighlightedAndTarget);
+        return allPositionsExceptHighlightedAndTarget.get(0);
     }
 
 }
