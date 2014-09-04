@@ -23,10 +23,12 @@ public class Distributions {
 
     // We take the maximum number of icons needed for any condition; therefore for half the conditions the array will not be full
     public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.MAX_NUM_HIGHLIGHTED_ICONS];
-    //TODO no need for a 2D array here!
     public static Integer[] images_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
     /*public static Integer[] images_gs_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];*/
     public static Integer[] labels_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
+
+    public static Integer[] images_ID_practice = new Integer[ExperimentParameters.NUM_PRACTICE_TRIALS];
+    public static Integer[] labels_ID_practice = new Integer[ExperimentParameters.NUM_PRACTICE_TRIALS];
 
     public static double empiricalAccuracy;
 
@@ -41,10 +43,22 @@ public class Distributions {
     }
 
     // Reusing icons except for the ones that were targets
-    private static void iconDistributionInitExperiment() {
-        assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() <= 301);
+    private static void initIconDistributionForExperiment() {
+
+        // Verify that we have enough icons
+        assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() + ExperimentParameters.NUM_PRACTICE_TRIALS <= 301);
+
+        // Load all available icons
         for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian(); i++) {
             allAvailableIcons.add(i);
+        }
+
+        // Select the target icons that will be used for the practice trials throughout the experiment
+        int icon;
+        for (int i = 0; i < ExperimentParameters.NUM_PRACTICE_TRIALS; i++) {
+            icon = allAvailableIcons.remove(0);
+            images_ID_practice[i] = LauncherParameters.images_ID[icon];
+            labels_ID_practice[i] = LauncherParameters.labels_ID[icon];
         }
     }
 
@@ -79,7 +93,7 @@ public class Distributions {
 
         // Step 1:  Prepare the random selection of icons and labels for the entire experiment
 
-        iconDistributionInitExperiment();
+        initIconDistributionForExperiment();
     }
 
     // Happens AFTER State.initForCondition();
@@ -204,11 +218,11 @@ public class Distributions {
         Log.v("Distributions","Empirical accuracy after adjusting = "+ empiricalAccuracy);
 
         // Step 8: Select the other icons (=pictures+labels) to be displayed
-        iconDistributionInitCondition();
+        initIconDistributionForCondition();
     }
 
     // Happens at the end of the initiation process
-    private static void iconDistributionInitCondition() {
+    private static void initIconDistributionForCondition() {
         // Step a: shuffle the remaining icons
         Collections.shuffle(allAvailableIcons);
 

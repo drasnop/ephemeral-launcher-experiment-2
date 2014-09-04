@@ -219,7 +219,7 @@ public class Pager extends FragmentActivity{
                 long time_spent_swiping=current_time-Logging.previousPageStartDragging;
                 long time_spent_on_page=Logging.previousPageStartDragging-Logging.previousPageLandingTime;
 
-                Logging.pages_times += "("+State.page + "," + time_spent_on_page +"," + time_spent_swiping + "), ";
+                Logging.pages_times += State.page + "," + time_spent_on_page +"," + time_spent_swiping + ",";
 
                 // update
                 State.page=position+1;
