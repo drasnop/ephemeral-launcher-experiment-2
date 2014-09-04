@@ -142,11 +142,12 @@ public class Distributions {
             }
         }
 
-        // Step 4d: Add the MRU icon if not already present
+        // Step 4d: Add the MRU icon(s) if not already present (highlights at least 1 mru)
 
-        // TODO MRU
-        /*for(int i=2; i<=ExperimentParameters.NUM_TRIALS; i++)
-            highlightIconAtTrial(targets[i-1], i);*/
+        for(int m=1; m<ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[State.condition][1]]; m++){
+            for(int i=1+m; i<=ExperimentParameters.NUM_TRIALS; i++)
+                highlightIconAtTrial(targets[i-m],i);
+        }
 
         // Step 5: Compute the accuracy
 
@@ -211,33 +212,7 @@ public class Distributions {
         // Step a: shuffle the remaining icons
         Collections.shuffle(allAvailableIcons);
 
-        /*
-        // Step b: choose and remove target icons for this condition
-        int targetIcon;
-        for(int i=0; i<numNonZeroInZipfian();i++){
-            targetIcon=allAvailableIcons.remove(0);
-            images_ID[targets_list.get(i)] = LauncherParameters.images_ID[targetIcon];
-            /*images_gs_ID[targets_list[i]] = LauncherParameters.images_gs_ID[target];
-            labels_ID[targets_list.get(i)] = LauncherParameters.labels_ID[targetIcon];
-        }
-
-        // Step c: choose and COPY other icons for this condition
-        int nonTargetIcon;
-        int j=0;
-        for(int p=1; p<=State.num_positions();p++){
-            if(!targets_list.contains(p)){
-                nonTargetIcon = allAvailableIcons.get(j);
-                j++;
-                images_ID[p] = LauncherParameters.images_ID[nonTargetIcon];
-                /*images_gs_ID[State.block][i] = LauncherParameters.images_gs_ID[nontarget];
-                labels_ID[p] = LauncherParameters.labels_ID[nonTargetIcon];
-            }
-            // Otherwise do nothing; the icon has been chosen at step b
-        }
-        assert(j==State.num_positions()-numNonZeroInZipfian());
-        */
-
-        // all at once
+        // Step b: assign images to position, while removing the target icons from the allAvailable set
         int icon;
         int offset=0;
         for(int p=1; p<=State.num_positions();p++){

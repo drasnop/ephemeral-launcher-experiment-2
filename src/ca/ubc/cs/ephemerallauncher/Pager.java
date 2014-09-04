@@ -97,9 +97,8 @@ public class Pager extends FragmentActivity{
             Utils.vibrate(this);
 
             // update the MRU of the next trial
-            // TODO check if this is still necessary when highlighting randomly
-            if(!State.timeout && State.trial<ExperimentParameters.NUM_TRIALS)
-                Distributions.highlightIconAtTrial(global_position, State.trial+1);
+            /*if(!State.timeout && State.trial<ExperimentParameters.NUM_TRIALS)
+                Distributions.highlightIconAtTrial(global_position, State.trial+1);*/
         }
 
         mHandler.removeCallbacks(mTimeoutChecker);
