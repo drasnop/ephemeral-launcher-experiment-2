@@ -20,9 +20,12 @@ public class Condition extends Activity {
 		State.initStateForCondition();
         Distributions.initForCondition();
 		LauncherParameters.ANIMATION = Utils.effectToAnimation(State.effect);
-		
-		// Adjust the text
+
+		// Show block #
 		((TextView) this.findViewById(R.id.start_condition)).setText("Condition #"+State.block);
+
+        // Show # of pages
+        ((TextView) this.findViewById(R.id.num_pages)).setText(State.num_pages+" pages");
 	}
 	
 	public void startFirstTrial(View view) {

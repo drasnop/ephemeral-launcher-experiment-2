@@ -18,6 +18,16 @@
         android:text="@string/start_condition"
         android:textColor="@color/white"
         android:textSize="24sp" />
+
+    <TextView
+            android:id="@+id/num_pages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="180dp"
+            android:text="@string/num_pages"
+            android:textColor="@color/lightblue"
+            android:textSize="60sp" />
     
      <Button
          android:layout_width="wrap_content"

@@ -34,7 +34,7 @@
     <string name="zoom_out">Zoom Out</string>
     <string name="pulse_out">Pulse Out</string>
     <string name="pulse_in">Pulse In</string>
-    <string name="interrupted_color">Interruped Color</string>
+    <string name="interrupted_color">Interrupted Color</string>
     <string name="blur">Blur</string>
     <string name="color_blur">Color+blur</string>
     <string name="twist">Twist</string>
@@ -44,6 +44,7 @@
     <string name="events_log_header">Event Name, Event Description</string>
     <string name="experiment_log_header">TimeStamp, Participant ID</string>
     <string name="experiment_parameters_log_header">#Conditions, #Trials, #PagesLow, #PagesHigh, AccuracyLow, AccuracyHigh , #Highlighted Icons, Timeout, Duration(ms)</string>
+    <string name="num_pages"># pages</string>
 
     <string name="icon_0_label">Asparagus</string>
     <string name="icon_1_label">Apples</string>
