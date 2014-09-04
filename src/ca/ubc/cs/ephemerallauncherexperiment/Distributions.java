@@ -130,19 +130,16 @@ public class Distributions {
             target_ranks[i]=target.second;
         }
 
-        // starting from here, we take into account the practice trial
-        targets[0]=positionsOfTargets.get(0);   // choose target of rank 1, so it will be highlighted
-
         // Step 4a: Prepare highlighted icons array
 
-        for(int i=0; i<=ExperimentParameters.NUM_TRIALS; i++) {
+        for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++) {
             for (int j = 0; j < ExperimentParameters.MAX_NUM_HIGHLIGHTED_ICONS; j++)
                 highlighted[i][j] = -1;
         }
 
         // Step 4b: Generate highlighted icons sequence based on MFU
 
-        for(int i=0; i<=ExperimentParameters.NUM_TRIALS; i++){
+        for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
             // Fill up with MFU first
             for(int j=0; j<Math.min(State.num_highlighted_icons(),positionsOfTargets.size()); j++)
                 highlighted[i][j]=positionsOfTargets.get(j);
@@ -152,14 +149,13 @@ public class Distributions {
         }
 
         // Step 4c: Add random highlighted icons
-        for(int i=0; i<=ExperimentParameters.NUM_TRIALS; i++){
+        for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
             for(int j=1; j<=State.num_randomly_highlighted_icons; j++){
                 highlighted[i][State.num_highlighted_icons()-j]=selectIconNotHighlightedNotTarget(i);   // start at the end, to remove the least MFU
             }
         }
 
         // Step 4d: Add the MRU icon(s) if not already present (highlights at least 1 mru)
-        // of course, no MRU in the practice trial
 
         for(int m=1; m<ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[State.condition][1]]; m++){
             for(int i=1+m; i<=ExperimentParameters.NUM_TRIALS; i++)
@@ -167,7 +163,6 @@ public class Distributions {
         }
 
         // Step 5: Compute the accuracy
-        // we stop taking into account practice trial from here
 
         int successes=computeSuccesses();
         empiricalAccuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
@@ -221,8 +216,25 @@ public class Distributions {
         computeAccuracy();
         Log.v("Distributions","Empirical accuracy after adjusting = "+ empiricalAccuracy);
 
-        // Step 8: Select the other icons (=pictures+labels) to be displayed
+        // Step 8: Generate target and highlighted icons for the practice trial
+        initPracticeTrial();
+
+        // Step 9: Select the other icons (=pictures+labels) to be displayed
         initIconDistributionForCondition();
+    }
+
+    private static void initPracticeTrial() {
+        ArrayList<Integer> allPositions = new ArrayList<Integer>();
+        for (int i = 1; i <= State.num_positions(); i++) {
+            allPositions.add(i);
+        }
+        Collections.shuffle(allPositions);
+
+        targets[0]=allPositions.get(0);
+
+        for (int i = 0; i < State.num_highlighted_icons(); i++) {
+            highlighted[0][i]=allPositions.get(i);
+        }
     }
 
     // Happens at the end of the initiation process
