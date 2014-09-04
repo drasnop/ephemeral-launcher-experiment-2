@@ -14,6 +14,9 @@ public class State {
     public static int num_pages;
     public static double accuracy;
 
+    public static int num_randomly_highlighted_icons;
+    public static int num_mru_highlighted_icons;
+
     public static int num_positions(){
         return num_pages*ExperimentParameters.NUM_ICONS_PER_PAGE;
     }
@@ -48,6 +51,9 @@ public class State {
         effect = ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][0]];
         num_pages = ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]];
         accuracy = ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][2]];
+
+        num_randomly_highlighted_icons = ExperimentParameters.NUM_RANDOMLY_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[condition][1]];
+        num_mru_highlighted_icons = ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[condition][1]];
 
         trial=1;
     }

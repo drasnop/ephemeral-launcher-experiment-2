@@ -22,7 +22,7 @@ public class Distributions {
     public static List<Integer> targets_list = new ArrayList<Integer>();
 
     // We take the maximum number of icons needed for any condition; therefore for half the conditions the array will not be full
-    public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.NUM_PAGES[1]*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE];
+    public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.MAX_NUM_HIGHLIGHTED_ICONS];
     //TODO no need for a 2D array here!
     public static Integer[] images_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
     /*public static Integer[] images_gs_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];*/
@@ -93,16 +93,16 @@ public class Distributions {
         }
         Collections.shuffle(allPositions);
         // TODO replace zipfSize by numNonZeroZipfian
-        List<Integer> positions = allPositions.subList(0, zipfSize); // Extract from index 0 (included) to zipfSize (excluded)
-        targets_list = positions.subList(0,numNonZeroInZipfian());
-        assert (positions.size() == zipfSize);
+        List<Integer> positionsOfTargets = allPositions.subList(0, zipfSize); // Extract from index 0 (included) to zipfSize (excluded)
+        targets_list = positionsOfTargets.subList(0,numNonZeroInZipfian());
+        assert (positionsOfTargets.size() == zipfSize);
 
         // Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to the Zipfian distribution
 
         ArrayList<Pair<Integer,Integer>> targetsList = new ArrayList<Pair<Integer,Integer>>();  // (position, zipfian rank)
         for(int i=1; i<=zipfSize; i++){
             for(int j=0; j< zipfian[i]; j++){
-                targetsList.add(new Pair<Integer, Integer>(positions.get(i-1),i));
+                targetsList.add(new Pair<Integer, Integer>(positionsOfTargets.get(i-1),i));
             }
         }
         assert(targetsList.size()==ExperimentParameters.NUM_TRIALS);
@@ -117,19 +117,36 @@ public class Distributions {
             target_ranks[i]=target.second;
         }
 
-        // Step 4a: Generate highlighted icons sequence based on MFU
+        // Step 4a: Prepare highlighted icons array
+
+        for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++) {
+            for (int j = 0; j < ExperimentParameters.MAX_NUM_HIGHLIGHTED_ICONS; j++)
+                highlighted[i][j] = -1;
+        }
+
+        // Step 4b: Generate highlighted icons sequence based on MFU
 
         for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
-            for(int j=0; j<State.num_highlighted_icons(); j++){
-                // TODO fix out of bound for get
-                highlighted[i][j]=positions.get(j);
+            // Fill up with MFU first
+            for(int j=0; j<Math.min(State.num_highlighted_icons(),positionsOfTargets.size()); j++)
+                highlighted[i][j]=positionsOfTargets.get(j);
+
+            // If there are more highlighted icons than targets, they will be filled up by random highlighting
+            assert(State.num_highlighted_icons()-positionsOfTargets.size()<State.num_randomly_highlighted_icons);
+        }
+
+        // Step 4c: Add random highlighted icons
+        for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
+            for(int j=1; j<=State.num_randomly_highlighted_icons; j++){
+                highlighted[i][State.num_highlighted_icons()-j]=selectIconNotHighlightedNotTarget(i);   // start at the end, to remove the least MFU
             }
         }
 
-        // Step 4b: Add the MRU icon if not already present
+        // Step 4d: Add the MRU icon if not already present
 
-        for(int i=2; i<=ExperimentParameters.NUM_TRIALS; i++)
-            highlightIconAtTrial(targets[i-1], i);
+        // TODO MRU
+        /*for(int i=2; i<=ExperimentParameters.NUM_TRIALS; i++)
+            highlightIconAtTrial(targets[i-1], i);*/
 
         // Step 5: Compute the accuracy
 
@@ -221,19 +238,19 @@ public class Distributions {
         */
 
         // all at once
-        int position;
+        int icon;
         int offset=0;
         for(int p=1; p<=State.num_positions();p++){
             if(targets_list.contains(p)){
-                position=allAvailableIcons.remove(p-offset); // because we have removed offset icons from the list in between
+                icon=allAvailableIcons.remove(p-offset); // because we have removed offset icons from the list in between
                 offset++;
             }
             else{
-                position=allAvailableIcons.get(p-offset);   // because we have removed offset icons from the list in between
+                icon=allAvailableIcons.get(p - offset);   // because we have removed offset icons from the list in between
             }
-            images_ID[p] = LauncherParameters.images_ID[position];
+            images_ID[p] = LauncherParameters.images_ID[icon];
             /*images_gs_ID[p] = LauncherParameters.images_gs_ID[positions];*/
-            labels_ID[p] = LauncherParameters.labels_ID[position];
+            labels_ID[p] = LauncherParameters.labels_ID[icon];
         }
 
     }
@@ -262,7 +279,7 @@ public class Distributions {
 
     private static boolean isAmongHighlighted(int trial, int icon){
         for(int i=0; i<State.num_highlighted_icons(); i++){
-            if(highlighted[trial][i]==icon)
+            if(highlighted[trial][i]==icon)     // highlighted may still be incomplete (= full of -1)
                 return true;
         }
         return false;
@@ -274,6 +291,10 @@ public class Distributions {
                 return true;
         }
         return false;
+    }
+
+    private static boolean isTarget(int trial, int i){
+        return targets[trial]==i;
     }
 
     public static void highlightIconAtTrial(int icon, int trial){
@@ -330,12 +351,12 @@ public class Distributions {
     }
 
     private static int selectIconNotHighlightedNotTarget(int trial){
-        assert(isPredictionCorrect(trial));
-        ArrayList<Integer> allPositionsExceptHighlighted= new ArrayList<Integer>(); // also encompasses target since prediction is correct
-        for(int i=0; i<State.num_positions();i++){
-            if(!isAmongHighlighted(trial,i))
+        ArrayList<Integer> allPositionsExceptHighlighted= new ArrayList<Integer>();
+            for(int i=0; i<State.num_positions();i++){
+            if(!isAmongHighlighted(trial,i) && !isTarget(trial,i))
                 allPositionsExceptHighlighted.add(i);
         }
+        Collections.shuffle(allPositionsExceptHighlighted);
         return allPositionsExceptHighlighted.get(0);
     }
 
