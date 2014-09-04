@@ -47,10 +47,10 @@ public class State {
     // Happens BEFORE Distributions.initForCondition();
 	public static void initStateForCondition() {
 
-        condition= ExperimentParameters.LATINSQ[participant% ExperimentParameters.LATINSQ.length][block];
-        effect = ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][0]];
+        condition= ExperimentParameters.ORDERS[participant% ExperimentParameters.ORDERS.length][block];
+        accuracy = ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][0]];
         num_pages = ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]];
-        accuracy = ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][2]];
+        effect = ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][2]];
 
         num_randomly_highlighted_icons = ExperimentParameters.NUM_RANDOMLY_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[condition][1]];
         num_mru_highlighted_icons = ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[condition][1]];

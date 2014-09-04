@@ -125,9 +125,9 @@ public class Logging {
     }
 
     private static String logCondition(int condition){
-        return ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][0]]+", "
-                +ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]]+","
-                +ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][2]]+" ";
+        return ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][0]]+", "
+                +ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]]+", "
+                +ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][2]]+" ";
     }
 
     public static void logPostExperimentDistributions(Context context) {
