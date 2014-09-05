@@ -188,8 +188,6 @@ public class Distributions {
                     adjustTrialSuccess(t);
                     to_adjust--;
                 }
-                else
-                    randomlyChangeTrial(t);
             }
         }
 
@@ -210,8 +208,6 @@ public class Distributions {
                     adjustTrialFailure(t);
                     to_adjust--;
                 }
-                else
-                    randomlyChangeTrial(t);
             }
         }
 
@@ -321,10 +317,9 @@ public class Distributions {
             highlighted[trial][State.num_highlighted_icons()-1]=icon;
     }
 
-    // Change one highlighted icon to make the prediction a success
+    // Change last highlighted icon to make the prediction a success
     private static void adjustTrialSuccess(int trial){
-        int icon=(int) Math.floor(Math.random()*State.num_highlighted_icons());		// int between 0 and HIGHLIGHTED-1
-        highlighted[trial][icon]=targets[trial];
+        highlighted[trial][State.num_highlighted_icons()-1]=targets[trial];
     }
 
     // Change one highlighted icon to make the prediction a failure
