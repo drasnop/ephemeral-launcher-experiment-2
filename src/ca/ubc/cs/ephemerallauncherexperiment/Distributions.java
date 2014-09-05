@@ -157,11 +157,11 @@ public class Distributions {
         }
 
         // Step 4d: Add the MRU icon(s) if not already present (highlights at least 1 mru)
+        //          MRU is static, i.e. it is based only on the intended selection of sequence, not the actual selections made by the users
 
-        int offset=ExperimentParameters.NUM_RANDOMLY_HIGHLIGHTED_ICONS[State.index_num_pages()];
         for(int m=1; m<ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[State.index_num_pages()]; m++){
             for(int i=1+m; i<=ExperimentParameters.NUM_TRIALS; i++) {
-                highlightIconAtTrial(targets[i - m - offset], i);    // additional offset because we don't want to override the random icons
+                highlightIconAtTrial(targets[i - m], i);
             }
         }
 
@@ -313,8 +313,10 @@ public class Distributions {
 
     public static void highlightIconAtTrial(int icon, int trial){
         // If the MRU icon is amongst the MFU, do nothing
-        if(!isAmongHighlighted(trial, icon))
-            highlighted[trial][State.num_highlighted_icons()-1]=icon;
+        if(!isAmongHighlighted(trial, icon)) {
+            int offset=ExperimentParameters.NUM_RANDOMLY_HIGHLIGHTED_ICONS[State.index_num_pages()];
+            highlighted[trial][State.num_highlighted_icons() - offset - 1] = icon;  // additional offset because we don't want to override the random icons
+        }
     }
 
     // Change last highlighted icon to make the prediction a success

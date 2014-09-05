@@ -45,6 +45,7 @@ public class ExperimentParameters {
 
 	public final static float SUCCESS_MESSAGE_SIZE = 20f;
 	public final static float FAILURE_MESSAGE_SIZE = 25f;
+    public final static float PRACTICE_MESSAGE_SIZE = 50f;
 
 	public final static String SUCCESS_MESSAGE = "ca.ubc.cs.ephemerallauncherexperiment.SUCCESS_MESSAGE";
 

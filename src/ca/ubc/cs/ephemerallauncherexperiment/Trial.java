@@ -3,7 +3,6 @@ package ca.ubc.cs.ephemerallauncherexperiment;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -53,11 +52,11 @@ public class Trial extends Activity {
 		else if (message.equals("Timeout")){
 			//message_text.setText(this.getString(R.string.trial_timeout_message));
 			message_text.setText("");
-			
 		}
         else if (message.equals("Practice")){
             message_text.setText(this.getString(R.string.trial_practice_message));
-            message_text.setTextColor(Color.CYAN);
+            message_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, ExperimentParameters.PRACTICE_MESSAGE_SIZE);
+            message_text.setTextColor(this.getResources().getColor(R.color.lightblue));
         }
 		else if (message.equals("None")){
 			message_text.setText(this.getString(R.string.trial_none_message));
