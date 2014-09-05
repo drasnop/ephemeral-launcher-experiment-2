@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +12,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import ca.ubc.cs.ephemerallauncher.Effects;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class Trial extends Activity {
 
@@ -30,7 +36,22 @@ public class Trial extends Activity {
 		
 		
 		initializeTrial();
-		
+
+        try {
+            // Save state
+            File backup = new File(FileManager.getExtStorageDir(this, ExperimentParameters.LOG_FOLDER),Logging.getExperimentBackupFileName());
+            FileOutputStream fos = new FileOutputStream(backup);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(ExperimentParameters.state);
+            oos.writeObject(ExperimentParameters.distributions);
+            oos.flush();
+            oos.close();
+            Log.v("Trial", "Trial " + ExperimentParameters.state.block + " " + ExperimentParameters.state.trial + " saved");
+        }catch(IOException e ){
+            e.printStackTrace();
+        }
+
+
 		Intent intent = getIntent();
 		String message = intent.getStringExtra(ExperimentParameters.SUCCESS_MESSAGE);
 		
