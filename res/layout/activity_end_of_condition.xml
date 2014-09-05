@@ -11,6 +11,7 @@
     tools:context=".Condition" >
 
     <TextView
+        android:id="@+id/end_of_condition_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
