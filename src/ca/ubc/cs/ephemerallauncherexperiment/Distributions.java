@@ -45,7 +45,7 @@ public class Distributions {
     private static void initIconDistributionForExperiment() {
 
         // Verify that we have enough icons (+1 is for practice trial)
-        assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() + 1 <= 301);
+        assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() + 1 <= 341);
 
         // Load all available icons
         for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian(); i++) {
@@ -339,7 +339,7 @@ public class Distributions {
             icon=selectOneHighlightedExceptTarget(trial);
 
         highlighted[trial][icon]=replaceBy;
-    }*/
+    }
 
     // Helper function
     private static int selectOneHighlightedExceptTarget(int trial){
@@ -351,7 +351,7 @@ public class Distributions {
         }
         Collections.shuffle(highlight);
         return highlight.get(0);
-    }
+    }*/
 
     private static int findTargetAmongHighlighted(int trial){
         assert(isPredictionCorrect(trial));

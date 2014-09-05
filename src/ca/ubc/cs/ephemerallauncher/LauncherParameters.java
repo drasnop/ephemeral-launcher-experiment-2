@@ -178,7 +178,21 @@ public class LauncherParameters {
             R.drawable.icon_289, R.drawable.icon_290, R.drawable.icon_291,
             R.drawable.icon_292, R.drawable.icon_293, R.drawable.icon_294,
             R.drawable.icon_295, R.drawable.icon_296, R.drawable.icon_297,
-            R.drawable.icon_298, R.drawable.icon_299, R.drawable.icon_300};
+            R.drawable.icon_298, R.drawable.icon_299,
+            R.drawable.icon_300, R.drawable.icon_301, R.drawable.icon_302,
+            R.drawable.icon_303, R.drawable.icon_304, R.drawable.icon_305,
+            R.drawable.icon_306, R.drawable.icon_307, R.drawable.icon_308,
+            R.drawable.icon_309, R.drawable.icon_310, R.drawable.icon_311,
+            R.drawable.icon_312, R.drawable.icon_313, R.drawable.icon_314,
+            R.drawable.icon_315, R.drawable.icon_316, R.drawable.icon_317,
+            R.drawable.icon_318, R.drawable.icon_319, R.drawable.icon_320,
+            R.drawable.icon_321, R.drawable.icon_322, R.drawable.icon_323,
+            R.drawable.icon_324, R.drawable.icon_325, R.drawable.icon_326,
+            R.drawable.icon_327, R.drawable.icon_328, R.drawable.icon_329,
+            R.drawable.icon_330, R.drawable.icon_331, R.drawable.icon_332,
+            R.drawable.icon_333, R.drawable.icon_334, R.drawable.icon_335,
+            R.drawable.icon_336, R.drawable.icon_337, R.drawable.icon_338,
+            R.drawable.icon_339, R.drawable.icon_340};
 
    /* public static final Integer[] images_gs_ID = {R.drawable.icon_0_gs,
             R.drawable.icon_1_gs, R.drawable.icon_2_gs, R.drawable.icon_3_gs,
@@ -490,5 +504,13 @@ public class LauncherParameters {
             R.string.icon_307_label, R.string.icon_308_label, R.string.icon_309_label,
             R.string.icon_310_label, R.string.icon_311_label, R.string.icon_312_label,
             R.string.icon_313_label, R.string.icon_314_label, R.string.icon_315_label,
-            R.string.icon_316_label, R.string.icon_317_label, R.string.icon_318_label};
+            R.string.icon_316_label, R.string.icon_317_label, R.string.icon_318_label,
+            R.string.icon_319_label,R.string.icon_320_label,R.string.icon_321_label,
+            R.string.icon_322_label,R.string.icon_323_label,R.string.icon_324_label,
+            R.string.icon_325_label,R.string.icon_326_label,R.string.icon_327_label,
+            R.string.icon_328_label,R.string.icon_329_label,R.string.icon_330_label,
+            R.string.icon_331_label,R.string.icon_332_label,R.string.icon_333_label,
+            R.string.icon_334_label,R.string.icon_335_label,R.string.icon_336_label,
+            R.string.icon_337_label,R.string.icon_338_label,R.string.icon_339_label,
+            R.string.icon_340_label};
 }

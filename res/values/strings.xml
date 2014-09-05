@@ -172,7 +172,7 @@
     <string name="icon_122_label">Frog</string>
     <string name="icon_123_label">Goose</string>
     <string name="icon_124_label">Goldfish</string>
-    <string name="icon_125_label">Forilla</string>
+    <string name="icon_125_label">Gorilla</string>
     <string name="icon_126_label">Grass</string>
     <string name="icon_127_label">Goat</string>
     <string name="icon_128_label">Hare</string>
@@ -190,14 +190,14 @@
     <string name="icon_140_label">Moose</string>
     <string name="icon_141_label">Mouse</string>
     <string name="icon_142_label">Mosquito</string>
-    <string name="icon_143_label">Octopuss</string>
+    <string name="icon_143_label">Octopus</string>
     <string name="icon_144_label">Owl</string>
     <string name="icon_145_label">Ox</string>
     <string name="icon_146_label">Oyster</string>
     <string name="icon_147_label">Penguin</string>
     <string name="icon_148_label">Pigeon</string>
     <string name="icon_149_label">Pony</string>
-    <string name="icon_150_label">Procupine</string>
+    <string name="icon_150_label">Porcupine</string>
     <string name="icon_151_label">Person</string>
     <string name="icon_152_label">Pig</string>
     <string name="icon_153_label">Raccoon</string>
@@ -367,5 +367,26 @@
     <string name="icon_317_label">Wheel</string>
     <string name="icon_318_label">Wreck</string>
     <string name="icon_319_label">Yacht</string>
+    <string name="icon_320_label">Sky</string>
+    <string name="icon_321_label">Gym</string>
+    <string name="icon_322_label">Aquarium</string>
+    <string name="icon_323_label">Pool</string>
+    <string name="icon_324_label">Ring</string>
+    <string name="icon_325_label">Field</string>
+    <string name="icon_326_label">Supermarket</string>
+    <string name="icon_327_label">Playground</string>
+    <string name="icon_328_label">Forest</string>
+    <string name="icon_329_label">Lake</string>
+    <string name="icon_330_label">River</string>
+    <string name="icon_331_label">Mall</string>
+    <string name="icon_332_label">Classroom</string>
+    <string name="icon_333_label">Kindergarten</string>
+    <string name="icon_334_label">Theatre</string>
+    <string name="icon_335_label">Montain</string>
+    <string name="icon_336_label">Beach</string>
+    <string name="icon_337_label">Park</string>
+    <string name="icon_338_label">Campus</string>
+    <string name="icon_339_label">Restaurant</string>
+    <string name="icon_340_label">Bakery</string>
 
 </resources>
