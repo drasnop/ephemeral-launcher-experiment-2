@@ -87,8 +87,10 @@ public class Utils {
 	
 	public static String padWithZero(int i){
 		String res="";
-		if(i<10)
+		if(i<100)
 			res+="0";
+        if(i<10)
+            res+="0";
 		res+=i;
 		return res;
 	}

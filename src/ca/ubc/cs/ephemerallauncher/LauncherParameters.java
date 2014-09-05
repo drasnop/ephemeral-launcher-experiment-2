@@ -12,8 +12,8 @@ public class LauncherParameters {
     public static boolean ANIMATION_HAS_PREANIMATION_STATE;				// Will be initialized automatically
 
     // for highlighted icons
-    public static final int DELAY = 0;
-    public static final int TOTAL_DURATION = 500;
+    public static final int DELAY = 100;
+    public static final int TOTAL_DURATION = 450;
 
     // size
     public static final float SIZE__SMALL = 0.7f;
@@ -21,7 +21,7 @@ public class LauncherParameters {
     public static final float SIZE__REG = 1;						// original size
 
     public static final int PULSE__1STHALF_DURATION = TOTAL_DURATION/2;
-    public static final int PULSE__DELAY = PULSE__1STHALF_DURATION;    // BEWARE: this is just the delay after which the 2nd part of the animation starts
+    public static final int PULSE__DELAY = DELAY+PULSE__1STHALF_DURATION;    // BEWARE: this is just the delay after which the 2nd part of the animation starts
     public static final int PULSE__2NDHALF_DURATION = TOTAL_DURATION - PULSE__1STHALF_DURATION;
 
     // rotation

@@ -86,7 +86,6 @@ public class Logging {
     }
 
     public static void logDistributionsAtConditionInit(Context context) {
-        currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
         String logStr ="";
 
         //logging target positions
@@ -115,18 +114,17 @@ public class Logging {
         logStr += "IMAGE ICONS AND LABELS\n";
 
         String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
-        for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
-            logStr += halfLineSep;
-            logStr += "CONDITION " + String.valueOf(c) + ": " + conditionToString(c) +"\n";
-            for (int pos=1; pos <= State.num_positions(); pos++){
-                logStr += String.valueOf(pos) + ": " + Utils.extractIconName(context.getString(Distributions.images_ID[pos]), iconAddressPrefix) + " "  +context.getString(Distributions.labels_ID[pos]) + "; " ;
-                if ((pos) % ExperimentParameters.NUM_ICONS_PER_PAGE == 0) {
-                    logStr += "\n";
-                }
-
+        logStr += halfLineSep;
+        logStr += "CONDITION " + String.valueOf(State.condition) + ": " + conditionToString(State.condition) +"\n";
+        for (int pos=1; pos <= State.num_positions(); pos++){
+            logStr += String.valueOf(pos) + ": " + Utils.extractIconName(context.getString(Distributions.images_ID[pos]), iconAddressPrefix) + " "  +context.getString(Distributions.labels_ID[pos]) + "; " ;
+            if ((pos) % ExperimentParameters.NUM_ICONS_PER_PAGE == 0) {
+                logStr += "\n";
             }
+
         }
 
+        // Write things in the SAME distribution log file
         FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
     }
 
@@ -167,7 +165,8 @@ public class Logging {
     ///////////////////////////    Log trial    ///////////////////////////////////
 
     public static String stateCsvLog(Context context){
-        return Utils.appendWithComma(State.participantId, String.valueOf(State.block), State.effect.toString(), String.valueOf(State.trial), String.valueOf(startTime),
+        return Utils.appendWithComma(State.participantId, String.valueOf(State.block), String.valueOf(State.accuracy),String.valueOf(State.num_pages), State.effect.toString(),
+                String.valueOf(State.trial), String.valueOf(startTime),
                 String.valueOf(State.targetIconPage), String.valueOf(State.targetIconRow), String.valueOf(State.targetIconColumn),
                 Utils.extractIconName(context.getString(Distributions.images_ID[Distributions.targets[State.trial]]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX), context.getString(Distributions.labels_ID[Distributions.targets[State.trial]]),
                 String.valueOf(Distributions.target_ranks[State.trial]));
@@ -182,6 +181,10 @@ public class Logging {
     }
 
     public static void logTrial(Context context, Result result){
+        // If user stayed on the first page
+        if(Logging.pages_times.equals(""))
+            Logging.pages_times="1,"+result.duration+",0,";
+
         String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result),Logging.pages_times);
         FileManager.appendLineToFile(Logging.currentTrialsLogFile,finalTrialLog);
     }
