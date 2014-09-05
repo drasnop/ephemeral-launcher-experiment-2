@@ -17,13 +17,13 @@ public class TrialTimeout extends Activity {
 
 		String message = "Timeout";
 
-		State.trial++;
-		if (State.trial > ExperimentParameters.NUM_TRIALS) {
+		ExperimentParameters.state.trial++;
+		if (ExperimentParameters.state.trial > ExperimentParameters.NUM_TRIALS) {
 			// end condition
 
-			State.block++;
+			ExperimentParameters.state.block++;
 
-			if (State.block == ExperimentParameters.NUM_CONDITIONS) {
+			if (ExperimentParameters.state.block == ExperimentParameters.NUM_CONDITIONS) {
 				Intent intent = new Intent(this, EndOfExperiment.class);
 				intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);
 				startActivity(intent);

@@ -4,35 +4,51 @@ import android.util.Log;
 import android.util.Pair;
 import ca.ubc.cs.ephemerallauncher.LauncherParameters;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Distributions {
+public class Distributions implements Serializable {
 
-    protected static int[] zipfian = new int[ExperimentParameters.zipfSize+1];
-    public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1];
-    public static int[] target_ranks = new int[ExperimentParameters.NUM_TRIALS+1];	// just used for logging
-    public static int[] selected = new int[ExperimentParameters.NUM_TRIALS+1];		// just used for logging
+    protected int[] zipfian;
+    public int[] targets;
+    public int[] target_ranks;
+    public int[] selected;
 
-    public static ArrayList<Integer> allAvailableIcons = new ArrayList<Integer>();
-    public static List<Integer> targets_list = new ArrayList<Integer>();
+    public ArrayList<Integer> allAvailableIcons;
+    public List<Integer> targets_list;
 
-    // We take the maximum number of icons needed for any condition; therefore for half the conditions the array will not be full
-    public static int[][] highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.MAX_NUM_HIGHLIGHTED_ICONS];
-    public static Integer[] images_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
-    /*public static Integer[] images_gs_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];*/
-    public static Integer[] labels_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
+    public int[][] highlighted;
+    public Integer[] images_ID;
+    /*public Integer[] images_gs_ID;*/
+    public Integer[] labels_ID;
 
-    public static Integer image_ID_practice;
-    public static Integer label_ID_practice;
-    public static Integer image_ID_stored;
-    public static Integer label_ID_stored;
+    public Integer image_ID_practice;
+    public Integer label_ID_practice;
+    public Integer image_ID_stored;
+    public Integer label_ID_stored;
 
-    public static double empiricalAccuracy;
+    public double empiricalAccuracy;
+
+    public Distributions(){
+        zipfian = new int[ExperimentParameters.zipfSize+1];
+        targets = new int[ExperimentParameters.NUM_TRIALS+1];
+        target_ranks = new int[ExperimentParameters.NUM_TRIALS+1];	// just used for logging
+        selected = new int[ExperimentParameters.NUM_TRIALS+1];		// just used for logging
+
+        allAvailableIcons = new ArrayList<Integer>();
+        targets_list = new ArrayList<Integer>();
+
+        // We take the maximum number of icons needed for any condition; therefore for half the conditions the array will not be full
+        highlighted = new int[ExperimentParameters.NUM_TRIALS+1][ExperimentParameters.MAX_NUM_HIGHLIGHTED_ICONS];
+        images_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
+        /*images_gs_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];*/
+        labels_ID = new Integer[ExperimentParameters.MAX_NUM_POSITIONS+1];
+    }
 
     // Actual number of targets, which can be smaller than zipfSize
-    public static int numNonZeroInZipfian(){
+    public int numNonZeroInZipfian(){
         int count=0;
         for(Integer f : zipfian){
             if(f>0)
@@ -42,7 +58,7 @@ public class Distributions {
     }
 
     // Reusing icons except for the ones that were targets
-    private static void initIconDistributionForExperiment() {
+    private void initIconDistributionForExperiment() {
 
         // Verify that we have enough icons (+1 is for practice trial)
         assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() + 1 <= 341);
@@ -59,7 +75,7 @@ public class Distributions {
     }
 
 
-    public static void initForExperiment() {
+    public void initForExperiment() {
 
         // Step 0: Generate Zipfian distribution of frequencies (the first cell of the array is not used)
 
@@ -92,13 +108,13 @@ public class Distributions {
         initIconDistributionForExperiment();
     }
 
-    // Happens AFTER State.initForCondition();
-    public static void initForCondition() {
+    // Happens AFTER ExperimentParameters.state.initForCondition();
+    public void initForCondition() {
 
-        // Step 2: Pick zipfSize positions for the target icon, in [1..State.num_pages*20]
+        // Step 2: Pick zipfSize positions for the target icon, in [1..ExperimentParameters.state.num_pages*20]
 
         ArrayList<Integer> allPositions = new ArrayList<Integer>();
-        for (int i = 1; i <= State.num_positions(); i++) {
+        for (int i = 1; i <= ExperimentParameters.state.num_positions(); i++) {
             allPositions.add(i);
         }
         Collections.shuffle(allPositions);
@@ -138,25 +154,25 @@ public class Distributions {
 
         for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
             // Fill up with MFU first
-            for(int j=0; j<Math.min(State.num_highlighted_icons(),positionsOfTargets.size()); j++)
+            for(int j=0; j<Math.min(ExperimentParameters.state.num_highlighted_icons(),positionsOfTargets.size()); j++)
                 highlighted[i][j]=positionsOfTargets.get(j);
 
             // If there are more highlighted icons than targets, they will be filled up by random highlighting
-            assert(State.num_highlighted_icons()-positionsOfTargets.size()<State.num_randomly_highlighted_icons);
+            assert(ExperimentParameters.state.num_highlighted_icons()-positionsOfTargets.size()<ExperimentParameters.state.num_randomly_highlighted_icons);
         }
 
         // Step 4c: Add random highlighted icons
 
         for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
-            for(int j=1; j<=State.num_randomly_highlighted_icons; j++){
-                highlighted[i][State.num_highlighted_icons()-j]=selectIconNotHighlightedNotTarget(i);   // start at the end, to remove the least MFU
+            for(int j=1; j<=ExperimentParameters.state.num_randomly_highlighted_icons; j++){
+                highlighted[i][ExperimentParameters.state.num_highlighted_icons()-j]=selectIconNotHighlightedNotTarget(i);   // start at the end, to remove the least MFU
             }
         }
 
         // Step 4d: Add the MRU icon(s) if not already present (highlights at least 1 mru)
         //          MRU is static, i.e. it is based only on the intended selection of sequence, not the actual selections made by the users
 
-        for(int m=1; m<ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[State.index_num_pages()]; m++){
+        for(int m=1; m<ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[ExperimentParameters.state.index_num_pages()]; m++){
             for(int i=1+m; i<=ExperimentParameters.NUM_TRIALS; i++) {
                 highlightIconAtTrial(targets[i - m], i);
             }
@@ -170,7 +186,7 @@ public class Distributions {
 
         // Step 6a: Adjust the accuracy up if necessary
 
-        int min_successes= (int) Math.ceil(State.accuracy*ExperimentParameters.NUM_TRIALS);
+        int min_successes= (int) Math.ceil(ExperimentParameters.state.accuracy*ExperimentParameters.NUM_TRIALS);
         int to_adjust=min_successes-successes;
 
         if(to_adjust>0){ // successes < min_successes
@@ -190,7 +206,7 @@ public class Distributions {
 
         // Step 6b: Adjust the accuracy down if necessary
 
-        int max_successes= (int) Math.floor(State.accuracy*ExperimentParameters.NUM_TRIALS);
+        int max_successes= (int) Math.floor(ExperimentParameters.state.accuracy*ExperimentParameters.NUM_TRIALS);
         to_adjust=successes-max_successes;
 
         if(to_adjust>0){ // successes > max_successes
@@ -219,29 +235,29 @@ public class Distributions {
         initIconDistributionForCondition();
     }
 
-    private static void initPracticeTrial() {
+    private void initPracticeTrial() {
         ArrayList<Integer> allPositions = new ArrayList<Integer>();
-        for (int i = 1; i <= State.num_positions(); i++) {
+        for (int i = 1; i <= ExperimentParameters.state.num_positions(); i++) {
             allPositions.add(i);
         }
         Collections.shuffle(allPositions);
 
         targets[0]=allPositions.get(0);
 
-        for (int i = 0; i < State.num_highlighted_icons(); i++) {
+        for (int i = 0; i < ExperimentParameters.state.num_highlighted_icons(); i++) {
             highlighted[0][i]=allPositions.get(i);
         }
     }
 
     // Happens at the end of the initiation process
-    private static void initIconDistributionForCondition() {
+    private void initIconDistributionForCondition() {
         // Step a: shuffle the remaining icons
         Collections.shuffle(allAvailableIcons);
 
         // Step b: assign images to position, while removing the target icons from the allAvailable set
         int icon;
         int offset=0;
-        for(int p=1; p<=State.num_positions();p++){
+        for(int p=1; p<=ExperimentParameters.state.num_positions();p++){
             if(targets_list.contains(p)){
                 icon=allAvailableIcons.remove(p-1-offset); // because we have removed offset icons from the list in between
                 offset++;
@@ -254,7 +270,7 @@ public class Distributions {
             labels_ID[p] = LauncherParameters.labels_ID[icon];
         }
 
-        Log.v("Distributions","Condition# "+State.condition+"  " +allAvailableIcons.size()+" = "+allAvailableIcons.size());
+        Log.v("Distributions","Condition# "+ExperimentParameters.state.condition+"  " +allAvailableIcons.size()+" = "+allAvailableIcons.size());
 
         // Step c: temporarily swap an icon with the practice target icon
         image_ID_stored = images_ID[targets[0]];
@@ -264,7 +280,7 @@ public class Distributions {
         labels_ID[targets[0]] = label_ID_practice;
     }
 
-    public static void unSwapIconsAfterPractice(){
+    public void unSwapIconsAfterPractice(){
         images_ID[targets[0]] = image_ID_stored;
         labels_ID[targets[0]] = label_ID_stored;
     }
@@ -272,12 +288,12 @@ public class Distributions {
     ///////////////////    Helper functions    //////////////////////////////////
 
 
-    public static void computeAccuracy(){
+    public void computeAccuracy(){
         int successes=computeSuccesses();
         empiricalAccuracy = ((double) successes)/ExperimentParameters.NUM_TRIALS;
     }
 
-    private static int computeSuccesses(){
+    private int computeSuccesses(){
         int successes=0;
         for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
             if(isPredictionCorrect(i))
@@ -286,57 +302,57 @@ public class Distributions {
         return successes;
     }
 
-    private static boolean isPredictionCorrect(int trial){
+    private boolean isPredictionCorrect(int trial){
         return isAmongHighlighted(trial, targets[trial]);
     }
 
-    private static boolean isAmongHighlighted(int trial, int position){
-        for(int i=0; i<State.num_highlighted_icons(); i++){
+    private boolean isAmongHighlighted(int trial, int position){
+        for(int i=0; i<ExperimentParameters.state.num_highlighted_icons(); i++){
             if(highlighted[trial][i]==position)     // highlighted may still be incomplete (= full of -1)
                 return true;
         }
         return false;
     }
 
-    public static boolean isHighlighted(int position){
-        for(Integer icon:Distributions.highlighted[State.trial]){
+    public boolean isHighlighted(int position){
+        for(Integer icon:ExperimentParameters.distributions.highlighted[ExperimentParameters.state.trial]){
             if(position == icon)
                 return true;
         }
         return false;
     }
 
-    private static boolean isTarget(int trial, int position){
+    private boolean isTarget(int trial, int position){
         return targets[trial]==position;
     }
 
-    public static void highlightIconAtTrial(int icon, int trial){
+    public void highlightIconAtTrial(int icon, int trial){
         // If the MRU icon is amongst the MFU, do nothing
         if(!isAmongHighlighted(trial, icon)) {
-            int offset=ExperimentParameters.NUM_RANDOMLY_HIGHLIGHTED_ICONS[State.index_num_pages()];
-            highlighted[trial][State.num_highlighted_icons() - offset - 1] = icon;  // additional offset because we don't want to override the random icons
+            int offset=ExperimentParameters.NUM_RANDOMLY_HIGHLIGHTED_ICONS[ExperimentParameters.state.index_num_pages()];
+            highlighted[trial][ExperimentParameters.state.num_highlighted_icons() - offset - 1] = icon;  // additional offset because we don't want to override the random icons
         }
     }
 
     // Change last highlighted icon to make the prediction a success
-    private static void adjustTrialSuccess(int trial){
-        highlighted[trial][State.num_highlighted_icons()-1]=targets[trial];
+    private void adjustTrialSuccess(int trial){
+        highlighted[trial][ExperimentParameters.state.num_highlighted_icons()-1]=targets[trial];
     }
 
     // Change one highlighted icon to make the prediction a failure
-    private static void adjustTrialFailure(int trial){
+    private void adjustTrialFailure(int trial){
         int icon = findTargetAmongHighlighted(trial);
         int replaceBy=selectIconNotHighlightedNotTarget(trial);
         highlighted[trial][icon]=replaceBy;
     }
 
     /*// Change one highlighted icon without modifying the correctness of the prediction
-    private static void randomlyChangeTrial(int trial){
+    private void randomlyChangeTrial(int trial){
         int icon;
-        int replaceBy=(int) Math.floor(Math.random()* State.num_positions());
+        int replaceBy=(int) Math.floor(Math.random()* ExperimentParameters.state.num_positions());
 
         if(!isPredictionCorrect(trial))
-            icon=(int) Math.floor(Math.random()*State.num_highlighted_icons());		// int between 0 and HIGHLIGHTED-1
+            icon=(int) Math.floor(Math.random()*ExperimentParameters.state.num_highlighted_icons());		// int between 0 and HIGHLIGHTED-1
         else
             icon=selectOneHighlightedExceptTarget(trial);
 
@@ -344,10 +360,10 @@ public class Distributions {
     }
 
     // Helper function
-    private static int selectOneHighlightedExceptTarget(int trial){
+    private int selectOneHighlightedExceptTarget(int trial){
         assert(isPredictionCorrect(trial));
         ArrayList<Integer> highlight= new ArrayList<Integer>();
-        for(int i=0;i<State.num_highlighted_icons();i++){
+        for(int i=0;i<ExperimentParameters.state.num_highlighted_icons();i++){
             if(highlighted[trial][i] != targets[trial])
                 highlight.add(i);
         }
@@ -355,18 +371,18 @@ public class Distributions {
         return highlight.get(0);
     }*/
 
-    private static int findTargetAmongHighlighted(int trial){
+    private int findTargetAmongHighlighted(int trial){
         assert(isPredictionCorrect(trial));
-        for(int i=0;i<State.num_highlighted_icons();i++){
+        for(int i=0;i<ExperimentParameters.state.num_highlighted_icons();i++){
             if(highlighted[trial][i] == targets[trial])
                 return i;
         }
         return -1;
     }
 
-    private static int selectIconNotHighlightedNotTarget(int trial){
+    private int selectIconNotHighlightedNotTarget(int trial){
         ArrayList<Integer> allPositionsExceptHighlightedAndTarget= new ArrayList<Integer>();
-        for(int p=1; p<=State.num_positions();p++){
+        for(int p=1; p<=ExperimentParameters.state.num_positions();p++){
             if(!isAmongHighlighted(trial,p) && !isTarget(trial,p))
                 allPositionsExceptHighlightedAndTarget.add(p);
         }

@@ -23,10 +23,10 @@ public class Trial extends Activity {
 		setContentView(R.layout.activity_trial);
 
 		ImageView target_icon = (ImageView) this.findViewById(R.id.target_icon);
-		target_icon.setImageResource(Distributions.images_ID[Distributions.targets[State.trial]]);
+		target_icon.setImageResource(ExperimentParameters.distributions.images_ID[ExperimentParameters.distributions.targets[ExperimentParameters.state.trial]]);
 		
 		TextView target_icon_label = (TextView) this.findViewById(R.id.target_icon_label);
-		target_icon_label.setText(Distributions.labels_ID[Distributions.targets[State.trial]]);
+		target_icon_label.setText(ExperimentParameters.distributions.labels_ID[ExperimentParameters.distributions.targets[ExperimentParameters.state.trial]]);
 		
 		
 		initializeTrial();
@@ -72,21 +72,21 @@ public class Trial extends Activity {
 	}
 	
 	private void initializeTrial(){
-        State.timeout=false;
-        State.missed=false;
-        State.success=false;
-        State.page=1;
-        State.num_pages_visited=1;
+        ExperimentParameters.state.timeout=false;
+        ExperimentParameters.state.missed=false;
+        ExperimentParameters.state.success=false;
+        ExperimentParameters.state.page=1;
+        ExperimentParameters.state.num_pages_visited=1;
 
-		int targetIconPosition = Distributions.targets[State.trial]; //starts from 1
+		int targetIconPosition = ExperimentParameters.distributions.targets[ExperimentParameters.state.trial]; //starts from 1
 		int targetIconPosOnPage = (targetIconPosition-1) % ExperimentParameters.NUM_ICONS_PER_PAGE + 1;
-		State.targetIconPage = (int)Math.floor((targetIconPosition-1) / ExperimentParameters.NUM_ICONS_PER_PAGE) +1;
-		State.targetIconRow = (int)Math.floor((targetIconPosOnPage-1) / 4) + 1 ;
-		State.targetIconColumn = (targetIconPosOnPage-1)%4+1;
+		ExperimentParameters.state.targetIconPage = (int)Math.floor((targetIconPosition-1) / ExperimentParameters.NUM_ICONS_PER_PAGE) +1;
+		ExperimentParameters.state.targetIconRow = (int)Math.floor((targetIconPosOnPage-1) / 4) + 1 ;
+		ExperimentParameters.state.targetIconColumn = (targetIconPosOnPage-1)%4+1;
 
-        if(State.trial==1){
-            Distributions.unSwapIconsAfterPractice();
-            State.trial_timeout_ms = ExperimentParameters.REGULAR_TRIAL_TIMEOUT_MS;
+        if(ExperimentParameters.state.trial==1){
+            ExperimentParameters.distributions.unSwapIconsAfterPractice();
+            ExperimentParameters.state.trial_timeout_ms = ExperimentParameters.REGULAR_TRIAL_TIMEOUT_MS;
         }
 	}
 	

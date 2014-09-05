@@ -4,6 +4,9 @@ import android.graphics.Color;
 
 public class ExperimentParameters {
 
+    public static State state;
+    public static Distributions distributions;
+
 	public static final int NUM_CONDITIONS=12;
     public static final int NUM_PARTICIPANTS=12;
     public static final int NUM_TRIALS=40;		    // 40
@@ -92,7 +95,7 @@ public class ExperimentParameters {
     public static String experimentToString(){
         return Utils.appendWithComma(String.valueOf(NUM_CONDITIONS), String.valueOf(NUM_TRIALS),
                 String.valueOf(NUM_PAGES[0]), String.valueOf(NUM_PAGES[1]), String.valueOf(ACCURACY[0]), String.valueOf(ACCURACY[1]),
-                String.valueOf(NUM_HIGHLIGHTED_ICONS_PER_PAGE), String.valueOf(State.trial_timeout_ms));
+                String.valueOf(NUM_HIGHLIGHTED_ICONS_PER_PAGE), String.valueOf(ExperimentParameters.state.trial_timeout_ms));
     }
 
 }

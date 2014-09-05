@@ -15,10 +15,13 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_experiment);
-		
-		// (re)Initialize everything in State
-		State.initExperiment();
-		
+
+        // Initialize State and Distributions
+        ExperimentParameters.state=new State();
+        ExperimentParameters.distributions=new Distributions();
+        ExperimentParameters.state.initExperiment();
+
+        // Selection of participants
 		Integer participants[] = new Integer[ExperimentParameters.NUM_PARTICIPANTS];
 		for(int i=0; i<ExperimentParameters.NUM_PARTICIPANTS; i++){
 			participants[i]=i;
@@ -36,8 +39,8 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 	}
 	
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        State.participant=pos;
-        State.participantId="P"+pos;
+        ExperimentParameters.state.participant=pos;
+        ExperimentParameters.state.participantId="P"+pos;
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -45,7 +48,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
     }
 	
 	public void startFirstCondition(View view){	
-		if(State.participant<0){
+		if(ExperimentParameters.state.participant<0){
 			Toast.makeText(this, "Please select participant #", Toast.LENGTH_SHORT).show();
 		} else {
 		initializeExperiment();
@@ -56,9 +59,9 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 	}
 	
 	private void initializeExperiment(){
-		
-		// Initialize target, highlighted icons, images and labels 
-		Distributions.initForExperiment();
+
+        // Initialize zipfian
+		ExperimentParameters.distributions.initForExperiment();
 
         // Initialize logging
         Logging.initialize(this);

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import ca.ubc.cs.ephemerallauncherexperiment.*;
 
@@ -38,7 +39,7 @@ public class Pager extends FragmentActivity{
         // We wait until the last minute to record the starting time
         Logging.startTime = System.currentTimeMillis();
         Logging.previousPageLandingTime = Logging.startTime;
-        State.pages_times = "";
+        ExperimentParameters.state.pages_times = "";
         mTimeoutChecker.run();
 
         logEvent("TrialStarted","");
@@ -50,8 +51,8 @@ public class Pager extends FragmentActivity{
     }
 
     private void checkForTimeout(){
-        if (System.currentTimeMillis() - Logging.startTime > State.trial_timeout_ms && !State.timeout){
-            State.timeout = true;
+        if (System.currentTimeMillis() - Logging.startTime > ExperimentParameters.state.trial_timeout_ms && !ExperimentParameters.state.timeout){
+            ExperimentParameters.state.timeout = true;
             mHandler.removeCallbacks(mTimeoutChecker);
             concludeTrial(-1,-1);
 
@@ -75,7 +76,7 @@ public class Pager extends FragmentActivity{
     private void logEvent(String eventName, String eventDescription){
         String eventLog = Utils.appendWithComma(Utils.getTimeStamp(false), Logging.stateCsvLog(this), eventName, eventDescription);
 
-        FileManager.appendLineToFile(State.currentEventsLogFile, eventLog);
+        FileManager.appendLineToFile(ExperimentParameters.state.currentEventsLogFile, eventLog);
     }
 
     // AP: it would be great if we could have this function in Trial instead...
@@ -92,16 +93,16 @@ public class Pager extends FragmentActivity{
     public void concludeTrial(int page, int position_on_page){
 
         int global_position = page*LauncherParameters.NUM_ICONS_PER_PAGE+position_on_page+1;
-        Distributions.selected[State.trial]=global_position;
+        ExperimentParameters.distributions.selected[ExperimentParameters.state.trial]=global_position;
 
-        State.success = (Distributions.targets[State.trial] == global_position);
+        ExperimentParameters.state.success = (ExperimentParameters.distributions.targets[ExperimentParameters.state.trial] == global_position);
 
-        if(!State.success){
+        if(!ExperimentParameters.state.success){
             Utils.vibrate(this);
 
             // update the MRU of the next trial
-            /*if(!State.timeout && State.trial<ExperimentParameters.NUM_TRIALS)
-                Distributions.highlightIconAtTrial(global_position, State.trial+1);*/
+            /*if(!ExperimentParameters.state.timeout && ExperimentParameters.state.trial<ExperimentParameters.NUM_TRIALS)
+                ExperimentParameters.distributions.highlightIconAtTrial(global_position, ExperimentParameters.state.trial+1);*/
         }
 
         mHandler.removeCallbacks(mTimeoutChecker);
@@ -123,8 +124,8 @@ public class Pager extends FragmentActivity{
         }
         else
         {
-            iconName = Utils.extractIconName(this.getString(Distributions.images_ID[global_position]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX);
-            iconLabel = this.getString(Distributions.labels_ID[global_position]);
+            iconName = Utils.extractIconName(this.getString(ExperimentParameters.distributions.images_ID[global_position]), ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX);
+            iconLabel = this.getString(ExperimentParameters.distributions.labels_ID[global_position]);
 
         }
 
@@ -135,20 +136,22 @@ public class Pager extends FragmentActivity{
             // Save state
             FileOutputStream fos = new FileOutputStream("testfile");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            //oos.writeObject(State);
+            oos.writeObject(ExperimentParameters.state);
+            oos.writeObject(ExperimentParameters.distributions);
             oos.flush();
             oos.close();
+            Log.v("Trial", "Trial " + ExperimentParameters.state.block + " " + ExperimentParameters.state.trial + " saved");
         }catch(IOException e ){
-
+            e.printStackTrace();
         }
 
 
-        if (State.timeout){
+        if (ExperimentParameters.state.timeout){
             logEvent("Timeout", "");
             Intent intent = new Intent(this, TrialTimeout.class);
             this.startActivity(intent);
         }
-        else if (!State.success){
+        else if (!ExperimentParameters.state.success){
             logEvent("Failure","");
             startNextTrial("Failure");
         }
@@ -159,13 +162,13 @@ public class Pager extends FragmentActivity{
     }
 
     private void startNextTrial(String message){
-        State.trial++;
-        if(State.trial>ExperimentParameters.NUM_TRIALS){
+        ExperimentParameters.state.trial++;
+        if(ExperimentParameters.state.trial>ExperimentParameters.NUM_TRIALS){
             // end condition
 
-            State.block++;
+            ExperimentParameters.state.block++;
 
-            if (State.block == ExperimentParameters.NUM_CONDITIONS)
+            if (ExperimentParameters.state.block == ExperimentParameters.NUM_CONDITIONS)
             {
                 Intent intent = new Intent(this, EndOfExperiment.class);
                 intent.putExtra(ExperimentParameters.SUCCESS_MESSAGE, message);
@@ -191,7 +194,7 @@ public class Pager extends FragmentActivity{
 
         // Create grid views for each page
         ArrayList<Page> pages = new ArrayList<Page>();
-        for (int i = 0; i < State.num_pages; i++) {
+        for (int i = 0; i < ExperimentParameters.state.num_pages; i++) {
             pages.add(new Page(this,i));
         }
 
@@ -212,7 +215,7 @@ public class Pager extends FragmentActivity{
 
                     if (position - 1 >= 0)
                         pagerAdapter.getPage(position - 1).getGridView().startPreAnimation();
-                    if (position + 1 < State.num_pages)
+                    if (position + 1 < ExperimentParameters.state.num_pages)
                         pagerAdapter.getPage(position + 1).getGridView().startPreAnimation();
 
                     Logging.previousPageStartDragging=System.currentTimeMillis();
@@ -232,11 +235,11 @@ public class Pager extends FragmentActivity{
                 long time_spent_swiping=current_time-Logging.previousPageStartDragging;
                 long time_spent_on_page=Logging.previousPageStartDragging-Logging.previousPageLandingTime;
 
-                State.pages_times += State.page + "," + time_spent_on_page +"," + time_spent_swiping + ",";
+                ExperimentParameters.state.pages_times += ExperimentParameters.state.page + "," + time_spent_on_page +"," + time_spent_swiping + ",";
 
                 // update
-                State.page=position+1;
-                State.num_pages_visited++;
+                ExperimentParameters.state.page=position+1;
+                ExperimentParameters.state.num_pages_visited++;
                 Logging.previousPageLandingTime=current_time;
 
                 pagerAdapter.previousPosition=pagerAdapter.currentPosition;
@@ -247,8 +250,8 @@ public class Pager extends FragmentActivity{
                 logEvent("NewPage", "");
 
                 //checking for misses
-                if (State.page > State.targetIconPage) {
-                    State.missed = true;
+                if (ExperimentParameters.state.page > ExperimentParameters.state.targetIconPage) {
+                    ExperimentParameters.state.missed = true;
                 }
 
                 pagerAdapter.getCurrentPage().getGridView().startEphemeralAnimation();

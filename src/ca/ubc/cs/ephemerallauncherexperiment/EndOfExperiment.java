@@ -13,8 +13,8 @@ public class EndOfExperiment extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_end_of_experiment);
 		
-		Distributions.computeAccuracy();
-		Log.v("Distributions","Empirical accuracy after experiment = "+Distributions.empiricalAccuracy);
+		ExperimentParameters.distributions.computeAccuracy();
+		Log.v("Distributions","Empirical accuracy after experiment = "+ExperimentParameters.distributions.empiricalAccuracy);
 		
 		//Log empirical distributions (post-hoc)
         Logging.logPostExperimentDistributions(this);

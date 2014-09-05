@@ -14,7 +14,7 @@ public class EndOfCondition extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_end_of_condition);
 
-        if(State.block==5) {
+        if(ExperimentParameters.state.block==5) {
             TextView message_text = (TextView) this.findViewById(R.id.end_of_condition_message);
             message_text.setText("End of the first half of the Experiment.\nPlease fill up the questionnaire and take a break!");
             message_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, ExperimentParameters.FAILURE_MESSAGE_SIZE);

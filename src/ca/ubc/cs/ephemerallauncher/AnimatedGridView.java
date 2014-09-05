@@ -5,8 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import ca.ubc.cs.ephemerallauncherexperiment.Distributions;
-import ca.ubc.cs.ephemerallauncherexperiment.State;
+import ca.ubc.cs.ephemerallauncherexperiment.ExperimentParameters;
 
 import java.util.ArrayList;
 
@@ -41,8 +40,8 @@ public class AnimatedGridView extends GridView {
 		int position;			// from 1 to NUM_PAGES*NUM_ICONS_PER_PAGE
 		int position_on_page;	// from 0 to NUM_ICONS_PER_PAGE-1
 		String log="icons: ";
-		for(int i=0; i<State.num_highlighted_icons(); i++){
-			position=Distributions.highlighted[State.trial][i];
+		for(int i=0; i< ExperimentParameters.state.num_highlighted_icons(); i++){
+			position=ExperimentParameters.distributions.highlighted[ExperimentParameters.state.trial][i];
 			log=log+position;
 			if(this.page_number == (position-1)/LauncherParameters.NUM_ICONS_PER_PAGE){
 				position_on_page=(position-1)%LauncherParameters.NUM_ICONS_PER_PAGE;
