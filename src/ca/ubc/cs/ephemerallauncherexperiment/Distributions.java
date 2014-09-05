@@ -120,7 +120,7 @@ public class Distributions implements Serializable {
         Collections.shuffle(allPositions);
         // TODO replace zipfSize by numNonZeroZipfian (or try to use only one list)
         List<Integer> positionsOfTargets = allPositions.subList(0, ExperimentParameters.zipfSize);   // Extract from index 0 (included) to zipfSize (excluded)
-        targets_list = positionsOfTargets.subList(0,numNonZeroInZipfian());     // save these for later use
+        targets_list = new ArrayList<Integer>(positionsOfTargets.subList(0,numNonZeroInZipfian()));     // save these for later use
         assert (positionsOfTargets.size() == ExperimentParameters.zipfSize);
 
         // Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to the Zipfian distribution

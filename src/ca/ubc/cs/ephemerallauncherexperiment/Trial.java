@@ -58,6 +58,10 @@ public class Trial extends Activity {
             message_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, ExperimentParameters.PRACTICE_MESSAGE_SIZE);
             message_text.setTextColor(this.getResources().getColor(R.color.lightblue));
         }
+        else if (message.equals("Restored")){
+            message_text.setText(this.getString(R.string.trial_restored_message));
+            message_text.setTextSize(TypedValue.COMPLEX_UNIT_SP, ExperimentParameters.PRACTICE_MESSAGE_SIZE);
+        }
 		else if (message.equals("None")){
 			message_text.setText(this.getString(R.string.trial_none_message));
 		}

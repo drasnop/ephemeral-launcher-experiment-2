@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import ca.ubc.cs.ephemerallauncherexperiment.*;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -134,7 +135,8 @@ public class Pager extends FragmentActivity{
 
         try {
             // Save state
-            FileOutputStream fos = new FileOutputStream("testfile");
+            File backup = new File(FileManager.getExtStorageDir(this, ExperimentParameters.LOG_FOLDER),Logging.getExperimentBackupFileName());
+            FileOutputStream fos = new FileOutputStream(backup);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(ExperimentParameters.state);
             oos.writeObject(ExperimentParameters.distributions);

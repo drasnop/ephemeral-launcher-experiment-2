@@ -29,6 +29,8 @@ public class Logging {
         return ExperimentParameters.EXPERIMENT_LOG_FILE_NAME;
     }
 
+    public static String getExperimentBackupFileName() { return  ExperimentParameters.state.participantId+".backup"; }
+
     public static void initialize(Context context) {
 
         //Initialize trial log file

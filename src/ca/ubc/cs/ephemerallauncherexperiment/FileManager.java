@@ -66,12 +66,12 @@ public class FileManager {
 		appendToFile(c.getString(R.string.file_test));
 	}
 	
-	private static File getExtStorageDir(Context context, String dirName) {
+	public static File getExtStorageDir(Context context, String dirName) {
 	     
 	    File file = new File(context.getExternalFilesDir(
 	            "EXPERIMENT_DATA"), dirName);
 	    if (!file.mkdirs()) {
-	        Log.e("LOG", "Directory not created");
+	        // Log.e("LOG", "Directory not created");
 	    }
 	    return file;
 	}

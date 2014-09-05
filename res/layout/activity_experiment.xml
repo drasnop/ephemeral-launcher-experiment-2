@@ -25,15 +25,32 @@
     	android:layout_alignBaseline="@id/participant"  />
     
     <Button
+        android:id="@+id/buttonStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/experiment_button_start"
         android:layout_alignParentBottom="true"
-       	android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
+        android:layout_marginLeft="50dp"
         android:textSize="20sp"
         android:onClick = "startFirstCondition"
         android:textColor="@color/white" 
         />
+
+    <Button
+            android:id="@+id/buttonRestore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/experiment_button_restore"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="40dp"
+            android:layout_toRightOf="@+id/buttonStart"
+            android:layout_alignBaseline="@+id/buttonStart"
+            android:layout_alignBottom="@+id/buttonStart"
+            android:textSize="20sp"
+            android:onClick = "restore"
+            android:textColor="@color/white"
+            />
+
 
 </RelativeLayout>
