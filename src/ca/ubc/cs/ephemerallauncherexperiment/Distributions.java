@@ -47,8 +47,8 @@ public class Distributions {
     // Reusing icons except for the ones that were targets
     private static void initIconDistributionForExperiment() {
 
-        // Verify that we have enough icons
-        assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() + ExperimentParameters.NUM_PRACTICE_TRIALS <= 301);
+        // Verify that we have enough icons (+1 is for practice trial)
+        assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() + 1 <= 301);
 
         // Load all available icons
         for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian(); i++) {
@@ -105,9 +105,9 @@ public class Distributions {
             allPositions.add(i);
         }
         Collections.shuffle(allPositions);
-        // TODO replace zipfSize by numNonZeroZipfian
-        List<Integer> positionsOfTargets = allPositions.subList(0, zipfSize); // Extract from index 0 (included) to zipfSize (excluded)
-        targets_list = positionsOfTargets.subList(0,numNonZeroInZipfian());
+        // TODO replace zipfSize by numNonZeroZipfian (or try to use only one list)
+        List<Integer> positionsOfTargets = allPositions.subList(0, zipfSize);   // Extract from index 0 (included) to zipfSize (excluded)
+        targets_list = positionsOfTargets.subList(0,numNonZeroInZipfian());     // save these for later use
         assert (positionsOfTargets.size() == zipfSize);
 
         // Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to the Zipfian distribution
