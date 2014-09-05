@@ -26,6 +26,10 @@ public class State {
         return num_pages*ExperimentParameters.NUM_HIGHLIGHTED_ICONS_PER_PAGE;
     }
 
+    public static int index_num_pages(){
+        return ExperimentParameters.CONDITIONS[condition][1];
+    }
+
     //////////////   utilities for logging   //////////////////////
 
 	public static int page;		                // current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView

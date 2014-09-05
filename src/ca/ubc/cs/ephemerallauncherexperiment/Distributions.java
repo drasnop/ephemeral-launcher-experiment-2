@@ -149,6 +149,7 @@ public class Distributions {
         }
 
         // Step 4c: Add random highlighted icons
+
         for(int i=1; i<=ExperimentParameters.NUM_TRIALS; i++){
             for(int j=1; j<=State.num_randomly_highlighted_icons; j++){
                 highlighted[i][State.num_highlighted_icons()-j]=selectIconNotHighlightedNotTarget(i);   // start at the end, to remove the least MFU
@@ -157,9 +158,11 @@ public class Distributions {
 
         // Step 4d: Add the MRU icon(s) if not already present (highlights at least 1 mru)
 
-        for(int m=1; m<ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[ExperimentParameters.CONDITIONS[State.condition][1]]; m++){
-            for(int i=1+m; i<=ExperimentParameters.NUM_TRIALS; i++)
-                highlightIconAtTrial(targets[i-m],i);
+        int offset=ExperimentParameters.NUM_RANDOMLY_HIGHLIGHTED_ICONS[State.index_num_pages()];
+        for(int m=1; m<ExperimentParameters.NUM_MRU_HIGHLIGHTED_ICONS[State.index_num_pages()]; m++){
+            for(int i=1+m; i<=ExperimentParameters.NUM_TRIALS; i++) {
+                highlightIconAtTrial(targets[i - m - offset], i);    // additional offset because we don't want to override the random icons
+            }
         }
 
         // Step 5: Compute the accuracy
