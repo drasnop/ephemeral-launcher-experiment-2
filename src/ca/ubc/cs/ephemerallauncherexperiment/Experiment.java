@@ -64,7 +64,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
         Logging.initialize(this);
 		
 		//Log distributions
-        Logging.logDistributions(this);
+        Logging.logDistributionsAtExperimentInit(this);
 	}
 	
 

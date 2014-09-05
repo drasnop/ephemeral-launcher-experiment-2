@@ -20,6 +20,7 @@ public class Condition extends Activity {
 		State.initStateForCondition();
         Distributions.initForCondition();
 		LauncherParameters.ANIMATION = Utils.effectToAnimation(State.effect);
+        Logging.logDistributionsAtConditionInit(this);
 
 		// Show block #
 		((TextView) this.findViewById(R.id.start_condition)).setText("Condition #"+State.block);

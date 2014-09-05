@@ -15,6 +15,9 @@ public class Logging {
     public static File currentExperimentLogFile;	// the file contains the general experiment logs
     public static File currentDistributionsLogFile; // the file contains all information about distributions
 
+    static String lineSep = "\n-------------------------------------------------------\n";
+    static String halfLineSep = "\n" + lineSep.substring(0, (int)lineSep.length()/2) + "\n";
+
     //////////////////////////    Initialize    ////////////////////////////////////
 
     private static String getTrialLogFileName(){
@@ -53,12 +56,10 @@ public class Logging {
 
     ////////////////////////////    Log distributions    ///////////////////////////
 
-    public static void logDistributions(Context context) {
+    public static void logDistributionsAtExperimentInit(Context context) {
         currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
 
         String logStr ="";
-
-        String lineSep = "\n-------------------------------------------------------\n";
 
         //general
         logStr += "GENERAL \n";
@@ -73,7 +74,7 @@ public class Logging {
         logStr += lineSep;
         logStr += "CONDITIONS \n";
         for (int i=0; i < ExperimentParameters.EFFECTS.values().length; i++)
-            logStr += logCondition(i);
+            logStr += conditionToString(i);
 
         //logging zipfian
         logStr += lineSep;
@@ -81,50 +82,55 @@ public class Logging {
         for (int i=0; i < ExperimentParameters.zipfSize; i++)
             logStr += String.valueOf(Distributions.zipfian[i+1]) + " ";
 
+        FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
+    }
+
+    public static void logDistributionsAtConditionInit(Context context) {
+        currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+        String logStr ="";
+
         //logging target positions
         logStr += lineSep;
         logStr += "TARGET POSITIONS (positions start from 1) (Zipfian rank indicated below) \n";
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            logStr += Utils.padWithZero(Distributions.targets[tr+1]) + " ";
+        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS+1; tr++){
+            logStr += Utils.padWithZero(Distributions.targets[tr]) + " ";
         }
         logStr+="\n";
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            logStr += Utils.padWithZero(Distributions.target_ranks[tr+1]) + " ";
+        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS+1; tr++){
+            logStr += Utils.padWithZero(Distributions.target_ranks[tr]) + " ";
         }
 
         //logging highlighted icons
         logStr += lineSep;
         logStr += "HIGHLIGHTED ICONS' POSITIONS \n";
 
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
+        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS+1; tr++){
             for (int icon = 0; icon < State.num_highlighted_icons(); icon++)
-                logStr += Utils.padWithZero(Distributions.highlighted[tr+1][icon]) + " ";
+                logStr += Utils.padWithZero(Distributions.highlighted[tr][icon]) + " ";
             logStr += "\n";
         }
 
         //logging image icons and labels
         logStr += lineSep;
         logStr += "IMAGE ICONS AND LABELS\n";
-        //TODO log image icons and labels dynamically, condition after condition, instead of all at once
-       /*
+
         String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
         for (int c=0; c < ExperimentParameters.NUM_CONDITIONS; c++){
             logStr += halfLineSep;
-            logStr += "CONDITION " + String.valueOf(c) + ": " + logCondition(c) +"\n";
-            for (int pos=0; pos < State.num_positions(); pos++){
-                logStr += String.valueOf(pos+1) + ": " + Utils.extractIconName(context.getString(Distributions.images_ID[c][pos]), iconAddressPrefix) + " "  +context.getString(Distributions.labels_ID[c][pos]) + "; " ;
-                if ((pos+1) % ExperimentParameters.NUM_ICONS_PER_PAGE == 0) {
+            logStr += "CONDITION " + String.valueOf(c) + ": " + conditionToString(c) +"\n";
+            for (int pos=1; pos <= State.num_positions(); pos++){
+                logStr += String.valueOf(pos) + ": " + Utils.extractIconName(context.getString(Distributions.images_ID[pos]), iconAddressPrefix) + " "  +context.getString(Distributions.labels_ID[pos]) + "; " ;
+                if ((pos) % ExperimentParameters.NUM_ICONS_PER_PAGE == 0) {
                     logStr += "\n";
                 }
 
             }
         }
-        */
 
         FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
     }
 
-    private static String logCondition(int condition){
+    private static String conditionToString(int condition){
         return ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][0]]+", "
                 +ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]]+", "
                 +ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][2]]+" ";
@@ -134,8 +140,6 @@ public class Logging {
         currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
 
         String logStr ="";
-
-        String lineSep = "\n-------------------------------------------------------\n";
 
         logStr += lineSep;
         logStr += "Post-experiment accuracy: " + String.valueOf(Distributions.empiricalAccuracy) + "\n";
