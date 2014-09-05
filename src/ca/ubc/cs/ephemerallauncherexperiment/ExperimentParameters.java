@@ -6,8 +6,9 @@ public class ExperimentParameters {
 
 	public static final int NUM_CONDITIONS=12;
     public static final int NUM_PARTICIPANTS=12;
-    public static final int NUM_TRIALS=40;		//40
-    public static final int zipfSize = 15;      // because it works out well for 40 trial
+    public static final int NUM_TRIALS=40;		    // 40
+    public static final int zipfSize=15;            // because it works out well for 40 trial
+    public static final double zipfCoeff = 1;    // because it works out well for 40 trial
 
     public static final double[] ACCURACY = {.80,.95};
     public static final int[] NUM_PAGES = {3,6};

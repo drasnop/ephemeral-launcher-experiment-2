@@ -63,8 +63,8 @@ public class Logging {
         //general
         logStr += "GENERAL \n";
         logStr += "participantID: " + State.participantId + "\n";
-        logStr += "zipfSize: " + String.valueOf(Distributions.zipfSize) + "\n";
-        logStr += "zipfCoeff: " + String.valueOf(Distributions.zipfCoeff) + "\n";
+        logStr += "zipfSize: " + String.valueOf(ExperimentParameters.zipfSize) + "\n";
+        logStr += "zipfCoeff: " + String.valueOf(ExperimentParameters.zipfCoeff) + "\n";
         logStr += "Accuracy: " + String.valueOf(Distributions.empiricalAccuracy) + "\n";
         logStr += "Icon Set: " + ExperimentParameters.ICON_SET;
         logStr += "Label Set: " + ExperimentParameters.LABEL_SET;
@@ -78,7 +78,7 @@ public class Logging {
         //logging zipfian
         logStr += lineSep;
         logStr += "ZIPF \n";
-        for (int i=0; i < Distributions.zipfSize; i++)
+        for (int i=0; i < ExperimentParameters.zipfSize; i++)
             logStr += String.valueOf(Distributions.zipfian[i+1]) + " ";
 
         //logging target positions

@@ -10,10 +10,7 @@ import java.util.List;
 
 public class Distributions {
 
-    public static final double zipfCoeff = 1;
-    public static final int zipfSize = ExperimentParameters.zipfSize;
-
-    protected static int[] zipfian = new int[zipfSize+1];
+    protected static int[] zipfian = new int[ExperimentParameters.zipfSize+1];
     public static int[] targets = new int[ExperimentParameters.NUM_TRIALS+1];
     public static int[] target_ranks = new int[ExperimentParameters.NUM_TRIALS+1];	// just used for logging
     public static int[] selected = new int[ExperimentParameters.NUM_TRIALS+1];		// just used for logging
@@ -69,11 +66,11 @@ public class Distributions {
         double denominator = 0;
         int sum_frequencies = 0;
         int frequency;
-        for (int i = 1; i <= zipfSize; i++) {
-            denominator += 1.0 / Math.pow(i, zipfCoeff);
+        for (int i = 1; i <= ExperimentParameters.zipfSize; i++) {
+            denominator += 1.0 / Math.pow(i, ExperimentParameters.zipfCoeff);
         }
-        for (int i = 1; i <= zipfSize; i++) {
-            frequency=(int) Math.round(1.0/Math.pow(i, zipfCoeff)/denominator*ExperimentParameters.NUM_TRIALS);
+        for (int i = 1; i <= ExperimentParameters.zipfSize; i++) {
+            frequency=(int) Math.round(1.0/Math.pow(i, ExperimentParameters.zipfCoeff)/denominator*ExperimentParameters.NUM_TRIALS);
 
             if(sum_frequencies >= ExperimentParameters.NUM_TRIALS){
                 // Don't include item if we have already reached the limit
@@ -106,14 +103,14 @@ public class Distributions {
         }
         Collections.shuffle(allPositions);
         // TODO replace zipfSize by numNonZeroZipfian (or try to use only one list)
-        List<Integer> positionsOfTargets = allPositions.subList(0, zipfSize);   // Extract from index 0 (included) to zipfSize (excluded)
+        List<Integer> positionsOfTargets = allPositions.subList(0, ExperimentParameters.zipfSize);   // Extract from index 0 (included) to zipfSize (excluded)
         targets_list = positionsOfTargets.subList(0,numNonZeroInZipfian());     // save these for later use
-        assert (positionsOfTargets.size() == zipfSize);
+        assert (positionsOfTargets.size() == ExperimentParameters.zipfSize);
 
         // Step 3: Sample ExperimentParameters.NUM_TRIALS positions according to the Zipfian distribution
 
         ArrayList<Pair<Integer,Integer>> targetsList = new ArrayList<Pair<Integer,Integer>>();  // (position, zipfian rank)
-        for(int i=1; i<=zipfSize; i++){
+        for(int i=1; i<= ExperimentParameters.zipfSize; i++){
             for(int j=0; j< zipfian[i]; j++){
                 targetsList.add(new Pair<Integer, Integer>(positionsOfTargets.get(i-1),i));
             }
@@ -331,7 +328,7 @@ public class Distributions {
         highlighted[trial][icon]=replaceBy;
     }
 
-    // Change one highlighted icon without modifying the correctness of the prediction
+    /*// Change one highlighted icon without modifying the correctness of the prediction
     private static void randomlyChangeTrial(int trial){
         int icon;
         int replaceBy=(int) Math.floor(Math.random()* State.num_positions());
@@ -342,7 +339,7 @@ public class Distributions {
             icon=selectOneHighlightedExceptTarget(trial);
 
         highlighted[trial][icon]=replaceBy;
-    }
+    }*/
 
     // Helper function
     private static int selectOneHighlightedExceptTarget(int trial){
