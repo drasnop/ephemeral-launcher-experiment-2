@@ -48,7 +48,7 @@ public class Distributions {
         assert(ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() + 1 <= 341);
 
         // Load all available icons
-        for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian(); i++) {
+        for (int i = 0; i < ExperimentParameters.MAX_NUM_POSITIONS+(ExperimentParameters.NUM_CONDITIONS-1)*numNonZeroInZipfian() +1; i++) {
             allAvailableIcons.add(i);
         }
 
@@ -243,16 +243,18 @@ public class Distributions {
         int offset=0;
         for(int p=1; p<=State.num_positions();p++){
             if(targets_list.contains(p)){
-                icon=allAvailableIcons.remove(p-offset); // because we have removed offset icons from the list in between
+                icon=allAvailableIcons.remove(p-1-offset); // because we have removed offset icons from the list in between
                 offset++;
             }
             else{
-                icon=allAvailableIcons.get(p - offset);   // because we have removed offset icons from the list in between
+                icon=allAvailableIcons.get(p-1-offset);   // because we have removed offset icons from the list in between
             }
             images_ID[p] = LauncherParameters.images_ID[icon];
             /*images_gs_ID[p] = LauncherParameters.images_gs_ID[positions];*/
             labels_ID[p] = LauncherParameters.labels_ID[icon];
         }
+
+        Log.v("Distributions","Condition# "+State.condition+"  " +allAvailableIcons.size()+" = "+allAvailableIcons.size());
 
         // Step c: temporarily swap an icon with the practice target icon
         image_ID_stored = images_ID[targets[0]];

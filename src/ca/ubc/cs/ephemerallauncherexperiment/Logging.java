@@ -2,21 +2,14 @@ package ca.ubc.cs.ephemerallauncherexperiment;
 
 import android.content.Context;
 
-import java.io.File;
-
 public class Logging {
 
     public static long startTime;
     public static long previousPageLandingTime;       // timestamp of when the previous page was reached
     public static long previousPageStartDragging;     // timestamp of when users started swiping on the previous page
-    public static String pages_times;                 // string of pairs (page#, time spent on it)
-    public static File currentTrialsLogFile;		// the file contains per trial logs for a participant
-    public static File currentEventsLogFile;		// the file contains per event (command) logs for a participant
-    public static File currentExperimentLogFile;	// the file contains the general experiment logs
-    public static File currentDistributionsLogFile; // the file contains all information about distributions
 
-    static String lineSep = "\n-------------------------------------------------------\n";
-    static String halfLineSep = "\n" + lineSep.substring(0, (int)lineSep.length()/2) + "\n";
+    static final String lineSep = "\n-------------------------------------------------------\n";
+    static final String halfLineSep = "\n" + lineSep.substring(0, (int)lineSep.length()/2) + "\n";
 
     //////////////////////////    Initialize    ////////////////////////////////////
 
@@ -39,25 +32,25 @@ public class Logging {
     public static void initialize(Context context) {
 
         //Initialize trial log file
-        currentTrialsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getTrialLogFileName());
-        FileManager.writeToFile(currentTrialsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.trial_log_header)), false);
+        State.currentTrialsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getTrialLogFileName());
+        FileManager.writeToFile(State.currentTrialsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.trial_log_header)), false);
 
         //Initialize event log file
-        currentEventsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getEventsLogFileName());
-        FileManager.writeToFile(currentEventsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.events_log_header)), false);
+        State.currentEventsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getEventsLogFileName());
+        FileManager.writeToFile(State.currentEventsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.events_log_header)), false);
 
         //Initialize experiment log file
-        currentExperimentLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
-        if (!currentExperimentLogFile.exists()){
-            FileManager.writeToFile(currentExperimentLogFile, Utils.appendWithComma(context.getString(R.string.experiment_log_header), context.getString(R.string.experiment_parameters_log_header)), false);
+        State.currentExperimentLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
+        if (!State.currentExperimentLogFile.exists()){
+            FileManager.writeToFile(State.currentExperimentLogFile, Utils.appendWithComma(context.getString(R.string.experiment_log_header), context.getString(R.string.experiment_parameters_log_header)), false);
         }
-        FileManager.appendLineToFile(currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.experimentToString()));
+        FileManager.appendLineToFile(State.currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), State.participantId, ExperimentParameters.experimentToString()));
     }
 
     ////////////////////////////    Log distributions    ///////////////////////////
 
     public static void logDistributionsAtExperimentInit(Context context) {
-        currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+        State.currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
 
         String logStr ="";
 
@@ -82,7 +75,7 @@ public class Logging {
         for (int i=0; i < ExperimentParameters.zipfSize; i++)
             logStr += String.valueOf(Distributions.zipfian[i+1]) + " ";
 
-        FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
+        FileManager.writeLineToFile(State.currentDistributionsLogFile, logStr, false);
     }
 
     public static void logDistributionsAtConditionInit(Context context) {
@@ -125,7 +118,7 @@ public class Logging {
         }
 
         // Write things in the SAME distribution log file
-        FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
+        FileManager.writeLineToFile(State.currentDistributionsLogFile, logStr, false);
     }
 
     private static String conditionToString(int condition){
@@ -135,7 +128,7 @@ public class Logging {
     }
 
     public static void logPostExperimentDistributions(Context context) {
-        currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+        State.currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
 
         String logStr ="";
 
@@ -159,7 +152,7 @@ public class Logging {
             logStr += "\n";
         }
 
-        FileManager.writeLineToFile(currentDistributionsLogFile, logStr, false);
+        FileManager.writeLineToFile(State.currentDistributionsLogFile, logStr, false);
     }
 
     ///////////////////////////    Log trial    ///////////////////////////////////
@@ -182,10 +175,10 @@ public class Logging {
 
     public static void logTrial(Context context, Result result){
         // If user stayed on the first page
-        if(Logging.pages_times.equals(""))
-            Logging.pages_times="1,"+result.duration+",0,";
+        if(State.pages_times.equals(""))
+            State.pages_times="1,"+result.duration+",0,";
 
-        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result),Logging.pages_times);
-        FileManager.appendLineToFile(Logging.currentTrialsLogFile,finalTrialLog);
+        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result), State.pages_times);
+        FileManager.appendLineToFile(State.currentTrialsLogFile,finalTrialLog);
     }
 }

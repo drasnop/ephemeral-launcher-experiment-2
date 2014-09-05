@@ -9,6 +9,9 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import ca.ubc.cs.ephemerallauncherexperiment.*;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Pager extends FragmentActivity{
@@ -35,7 +38,7 @@ public class Pager extends FragmentActivity{
         // We wait until the last minute to record the starting time
         Logging.startTime = System.currentTimeMillis();
         Logging.previousPageLandingTime = Logging.startTime;
-        Logging.pages_times = "";
+        State.pages_times = "";
         mTimeoutChecker.run();
 
         logEvent("TrialStarted","");
@@ -72,7 +75,7 @@ public class Pager extends FragmentActivity{
     private void logEvent(String eventName, String eventDescription){
         String eventLog = Utils.appendWithComma(Utils.getTimeStamp(false), Logging.stateCsvLog(this), eventName, eventDescription);
 
-        FileManager.appendLineToFile(Logging.currentEventsLogFile, eventLog);
+        FileManager.appendLineToFile(State.currentEventsLogFile, eventLog);
     }
 
     // AP: it would be great if we could have this function in Trial instead...
@@ -127,6 +130,18 @@ public class Pager extends FragmentActivity{
 
 
         Logging.logTrial(this, new Result(duration, row, column, iconName, iconLabel));
+
+        try {
+            // Save state
+            FileOutputStream fos = new FileOutputStream("testfile");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            //oos.writeObject(State);
+            oos.flush();
+            oos.close();
+        }catch(IOException e ){
+
+        }
+
 
         if (State.timeout){
             logEvent("Timeout", "");
@@ -217,7 +232,7 @@ public class Pager extends FragmentActivity{
                 long time_spent_swiping=current_time-Logging.previousPageStartDragging;
                 long time_spent_on_page=Logging.previousPageStartDragging-Logging.previousPageLandingTime;
 
-                Logging.pages_times += State.page + "," + time_spent_on_page +"," + time_spent_swiping + ",";
+                State.pages_times += State.page + "," + time_spent_on_page +"," + time_spent_swiping + ",";
 
                 // update
                 State.page=position+1;
