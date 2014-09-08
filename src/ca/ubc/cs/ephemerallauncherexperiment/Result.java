@@ -10,7 +10,9 @@ public class Result {
     public String iconLabel;
 
     public Result (double duration, int row, int column, String iconName, String iconLabel) {
-        this.ifHighlighted = ExperimentParameters.distributions.isHighlighted(ExperimentParameters.distributions.selected[ExperimentParameters.state.trial]);
+        // WRONG! what we want to know is whether the target icon was highlighted, not the one that was selected
+        // this.ifHighlighted = ExperimentParameters.distributions.isHighlighted(ExperimentParameters.distributions.selected[ExperimentParameters.state.trial]);
+        this.ifHighlighted = ExperimentParameters.distributions.isHighlighted(ExperimentParameters.distributions.targets[ExperimentParameters.state.trial]);
         this.duration = duration;
         this.row = row;
         this.column = column;
