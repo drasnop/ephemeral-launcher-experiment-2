@@ -6,14 +6,9 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import ca.ubc.cs.ephemerallauncherexperiment.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Pager extends FragmentActivity{
@@ -132,20 +127,6 @@ public class Pager extends FragmentActivity{
 
 
         Logging.logTrial(this, new Result(duration, row, column, iconName, iconLabel));
-
-        try {
-            // Save state
-            File backup = new File(FileManager.getExtStorageDir(this, ExperimentParameters.LOG_FOLDER),Logging.getExperimentBackupFileName());
-            FileOutputStream fos = new FileOutputStream(backup);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(ExperimentParameters.state);
-            oos.writeObject(ExperimentParameters.distributions);
-            oos.flush();
-            oos.close();
-            Log.v("Trial", "Trial " + ExperimentParameters.state.block + " " + ExperimentParameters.state.trial + " saved");
-        }catch(IOException e ){
-            e.printStackTrace();
-        }
 
 
         if (ExperimentParameters.state.timeout){
