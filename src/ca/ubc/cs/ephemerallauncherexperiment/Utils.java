@@ -85,12 +85,12 @@ public class Utils {
 		vibrator.vibrate(ExperimentParameters.VIBRATION_DURATION_MS);
 	}
 	
-	public static String padWithZero(int i){
+	public static String padWithSpaces(int i){
 		String res="";
 		if(i<100)
-			res+="0";
+			res+=" ";
         if(i<10)
-            res+="0";
+            res+=" ";
 		res+=i;
 		return res;
 	}

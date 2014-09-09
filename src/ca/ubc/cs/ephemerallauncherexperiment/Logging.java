@@ -7,9 +7,10 @@ public class Logging {
     public static long startTime;
     public static long previousPageLandingTime;       // timestamp of when the previous page was reached
     public static long previousPageStartDragging;     // timestamp of when users started swiping on the previous page
+    public static String pages_times;                 // string of pairs (page#, time spent on it)
 
-    static final String lineSep = "\n-------------------------------------------------------\n";
-    static final String halfLineSep = "\n" + lineSep.substring(0, (int)lineSep.length()/2) + "\n";
+    private static final String lineSep = "\n-------------------------------------------------------\n";
+    private static final String halfLineSep = "\n" + lineSep.substring(0, (int)lineSep.length()/2) + "\n";
 
     //////////////////////////    Initialize    ////////////////////////////////////
 
@@ -50,8 +51,6 @@ public class Logging {
         //Initialize event log file
         ExperimentParameters.state.currentEventsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getEventsLogFileName());
         FileManager.writeToFile(ExperimentParameters.state.currentEventsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.events_log_header)), false);
-
-
     }
 
     ////////////////////////////    Log distributions    ///////////////////////////
@@ -65,15 +64,12 @@ public class Logging {
         logStr += "participantID: " + ExperimentParameters.state.participantId + "\n";
         logStr += "zipfSize: " + String.valueOf(ExperimentParameters.zipfSize) + "\n";
         logStr += "zipfCoeff: " + String.valueOf(ExperimentParameters.zipfCoeff) + "\n";
-        logStr += "Accuracy: " + String.valueOf(ExperimentParameters.distributions.empiricalAccuracy) + "\n";
-        logStr += "Icon Set: " + ExperimentParameters.ICON_SET;
-        logStr += "Label Set: " + ExperimentParameters.LABEL_SET;
 
         //logging conditions
         logStr += lineSep;
         logStr += "CONDITIONS \n";
-        for (int i=0; i < ExperimentParameters.EFFECTS.values().length; i++)
-            logStr += conditionToString(i);
+        for (int i=0; i < ExperimentParameters.NUM_CONDITIONS; i++)
+            logStr += conditionToString(i)+"\n";
 
         //logging zipfian
         logStr += lineSep;
@@ -91,11 +87,11 @@ public class Logging {
         logStr += lineSep;
         logStr += "TARGET POSITIONS (positions start from 1) (Zipfian rank indicated below) \n";
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS+1; tr++){
-            logStr += Utils.padWithZero(ExperimentParameters.distributions.targets[tr]) + " ";
+            logStr += Utils.padWithSpaces(ExperimentParameters.distributions.targets[tr]) + " ";
         }
         logStr+="\n";
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS+1; tr++){
-            logStr += Utils.padWithZero(ExperimentParameters.distributions.target_ranks[tr]) + " ";
+            logStr += Utils.padWithSpaces(ExperimentParameters.distributions.target_ranks[tr]) + " ";
         }
 
         //logging highlighted icons
@@ -104,7 +100,7 @@ public class Logging {
 
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS+1; tr++){
             for (int icon = 0; icon < ExperimentParameters.state.num_highlighted_icons(); icon++)
-                logStr += Utils.padWithZero(ExperimentParameters.distributions.highlighted[tr][icon]) + " ";
+                logStr += Utils.padWithSpaces(ExperimentParameters.distributions.highlighted[tr][icon]) + " ";
             logStr += "\n";
         }
 
@@ -114,13 +110,12 @@ public class Logging {
 
         String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
         logStr += halfLineSep;
-        logStr += "CONDITION " + String.valueOf(ExperimentParameters.state.condition) + ": " + conditionToString(ExperimentParameters.state.condition) +"\n";
+        logStr += "CONDITION " + conditionToString(ExperimentParameters.state.condition) +"\n";
         for (int pos=1; pos <= ExperimentParameters.state.num_positions(); pos++){
             logStr += String.valueOf(pos) + ": " + Utils.extractIconName(context.getString(ExperimentParameters.distributions.images_ID[pos]), iconAddressPrefix) + " "  +context.getString(ExperimentParameters.distributions.labels_ID[pos]) + "; " ;
             if ((pos) % ExperimentParameters.NUM_ICONS_PER_PAGE == 0) {
                 logStr += "\n";
             }
-
         }
 
         // Write things in the SAME distribution log file
@@ -129,9 +124,10 @@ public class Logging {
 
     public static void logPostExperimentDistributions() {
 
-        String logStr ="";
+        String logStr = lineSep;
 
-        logStr += lineSep;
+        // Not very useful anymore, but eh
+        ExperimentParameters.distributions.computeAccuracy();
         logStr += "Post-experiment accuracy: " + String.valueOf(ExperimentParameters.distributions.empiricalAccuracy) + "\n";
 
         //logging selected positions
@@ -141,13 +137,14 @@ public class Logging {
             logStr += String.valueOf(ExperimentParameters.distributions.selected[tr+1]) + " ";
         }
 
+        // Write things in the SAME distribution log file
         FileManager.appendLineToFile(ExperimentParameters.state.currentDistributionsLogFile, logStr);
     }
 
     private static String conditionToString(int condition){
-        return ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][0]]+", "
+        return condition + ": " + ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][0]]+", "
                 +ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]]+", "
-                +ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][2]]+" ";
+                +ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][2]];
     }
 
     ///////////////////////////    Log trial    ///////////////////////////////////
@@ -170,10 +167,10 @@ public class Logging {
 
     public static void logTrial(Context context, Result result){
         // If user stayed on the first page
-        if(ExperimentParameters.state.pages_times.equals(""))
-            ExperimentParameters.state.pages_times="1,"+result.duration+",0,";
+        if(Logging.pages_times.equals(""))
+            Logging.pages_times="1,"+result.duration+",0,";
 
-        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result), ExperimentParameters.state.pages_times);
+        String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result), Logging.pages_times);
         FileManager.appendLineToFile(ExperimentParameters.state.currentTrialsLogFile,finalTrialLog);
     }
 }

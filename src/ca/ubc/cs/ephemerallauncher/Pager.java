@@ -35,7 +35,7 @@ public class Pager extends FragmentActivity{
         // We wait until the last minute to record the starting time
         Logging.startTime = System.currentTimeMillis();
         Logging.previousPageLandingTime = Logging.startTime;
-        ExperimentParameters.state.pages_times = "";
+        Logging.pages_times = "";
         mTimeoutChecker.run();
 
         logEvent("TrialStarted","");
@@ -206,6 +206,9 @@ public class Pager extends FragmentActivity{
                 if (state ==ViewPager.SCROLL_STATE_IDLE){
                     logEvent("PageIDLE","");
                 }
+                if (state == ViewPager.SCROLL_STATE_SETTLING){
+                    // TODO handle case where we landed on the same page
+                }
             }
 
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -218,7 +221,7 @@ public class Pager extends FragmentActivity{
                 long time_spent_swiping=current_time-Logging.previousPageStartDragging;
                 long time_spent_on_page=Logging.previousPageStartDragging-Logging.previousPageLandingTime;
 
-                ExperimentParameters.state.pages_times += ExperimentParameters.state.page + "," + time_spent_on_page +"," + time_spent_swiping + ",";
+                Logging.pages_times += ExperimentParameters.state.page + "," + time_spent_on_page +"," + time_spent_swiping + ",";
 
                 // update
                 ExperimentParameters.state.page=position+1;

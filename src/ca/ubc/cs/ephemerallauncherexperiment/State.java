@@ -38,7 +38,6 @@ public class State implements Serializable{
 	public int page;		                // current page in the pager  //I doubt this is useful //AP: otherwise I don't know how to get this value from the AnimatedGridView
     public int num_pages_visited;        // from 1 to infinity, since the beginning of the trial = number of swipes + 1
 
-    public String pages_times;                 // string of pairs (page#, time spent on it)
     public File currentTrialsLogFile;		// the file contains per trial logs for a participant
     public File currentEventsLogFile;		// the file contains per event (command) logs for a participant
     public File currentExperimentLogFile;	// the file contains the general experiment logs
