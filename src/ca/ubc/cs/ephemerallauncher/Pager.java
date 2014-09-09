@@ -209,7 +209,7 @@ public class Pager extends FragmentActivity{
                     // logging
                     current_time=System.currentTimeMillis();
                     Logging.idle_time += current_time - Logging.previousPageLandingTime;
-                    Logging.previousPageStartDragging=System.currentTimeMillis();
+                    Logging.previousPageStartDragging=current_time;
                 }
                 if (state ==ViewPager.SCROLL_STATE_IDLE){
                     logEvent("PageIDLE","");
