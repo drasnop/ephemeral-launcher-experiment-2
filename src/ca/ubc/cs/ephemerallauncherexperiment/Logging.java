@@ -12,7 +12,6 @@ public class Logging {
     public static String pages_times;                 // string of (page#, idle_time, swiping_time)
 
     private static final String lineSep = "\n-------------------------------------------------------\n";
-    private static final String halfLineSep = "\n" + lineSep.substring(0, lineSep.length()/2) + "\n";
 
     //////////////////////////    Initialize    ////////////////////////////////////
 
@@ -89,10 +88,11 @@ public class Logging {
     }
 
     public static void logDistributionsAtConditionInit(Context context) {
-        String logStr ="";
+        String logStr = lineSep;
+        logStr += "CONDITION " + conditionToString(ExperimentParameters.state.condition) +"\n";
 
         //logging target positions
-        logStr += lineSep;
+        logStr+="\n";
         logStr += "TARGET POSITIONS (positions start from 1) (Zipfian rank indicated below) \n";
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS+1; tr++){
             logStr += Utils.padWithSpaces(ExperimentParameters.distributions.targets[tr]) + " ";
@@ -103,7 +103,7 @@ public class Logging {
         }
 
         //logging highlighted icons
-        logStr += lineSep;
+        logStr += "\n\n";
         logStr += "HIGHLIGHTED ICONS' POSITIONS \n";
 
         for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS+1; tr++){
@@ -113,12 +113,8 @@ public class Logging {
         }
 
         //logging image icons and labels
-        logStr += lineSep;
-        logStr += "IMAGE ICONS AND LABELS\n";
-
         String iconAddressPrefix = ExperimentParameters.ICON_RESOURCE_ADDRESS_PREFIX;
-        logStr += halfLineSep;
-        logStr += "CONDITION " + conditionToString(ExperimentParameters.state.condition) +"\n";
+        logStr += "\n";
         for (int pos=1; pos <= ExperimentParameters.state.num_positions(); pos++){
             logStr += String.valueOf(pos) + ": " + Utils.extractIconName(context.getString(ExperimentParameters.distributions.images_ID[pos]), iconAddressPrefix) + " "  +context.getString(ExperimentParameters.distributions.labels_ID[pos]) + "; " ;
             if ((pos) % ExperimentParameters.NUM_ICONS_PER_PAGE == 0) {
