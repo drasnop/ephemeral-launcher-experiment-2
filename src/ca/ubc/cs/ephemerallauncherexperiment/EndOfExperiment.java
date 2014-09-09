@@ -17,7 +17,7 @@ public class EndOfExperiment extends Activity {
 		Log.v("Distributions","Empirical accuracy after experiment = "+ExperimentParameters.distributions.empiricalAccuracy);
 		
 		//Log empirical distributions (post-hoc)
-        Logging.logPostExperimentDistributions(this);
+        Logging.logPostExperimentDistributions();
 	}
 
 	public void finishExperiment(View view){

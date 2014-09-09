@@ -21,9 +21,6 @@ public class FileManager {
 		return new File(getExtStorageDir(c, folderName),fileName);
     }
 
-	public static void appendLineToFile(String content){
-		writeLineToFile(content, true);
-	}
 	public static void appendLineToFile(File file, String content){
 		writeLineToFile(file, content, true);
 	}

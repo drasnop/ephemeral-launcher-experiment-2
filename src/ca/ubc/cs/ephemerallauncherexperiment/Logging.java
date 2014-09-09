@@ -33,6 +33,16 @@ public class Logging {
 
     public static void initialize(Context context) {
 
+        //Initialize experiment log file
+        ExperimentParameters.state.currentExperimentLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
+        if (!ExperimentParameters.state.currentExperimentLogFile.exists()){
+            FileManager.writeToFile(ExperimentParameters.state.currentExperimentLogFile, Utils.appendWithComma(context.getString(R.string.experiment_log_header), context.getString(R.string.experiment_parameters_log_header)), false);
+        }
+        FileManager.appendLineToFile(ExperimentParameters.state.currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), ExperimentParameters.state.participantId, ExperimentParameters.experimentToString()));
+
+        //Initialize distributions log file
+        ExperimentParameters.state.currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+
         //Initialize trial log file
         ExperimentParameters.state.currentTrialsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getTrialLogFileName());
         FileManager.writeToFile(ExperimentParameters.state.currentTrialsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.trial_log_header)), false);
@@ -41,18 +51,12 @@ public class Logging {
         ExperimentParameters.state.currentEventsLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getEventsLogFileName());
         FileManager.writeToFile(ExperimentParameters.state.currentEventsLogFile, Utils.appendWithComma(context.getString(R.string.state_log_header), context.getString(R.string.events_log_header)), false);
 
-        //Initialize experiment log file
-        ExperimentParameters.state.currentExperimentLogFile = FileManager.getFile(context, ExperimentParameters.LOG_FOLDER, getExperimentLogFileName());
-        if (!ExperimentParameters.state.currentExperimentLogFile.exists()){
-            FileManager.writeToFile(ExperimentParameters.state.currentExperimentLogFile, Utils.appendWithComma(context.getString(R.string.experiment_log_header), context.getString(R.string.experiment_parameters_log_header)), false);
-        }
-        FileManager.appendLineToFile(ExperimentParameters.state.currentExperimentLogFile, Utils.appendWithComma(Utils.getTimeStamp(false), ExperimentParameters.state.participantId, ExperimentParameters.experimentToString()));
+
     }
 
     ////////////////////////////    Log distributions    ///////////////////////////
 
-    public static void logDistributionsAtExperimentInit(Context context) {
-        ExperimentParameters.state.currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+    public static void logDistributionsAtExperimentInit() {
 
         String logStr ="";
 
@@ -120,17 +124,10 @@ public class Logging {
         }
 
         // Write things in the SAME distribution log file
-        FileManager.writeLineToFile(ExperimentParameters.state.currentDistributionsLogFile, logStr, false);
+        FileManager.appendLineToFile(ExperimentParameters.state.currentDistributionsLogFile, logStr);
     }
 
-    private static String conditionToString(int condition){
-        return ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][0]]+", "
-                +ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]]+", "
-                +ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][2]]+" ";
-    }
-
-    public static void logPostExperimentDistributions(Context context) {
-        ExperimentParameters.state.currentDistributionsLogFile = FileManager.getFile(context,  ExperimentParameters.LOG_FOLDER, getDistributionsFileName());
+    public static void logPostExperimentDistributions() {
 
         String logStr ="";
 
@@ -144,17 +141,13 @@ public class Logging {
             logStr += String.valueOf(ExperimentParameters.distributions.selected[tr+1]) + " ";
         }
 
-        //logging highlighted icons
-        logStr += lineSep;
-        logStr += "ACTUAL HIGHLIGHTED ICONS' POSITIONS (with empirical MRU) \n";
+        FileManager.appendLineToFile(ExperimentParameters.state.currentDistributionsLogFile, logStr);
+    }
 
-        for (int tr = 0; tr < ExperimentParameters.NUM_TRIALS; tr++){
-            for (int icon = 0; icon < ExperimentParameters.state.num_highlighted_icons(); icon++)
-                logStr += Utils.padWithZero(ExperimentParameters.distributions.highlighted[tr+1][icon]) + " ";
-            logStr += "\n";
-        }
-
-        FileManager.writeLineToFile(ExperimentParameters.state.currentDistributionsLogFile, logStr, false);
+    private static String conditionToString(int condition){
+        return ExperimentParameters.ACCURACY[ExperimentParameters.CONDITIONS[condition][0]]+", "
+                +ExperimentParameters.NUM_PAGES[ExperimentParameters.CONDITIONS[condition][1]]+", "
+                +ExperimentParameters.EFFECTS.values()[ExperimentParameters.CONDITIONS[condition][2]]+" ";
     }
 
     ///////////////////////////    Log trial    ///////////////////////////////////

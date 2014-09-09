@@ -73,7 +73,7 @@ public class Experiment extends Activity implements OnItemSelectedListener {
         Logging.initialize(this);
 
         //Log distributions
-        Logging.logDistributionsAtExperimentInit(this);
+        Logging.logDistributionsAtExperimentInit();
     }
 
     public void restore(View view) {
