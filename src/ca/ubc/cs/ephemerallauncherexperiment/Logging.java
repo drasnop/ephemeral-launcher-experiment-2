@@ -7,10 +7,12 @@ public class Logging {
     public static long startTime;
     public static long previousPageLandingTime;       // timestamp of when the previous page was reached
     public static long previousPageStartDragging;     // timestamp of when users started swiping on the previous page
-    public static String pages_times;                 // string of pairs (page#, time spent on it)
+    public static long idle_time;                     // total time spent on one page (without swiping)
+    public static long swiping_time;                  // total time spent swiping before changing page
+    public static String pages_times;                 // string of (page#, idle_time, swiping_time)
 
     private static final String lineSep = "\n-------------------------------------------------------\n";
-    private static final String halfLineSep = "\n" + lineSep.substring(0, (int)lineSep.length()/2) + "\n";
+    private static final String halfLineSep = "\n" + lineSep.substring(0, lineSep.length()/2) + "\n";
 
     //////////////////////////    Initialize    ////////////////////////////////////
 
@@ -65,17 +67,23 @@ public class Logging {
         logStr += "zipfSize: " + String.valueOf(ExperimentParameters.zipfSize) + "\n";
         logStr += "zipfCoeff: " + String.valueOf(ExperimentParameters.zipfCoeff) + "\n";
 
+        //logging zipfian
+        logStr += "\n";
+        logStr += "ZIPF \n";
+        for (int i=0; i < ExperimentParameters.zipfSize; i++)
+            logStr += String.valueOf(ExperimentParameters.distributions.zipfian[i+1]) + " ";
+
         //logging conditions
         logStr += lineSep;
         logStr += "CONDITIONS \n";
         for (int i=0; i < ExperimentParameters.NUM_CONDITIONS; i++)
             logStr += conditionToString(i)+"\n";
 
-        //logging zipfian
-        logStr += lineSep;
-        logStr += "ZIPF \n";
-        for (int i=0; i < ExperimentParameters.zipfSize; i++)
-            logStr += String.valueOf(ExperimentParameters.distributions.zipfian[i+1]) + " ";
+        //logging order
+        logStr += "\n";
+        logStr += "ORDER of conditions for this participant: \n";
+        for(int i=0; i<ExperimentParameters.ORDERS.length;i++)
+            logStr += ExperimentParameters.ORDERS[ExperimentParameters.state.participant][i]+" ";
 
         FileManager.writeLineToFile(ExperimentParameters.state.currentDistributionsLogFile, logStr, false);
     }
@@ -166,10 +174,6 @@ public class Logging {
     }
 
     public static void logTrial(Context context, Result result){
-        // If user stayed on the first page
-        if(Logging.pages_times.equals(""))
-            Logging.pages_times="1,"+result.duration+",0,";
-
         String finalTrialLog = Utils.appendWithComma(Utils.getTimeStamp(false), stateCsvLog(context),resultCsvLog(result), Logging.pages_times);
         FileManager.appendLineToFile(ExperimentParameters.state.currentTrialsLogFile,finalTrialLog);
     }

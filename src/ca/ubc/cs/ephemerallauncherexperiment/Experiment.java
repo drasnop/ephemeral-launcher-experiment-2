@@ -85,6 +85,11 @@ public class Experiment extends Activity implements OnItemSelectedListener {
 
         try{
             File backup = new File(FileManager.getExtStorageDir(this, ExperimentParameters.LOG_FOLDER),Logging.getExperimentBackupFileName());
+            if(!backup.exists()){
+                Toast.makeText(this, "No backup file found for this participant!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             FileInputStream fis = new FileInputStream(backup);
             ObjectInputStream ois = new ObjectInputStream(fis);
             ExperimentParameters.state = (State)ois.readObject();
